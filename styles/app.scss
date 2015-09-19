@@ -1,0 +1,32 @@
+$cdark: #455A64;
+$cdarken: darken($cdark, 20);
+$cprimary: #455A64;
+$caccent: #FF4081;
+$ctext: #212121;
+$clight: #CFD8DC;
+$ctext2: #727272;
+$cborder: #B6B6B6;
+$cwhite: #FFFFFF;
+
+body {
+  font-family: sans-serif;
+  background: $cprimary;
+  color: $ctext;
+}
+
+a {
+  color: $caccent;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  a {
+    text-decoration: none;
+    color: $cdarken;
+    padding: 1em 1.5em;
+    border: 2px solid rgba(black, 0.5);
+  }
+}
