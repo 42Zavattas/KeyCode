@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack & webpack --config webpack.config.production.js",
     "prod": "npm run build && NODE_ENV=production npm start",
-    "dev": "node webpack-dev-server.js & PORT=3001 nodemon start.js -e js,jsx",
+    "dev": "node webpack-dev-server.js & PORT=3001 nodemon start.js -e js",
     "lint": "eslint ./components/**/*.js",
     "start": "node start.js"
   },
