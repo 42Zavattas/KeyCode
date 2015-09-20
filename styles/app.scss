@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Coda);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
 
 $cdark: #455A64;
 $cdarken: darken($cdark, 20);
@@ -62,10 +63,16 @@ a {
   display: flex;
   flex-direction: column;
 
-  .View { flex-grow: 1; }
+  .View {
+    padding: 0 1em 1em 1em;
+    flex-grow: 1;
+  }
   .Footer { flex-shrink: 0; }
 }
 
 // imports
 @import './Footer.scss';
 @import './Header.scss';
+@import './Game.scss';
+@import './SourceCode.scss';
+@import './SourceInput.scss';

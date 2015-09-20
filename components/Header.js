@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'fluxible-router';
 
 export default class Header extends React.Component {
 
@@ -6,7 +7,7 @@ export default class Header extends React.Component {
     return (
       <div className='Header'>
         <h1>
-          KeyCode
+          <NavLink routeName='home'>KeyCode</NavLink>
         </h1>
       </div>
     );
