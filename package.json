@@ -22,6 +22,8 @@
     "fluxible-addons-react": "^0.1.6",
     "fluxible-plugin-fetchr": "^0.3.0",
     "fluxible-router": "^0.2.0",
+    "gsap": "^1.18.0",
+    "lodash": "^3.10.1",
     "react": "^0.13.0",
     "serialize-javascript": "^1.0.0",
     "serve-favicon": "^2.1.6"

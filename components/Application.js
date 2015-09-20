@@ -5,7 +5,11 @@ import ApplicationStore from '../stores/ApplicationStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 
+import Footer from './Footer';
+import Header from './Header';
+
 if (process.env.BROWSER === true) {
+  require('gsap');
   require('../styles/app.scss');
 }
 
@@ -16,9 +20,12 @@ class Application extends React.Component {
     var Handler = this.props.currentRoute.get('handler');
 
     return (
-      <div>
-        KeyCode
-        <Handler />
+      <div className='App'>
+        <Header />
+        <div className='View'>
+          <Handler className='toto' />
+        </div>
+        <Footer />
       </div>
     );
   }

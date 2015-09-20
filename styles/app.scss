@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Coda);
+
 $cdark: #455A64;
 $cdarken: darken($cdark, 20);
 $cprimary: #455A64;
@@ -8,8 +10,20 @@ $ctext2: #727272;
 $cborder: #B6B6B6;
 $cwhite: #FFFFFF;
 
+* {
+  box-sizing: border-box;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-y: auto;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: Coda, sans-serif;
   background: $cprimary;
   color: $ctext;
 }
@@ -24,9 +38,34 @@ a {
   justify-content: center;
   height: 400px;
   a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
     text-decoration: none;
-    color: $cdarken;
+    text-transform: uppercase;
+    color: $caccent;
     padding: 1em 1.5em;
-    border: 2px solid rgba(black, 0.5);
+    background: $cdarken;
   }
 }
+
+// Layout
+#app {
+  height: 100%;
+}
+
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .View { flex-grow: 1; }
+  .Footer { flex-shrink: 0; }
+}
+
+// imports
+@import './Footer.scss';
+@import './Header.scss';

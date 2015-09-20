@@ -7,7 +7,7 @@ class Home extends React.Component {
     return (
       <div>
         <div className='brand'>
-          <NavLink routeName='game'>Start a new game</NavLink>
+          <NavLink routeName='game'>Start</NavLink>
         </div>
       </div>
     );
