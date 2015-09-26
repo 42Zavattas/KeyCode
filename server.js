@@ -21,6 +21,9 @@ server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(compression());
 server.use(bodyParser.json());
 
+const fetchrPlugin = app.getPlugin('FetchrPlugin');
+server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
+
 server.use((req, res, next) => {
 
   let context = app.createContext();
