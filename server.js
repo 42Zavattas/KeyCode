@@ -3,7 +3,7 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import path from 'path';
 import serialize from 'serialize-javascript';
-import {navigateAction} from 'fluxible-router';
+import { navigateAction } from 'fluxible-router';
 import debugLib from 'debug';
 import React from 'react';
 import app from './app';
@@ -25,7 +25,6 @@ server.use((req, res, next) => {
 
   let context = app.createContext();
 
-  debug('Executing navigate action');
   context
     .getActionContext()
     .executeAction(navigateAction, { url: req.url }, (err) => {

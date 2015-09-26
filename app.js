@@ -8,4 +8,4 @@ const app = new Fluxible({ component: Application });
 app.registerStore(RouteStore);
 app.registerStore(ApplicationStore);
 
-module.exports = app;
+export default app;
