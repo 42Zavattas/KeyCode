@@ -1,8 +1,9 @@
 import React from 'react';
+
 import SourceCode from '../SourceCode';
 import SourceInput from '../SourceInput';
 
-class Game extends React.Component {
+export default class Game extends React.Component {
 
   constructor () {
     super();
@@ -15,11 +16,9 @@ class Game extends React.Component {
   render() {
     return (
       <div className='Game'>
-        <SourceCode text={this.state.text} />
+        <SourceCode text={ this.state.text } />
         <SourceInput />
       </div>
     );
   }
 }
-
-export default Game;

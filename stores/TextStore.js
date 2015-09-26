@@ -17,7 +17,7 @@ class TextStore extends BaseStore {
 
 TextStore.storeName = 'TextStore';
 TextStore.handlers = {
-  'CREATE_TEXT': 'handleCreateText'
+  CREATE_TEXT: 'handleCreateText'
 };
 
 export default TextStore;

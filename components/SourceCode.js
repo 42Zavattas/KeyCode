@@ -9,7 +9,7 @@ export default class SourceCode extends React.Component {
     return (
       <div className='SourceCode'>
         <pre>
-          {text}
+          { text }
         </pre>
       </div>
     );

@@ -4,7 +4,7 @@ import RouteStore from './RouteStore';
 
 class ApplicationStore extends BaseStore {
 
-  constructor(dispatcher) {
+  constructor (dispatcher) {
     super(dispatcher);
     this.currentPageName = null;
     this.currentPage = null;
@@ -12,7 +12,7 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = '';
   }
 
-  handlePageTitle(currentRoute) {
+  handlePageTitle (currentRoute) {
     this.dispatcher.waitFor(RouteStore, () => {
       if (currentRoute && currentRoute.get('title')) {
         this.pageTitle = currentRoute.get('title');
@@ -21,19 +21,19 @@ class ApplicationStore extends BaseStore {
     });
   }
 
-  getCurrentPageName() {
+  getCurrentPageName () {
     return this.currentPageName;
   }
 
-  getPageTitle() {
+  getPageTitle () {
     return this.pageTitle;
   }
 
-  getPages() {
+  getPages () {
     return this.pages;
   }
 
-  dehydrate() {
+  dehydrate () {
     return {
       currentPageName: this.currentPageName,
       currentPage: this.currentPage,
@@ -42,7 +42,7 @@ class ApplicationStore extends BaseStore {
     };
   }
 
-  rehydrate(state) {
+  rehydrate (state) {
     this.currentPageName = state.currentPageName;
     this.currentPage = state.currentPage;
     this.pages = state.pages;
@@ -54,7 +54,7 @@ class ApplicationStore extends BaseStore {
 ApplicationStore.storeName = 'ApplicationStore';
 
 ApplicationStore.handlers = {
-  'NAVIGATE_SUCCESS': 'handlePageTitle'
+  NAVIGATE_SUCCESS: 'handlePageTitle'
 };
 
 export default ApplicationStore;

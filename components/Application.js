@@ -1,10 +1,11 @@
-/*globals document*/
+/* globals document */
 
 import React from 'react';
-import ApplicationStore from '../stores/ApplicationStore';
-import TextStore from '../stores/TextStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
+
+import ApplicationStore from '../stores/ApplicationStore';
+import TextStore from '../stores/TextStore';
 
 import Footer from './Footer';
 import Header from './Header';
@@ -16,7 +17,7 @@ if (process.env.BROWSER === true) {
 
 class Application extends React.Component {
 
-  render() {
+  render () {
 
     var Handler = this.props.currentRoute.get('handler');
 
@@ -31,7 +32,7 @@ class Application extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     const newProps = this.props;
     if (newProps.pageTitle === prevProps.pageTitle) { return; }
     document.title = newProps.pageTitle;
