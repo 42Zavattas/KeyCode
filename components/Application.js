@@ -44,7 +44,6 @@ export default handleHistory(provideContext(connectToStores(
   [ApplicationStore, TextStore],
   (context, props) => {
     var appStore = context.getStore(ApplicationStore);
-    console.log('"YOOOOOOOOOOOOOOOOOOOOOOOOOO"');
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
