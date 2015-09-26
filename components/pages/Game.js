@@ -16,6 +16,12 @@ class Game extends React.Component {
     };
   }
 
+  decrement () {
+    this.setState({
+      currentWord: this.state.currentWord - 1
+    });
+  }
+
   increment () {
     this.setState({
       currentWord: this.state.currentWord + 1
@@ -27,6 +33,7 @@ class Game extends React.Component {
       <div className='Game'>
         <SourceCode text={this.props.text} currentWord={this.state.currentWord} />
         <SourceInput />
+        <button onClick={this.decrement.bind(this)}>dec</button>
         <button onClick={this.increment.bind(this)}>inc</button>
       </div>
     );
