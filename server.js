@@ -21,7 +21,15 @@ server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(compression());
 server.use(bodyParser.json());
 
+/**
+ * Isomorphic data fetching
+ */
+
+import textService from './services/TextService';
+
 const fetchrPlugin = app.getPlugin('FetchrPlugin');
+fetchrPlugin.registerService(textService);
+
 server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use((req, res, next) => {

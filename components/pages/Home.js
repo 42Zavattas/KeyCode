@@ -11,10 +11,9 @@ import createText from '../../actions/createText';
 class Home extends React.Component {
 
   handleClick () {
-    console.log(this.context.executeAction);
-    /*this.context.executeAction(createText, {
+    this.props.context.executeAction(createText, {
       text: 'yolo'
-    });*/
+    });
   }
 
   render() {
@@ -29,8 +28,5 @@ class Home extends React.Component {
   }
 
 }
-
-Home = connectToStores(Home, [TextStore], (context, props) => ({
-}));
 
 export default Home;

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ApplicationStore from '../stores/ApplicationStore';
+import TextStore from '../stores/TextStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 
@@ -23,7 +24,7 @@ class Application extends React.Component {
       <div className='App'>
         <Header />
         <div className='View'>
-          <Handler className='toto' />
+          <Handler context={this.props.context} />
         </div>
         <Footer />
       </div>
@@ -40,9 +41,10 @@ class Application extends React.Component {
 
 export default handleHistory(provideContext(connectToStores(
   Application,
-  [ApplicationStore],
-  function (context, props) {
+  [ApplicationStore, TextStore],
+  (context, props) => {
     var appStore = context.getStore(ApplicationStore);
+    console.log('"YOOOOOOOOOOOOOOOOOOOOOOOOOO"');
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),

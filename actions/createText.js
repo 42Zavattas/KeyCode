@@ -1,10 +1,7 @@
 'use strict';
 
-export default function createText (actionCtx, payload, done) {
-  console.log('entering create text');
-  setTimeout(function () {
-    console.log('timeout ok');
-    actionCtx.dispatch('CREATE_ACTION', payload);
-    done();
+export default function createText (context, payload, done) {
+  context.service.create('text', {}, {}, (err, res) => {
+    context.dispatch('CREATE_TEXT', res);
   });
 }

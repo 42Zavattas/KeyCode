@@ -9,7 +9,7 @@ class TextStore extends BaseStore {
   }
 
   handleCreateText (payload) {
-    console.log('call create text');
+    console.log('yaaaa');
     console.log(payload);
   }
 
