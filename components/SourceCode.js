@@ -2,57 +2,17 @@ import React from 'react';
 
 export default class SourceCode extends React.Component {
 
-  static buildText (text) {
-    let out = [];
-    const mem = {
-      word: [],
-      ret: [],
-      space: []
-    };
-
-    for (let i = 0; i < text.length; i++) {
-      let c = text[i];
-      if (c === ' ') {
-        checkAndPush('word', 'ret');
-        mem.space.push(c);
-      }
-      else if (c === '\n') {
-        checkAndPush('word', 'space');
-        mem.ret.push(c);
-      }
-      else {
-        checkAndPush('ret', 'space');
-        mem.word.push(c);
-      }
-    }
-
-    checkAndPush('word', 'space', 'ret');
-
-    function checkAndPush () {
-      var args = Array.prototype.slice.call(arguments);
-      args.forEach(term => {
-        if (mem[term].length) {
-          out.push({ type: term, val: mem[term].join('') });
-          mem[term] = [];
-        }
-      });
-    }
-
-    return out;
-  }
-
   constructor (props) {
     super(props);
-
-    this.state = {
-      text: SourceCode.buildText(props.text)
-    };
   }
 
   render () {
 
-    const { text } = this.state;
-    const { currentWord } = this.props;
+    const { text } = this.props;
+    const {
+      typedWord,
+      currentWordIndex
+    } = this.props;
 
     let beforeCursor = [];
     let afterCursor = [];
@@ -61,9 +21,9 @@ export default class SourceCode extends React.Component {
     // used to see at which word we are
     let wordIndex = 0;
 
-    text.forEach(token => {
+    text.chunks.forEach(token => {
       if (token.type === 'word') {
-        if (wordIndex === currentWord) {
+        if (wordIndex === currentWordIndex) {
           onCursor = token.val;
           return ++wordIndex;
         }
