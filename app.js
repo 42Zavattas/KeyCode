@@ -2,7 +2,7 @@ import Fluxible from 'fluxible';
 import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
 import RouteStore from './stores/RouteStore';
-import TextStore from './stores/TextStore';
+import GameStore from './stores/GameStore';
 
 import fetchrPlugin from 'fluxible-plugin-fetchr';
 
@@ -13,7 +13,7 @@ app.plug(fetchrPlugin({
 }));
 
 app.registerStore(RouteStore);
-app.registerStore(TextStore);
+app.registerStore(GameStore);
 app.registerStore(ApplicationStore);
 
 export default app;

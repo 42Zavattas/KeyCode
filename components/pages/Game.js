@@ -3,22 +3,40 @@ import React from 'react';
 import SourceCode from '../SourceCode';
 import SourceInput from '../SourceInput';
 
-export default class Game extends React.Component {
+import connectToStores from 'fluxible-addons-react/connectToStores';
+import GameStore from '../../stores/GameStore';
 
-  constructor () {
-    super();
+class Game extends React.Component {
+
+  constructor (props) {
+    super(props);
 
     this.state = {
-      text: 'if (id === 5) {\n  console.log(\'yallah\');\n}'
+      currentWord: 0
     };
+  }
+
+  increment () {
+    this.setState({
+      currentWord: this.state.currentWord + 1
+    });
   }
 
   render() {
     return (
       <div className='Game'>
-        <SourceCode text={ this.state.text } />
+        <SourceCode text={this.props.text} currentWord={this.state.currentWord} />
         <SourceInput />
+        <button onClick={this.increment.bind(this)}>inc</button>
       </div>
     );
   }
 }
+
+export default connectToStores(Game, [GameStore], (context) => {
+  var gameStore = context.getStore(GameStore);
+  return {
+    players: gameStore.getPlayers(),
+    text: gameStore.getText()
+  };
+});

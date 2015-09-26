@@ -42,7 +42,7 @@ class Application extends React.Component {
 
 export default handleHistory(provideContext(connectToStores(
   Application,
-  [ApplicationStore, TextStore],
+  [ApplicationStore],
   (context, props) => {
     var appStore = context.getStore(ApplicationStore);
     return {
