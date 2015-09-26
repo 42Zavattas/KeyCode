@@ -57,8 +57,6 @@ class Game extends React.Component {
           onChange={this.handleType.bind(this)}
           onValidate={this.handleValidateWord.bind(this)} />
 
-        <button onClick={this.decrement.bind(this)}>dec</button>
-        <button onClick={this.increment.bind(this)}>inc</button>
       </div>
     );
   }
