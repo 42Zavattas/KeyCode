@@ -17,6 +17,12 @@ export default class SourceInput extends React.Component {
     }
   }
 
+  handleKeyUp (e) {
+    if (e.which === 13) {
+      this.props.onValidate(e.target.value);
+    }
+  }
+
   render () {
     return (
       <div className='SourceInput'>
@@ -24,6 +30,7 @@ export default class SourceInput extends React.Component {
           type='text'
           ref='input'
           value={this.props.typedWord}
+          onKeyDown={this.handleKeyUp.bind(this)}
           onChange={this.handleChange.bind(this)} />
       </div>
     );
