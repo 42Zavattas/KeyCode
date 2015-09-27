@@ -5,7 +5,6 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 
 import ApplicationStore from '../stores/ApplicationStore';
-import TextStore from '../stores/TextStore';
 
 import Footer from './Footer';
 import Header from './Header';
