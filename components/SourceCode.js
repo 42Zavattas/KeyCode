@@ -30,7 +30,15 @@ export default class SourceCode extends React.Component {
         ++wordIndex;
       }
       if (onCursor) { afterCursor.push(token.val); }
-      else { beforeCursor.push(token.val); }
+      else {
+        const style = {};
+        if (token.bad) {
+          style.color = 'red';
+        }
+        beforeCursor.push(
+          <span key={beforeCursor.length} style={style}>{token.val}</span>
+        );
+      }
     });
 
     // get the right word to type
@@ -75,7 +83,6 @@ export default class SourceCode extends React.Component {
       ));
 
     afterCursor = afterCursor.join('');
-    beforeCursor = beforeCursor.join('');
 
     return (
       <div className='SourceCode'>

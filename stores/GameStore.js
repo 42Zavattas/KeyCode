@@ -76,12 +76,29 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleTypeBadWord (wordIndex) {
+    // retrieve word
+    let nbWords = 0;
+    for (let i = 0; i < this.text.chunks.length; ++i) {
+      let chunk = this.text.chunks[i];
+      if (chunk.type === 'word') {
+        if (nbWords === wordIndex) {
+          chunk.bad = true;
+          this.emitChange();
+          return;
+        }
+        ++nbWords;
+      }
+    }
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
-  'USER_JOIN_GAME'  : 'handleAddUserToGame'
+  'USER_JOIN_GAME': 'handleAddUserToGame',
+  'TYPE_BAD_WORD': 'handleTypeBadWord'
 };
 
 export default GameStore;

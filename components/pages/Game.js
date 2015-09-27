@@ -6,6 +6,8 @@ import SourceInput from '../SourceInput';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import GameStore from '../../stores/GameStore';
 
+import typeBadWord from '../../actions/typeBadWord';
+
 class Game extends React.Component {
 
   constructor (props) {
@@ -39,7 +41,11 @@ class Game extends React.Component {
     });
   }
 
-  handleValidateWord (word) {
+  handleValidateWord (typedWord) {
+    let wantedWord = this.props.text.words[this.state.currentWordIndex];
+    if (typedWord !== wantedWord) {
+      this.props.context.executeAction(typeBadWord, this.state.currentWordIndex);
+    }
     this.increment();
   }
 
