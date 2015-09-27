@@ -1,17 +1,21 @@
+import React from 'react';
+import path from 'path';
+import debugLib from 'debug';
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
-import path from 'path';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import React from 'react';
+import mongoose from 'mongoose';
 
 import app from './app';
+import config from './config';
 import HtmlComponent from './components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
 
 const htmlComponent = React.createFactory(HtmlComponent);
-const env = process.env.NODE_ENV;
+
+mongoose.connect(config.mongo, { db: { safe: true } });
 
 const server = express();
 
@@ -24,9 +28,11 @@ server.use(bodyParser.json());
  */
 
 import textService from './services/TextService';
+import userService from './services/UserService';
 
 const fetchrPlugin = app.getPlugin('FetchrPlugin');
 fetchrPlugin.registerService(textService);
+fetchrPlugin.registerService(userService);
 
 server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
@@ -46,7 +52,7 @@ server.use((req, res, next) => {
       const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
 
       const html = React.renderToStaticMarkup(htmlComponent({
-        clientFile: env === 'production' ? 'main.min.js' : 'main.js',
+        clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
         context: context.getComponentContext(),
         state: exposed,
         markup: React.renderToString(createElementWithContext(context))

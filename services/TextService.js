@@ -1,14 +1,17 @@
 'use strict';
 
+import { Text } from '../models';
+
 export default {
 
   name: 'text',
 
   create: (req, resource, params, body, config, done) => {
-    console.log('CREATING A TEXT');
-    // hehehe mongoose here
-    // yallah
-    done(null, { id: 1 });
+
+    Text.create({
+      data: body.data
+    }, done);
+
   }
 
 }

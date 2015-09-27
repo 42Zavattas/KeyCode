@@ -24,6 +24,9 @@
     "fluxible-router": "^0.2.0",
     "gsap": "^1.18.0",
     "lodash": "^3.10.1",
+    "mongoose": "^4.1.8",
+    "node-uuid": "^1.4.3",
+    "nodemailer": "^1.5.0",
     "react": "^0.13.0",
     "serialize-javascript": "^1.0.0",
     "serve-favicon": "^2.1.6"
