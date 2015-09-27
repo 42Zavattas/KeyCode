@@ -46,6 +46,7 @@ class GameStore extends BaseStore {
 
     return {
       chunks,
+      wordsChunks: chunks.filter(c => c.type === 'word'),
       words
     };
   }
@@ -56,7 +57,10 @@ class GameStore extends BaseStore {
     _.assign(this, {
 
       // the list of players in the game
-      players: [],
+      players: [
+        // mocked current player
+        { name: 'me', typedWords: 0 }
+      ],
 
       // the text used
       text: GameStore.buildText('if (id === 5) {\n  console.log(\'yallah\');\n}'),
@@ -77,19 +81,15 @@ class GameStore extends BaseStore {
   }
 
   handleTypeBadWord (wordIndex) {
-    // retrieve word
-    let nbWords = 0;
-    for (let i = 0; i < this.text.chunks.length; ++i) {
-      let chunk = this.text.chunks[i];
-      if (chunk.type === 'word') {
-        if (nbWords === wordIndex) {
-          chunk.bad = true;
-          this.emitChange();
-          return;
-        }
-        ++nbWords;
-      }
-    }
+    let chunk = this.text.wordsChunks[wordIndex];
+    chunk.bad = true;
+    this.emitChange();
+  }
+
+  handleTypeGoodWord (wordIndex) {
+    let chunk = this.text.wordsChunks[wordIndex];
+    ++this.players[0].typedWords;
+    this.emitChange();
   }
 
 }
@@ -98,7 +98,8 @@ GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
   'USER_JOIN_GAME': 'handleAddUserToGame',
-  'TYPE_BAD_WORD': 'handleTypeBadWord'
+  'TYPE_BAD_WORD': 'handleTypeBadWord',
+  'TYPE_GOOD_WORD': 'handleTypeGoodWord'
 };
 
 export default GameStore;

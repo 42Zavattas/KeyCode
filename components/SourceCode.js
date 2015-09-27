@@ -51,7 +51,7 @@ export default class SourceCode extends React.Component {
     };
 
     // split the current word by good/bad/no/cur typed
-    onCursor = onCursor
+    onCursor = (onCursor || '')
       .split('')
       .reduce((out, c, i) => {
         let lastCell = out[out.length - 1];

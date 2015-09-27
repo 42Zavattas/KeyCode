@@ -7,6 +7,7 @@ import connectToStores from 'fluxible-addons-react/connectToStores';
 import GameStore from '../../stores/GameStore';
 
 import typeBadWord from '../../actions/typeBadWord';
+import typeGoodWord from '../../actions/typeGoodWord';
 
 class Game extends React.Component {
 
@@ -28,7 +29,7 @@ class Game extends React.Component {
   }
 
   increment () {
-    if (this.state.currentWordIndex === this.props.text.words.length - 1) { return; }
+    if (this.state.currentWordIndex === this.props.text.words.length) { return; }
     this.setState({
       currentWordIndex: this.state.currentWordIndex + 1,
       typedWord: ''
@@ -43,9 +44,9 @@ class Game extends React.Component {
 
   handleValidateWord (typedWord) {
     let wantedWord = this.props.text.words[this.state.currentWordIndex];
-    if (typedWord !== wantedWord) {
-      this.props.context.executeAction(typeBadWord, this.state.currentWordIndex);
-    }
+    console.log(wantedWord);
+    let action = (typedWord !== wantedWord) ? typeBadWord : typeGoodWord;
+    this.props.context.executeAction(action, this.state.currentWordIndex);
     this.increment();
   }
 
@@ -58,10 +59,12 @@ class Game extends React.Component {
           currentWordIndex={this.state.currentWordIndex}
           typedWord={this.state.typedWord} />
 
-        <SourceInput
-          typedWord={this.state.typedWord}
-          onChange={this.handleType.bind(this)}
-          onValidate={this.handleValidateWord.bind(this)} />
+        {this.state.currentWordIndex < this.props.text.words.length && (
+          <SourceInput
+            typedWord={this.state.typedWord}
+            onChange={this.handleType.bind(this)}
+            onValidate={this.handleValidateWord.bind(this)} />
+        )}
 
       </div>
     );
