@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import debugLib from 'debug';
 import React from 'react';
 
 import app from './app';
@@ -13,8 +12,6 @@ import { createElementWithContext } from 'fluxible-addons-react';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 const env = process.env.NODE_ENV;
-
-const debug = debugLib('keycode');
 
 const server = express();
 
@@ -46,10 +43,8 @@ server.use((req, res, next) => {
         return;
       }
 
-      debug('Exposing context state');
       const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
 
-      debug('Rendering Application component into html');
       const html = React.renderToStaticMarkup(htmlComponent({
         clientFile: env === 'production' ? 'main.min.js' : 'main.js',
         context: context.getComponentContext(),
@@ -57,7 +52,6 @@ server.use((req, res, next) => {
         markup: React.renderToString(createElementWithContext(context))
       }));
 
-      debug('Sending markup');
       res.type('html');
       res.write('<!DOCTYPE html>' + html);
       res.end();
