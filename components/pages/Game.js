@@ -2,6 +2,7 @@ import React from 'react';
 
 import SourceCode from '../SourceCode';
 import SourceInput from '../SourceInput';
+import GameStats from '../GameStats';
 
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import GameStore from '../../stores/GameStore';
@@ -51,6 +52,9 @@ class Game extends React.Component {
   }
 
   render() {
+
+    let isFinished = this.state.currentWordIndex >= this.props.text.words.length;
+
     return (
       <div className='Game'>
 
@@ -59,11 +63,17 @@ class Game extends React.Component {
           currentWordIndex={this.state.currentWordIndex}
           typedWord={this.state.typedWord} />
 
-        {this.state.currentWordIndex < this.props.text.words.length && (
+        {!isFinished && (
           <SourceInput
             typedWord={this.state.typedWord}
             onChange={this.handleType.bind(this)}
             onValidate={this.handleValidateWord.bind(this)} />
+        )}
+
+        {isFinished && (
+          <GameStats
+            text={this.props.text}
+            players={this.props.players} />
         )}
 
       </div>

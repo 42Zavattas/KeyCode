@@ -59,7 +59,7 @@ class GameStore extends BaseStore {
       // the list of players in the game
       players: [
         // mocked current player
-        { name: 'me', typedWords: 0 }
+        { name: 'me', typedWords: 0, typedLetters: 0 }
       ],
 
       // the text used
@@ -89,6 +89,7 @@ class GameStore extends BaseStore {
   handleTypeGoodWord (wordIndex) {
     let chunk = this.text.wordsChunks[wordIndex];
     ++this.players[0].typedWords;
+    this.players[0].typedLetters += chunk.val.length;
     this.emitChange();
   }
 
