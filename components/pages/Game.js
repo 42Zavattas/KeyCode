@@ -45,7 +45,6 @@ class Game extends React.Component {
 
   handleValidateWord (typedWord) {
     let wantedWord = this.props.text.words[this.state.currentWordIndex];
-    console.log(wantedWord);
     let action = (typedWord !== wantedWord) ? typeBadWord : typeGoodWord;
     this.props.context.executeAction(action, this.state.currentWordIndex);
     this.increment();
