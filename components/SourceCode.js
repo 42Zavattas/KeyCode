@@ -7,6 +7,8 @@ export default class SourceCode extends React.Component {
   }
 
   componentDidMount () {
+    let follow = React.findDOMNode(this.refs.follow);
+    TweenMax.from(follow, 0.5, { opacity: 0 });
     this.follow();
   }
 
@@ -15,6 +17,7 @@ export default class SourceCode extends React.Component {
   }
 
   follow () {
+    if (this.props.isFinished) { return; }
     let box = React.findDOMNode(this.refs.box);
     let follow = React.findDOMNode(this.refs.follow);
     let cur = React.findDOMNode(this.refs.cur);
@@ -23,7 +26,7 @@ export default class SourceCode extends React.Component {
     TweenMax.to(follow, 0.15, {
       scaleX: rect.width + 5,
       x: rect.left - rectBox.left - 2,
-      y: rect.top - rectBox.top + 23
+      y: rect.top - rectBox.top + 30
     });
   }
 
@@ -67,50 +70,47 @@ export default class SourceCode extends React.Component {
 
     let styleByType = {
       bad: { background: 'rgba(255, 0, 0, 0.3)', color: 'white' },
-      no: {},
+      no: { background: 'rgba(255, 255, 255, 0.1)' },
       cur: { background: 'rgba(255, 255, 255, 0.5)', color: 'black' }
     };
 
-    // split the current word by good/bad/no/cur typed
-    onCursor = (onCursor || '')
-      .split('')
-      .reduce((out, c, i) => {
-        let lastCell = out[out.length - 1];
-        if (i === typedWord.length) {
-          out.push({ type: 'cur', val: c });
-        }
-        else if (i < typedWord.length) {
-          if (typedWord[i] === wordToType[i]) {
-            if (lastCell && lastCell.type === 'no') { lastCell.val += c; }
-            else { out.push({ type: 'no', val: c }); }
-          }
-          else {
-            if (lastCell && lastCell.type === 'bad') { lastCell.val += c; }
-            else { out.push({ type: 'bad', val: c }); }
-          }
-        }
-        else {
-          if (lastCell && lastCell.type === 'no') { lastCell.val += c; }
-          else { out.push({ type: 'no', val: c }); }
-        }
-        return out;
-      }, [])
-      .map((chunk, i) => (
-        <span
-          key={i}
-          style={styleByType[chunk.type]}>
-          {chunk.val}
-        </span>
-      ));
+    onCursor = (onCursor || '');
+    onCursor = [
+      <span style={styleByType.no} key={1}>
+        {onCursor.substr(0, typedWord.length)}
+      </span>,
+      <span style={styleByType.cur} key={2}>
+        {onCursor.substr(typedWord.length, 1)}
+      </span>,
+      <span style={styleByType.no} key={3}>
+        {onCursor.substr(typedWord.length + 1)}
+      </span>
+    ];
+
+    const followStyle = {};
+    let isBad = false;
+
+    if (wordToType) {
+      isBad = typedWord !== wordToType.substr(0, typedWord.length);
+
+      if (isBad) {
+        followStyle.backgroundColor = 'red';
+      }
+    }
 
     afterCursor = afterCursor.join('');
 
     return (
       <div className='SourceCode' ref='box'>
-        <div className='follow' ref='follow' />
+        {!this.props.isFinished && (
+          <div
+            style={followStyle}
+            className='follow'
+            ref='follow' />
+        )}
         <pre>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{beforeCursor}</span>
-          <span ref='cur' style={{ color: 'white' }}>
+          <span ref='cur' style={{ color: isBad ? 'red' : 'white' }}>
             {onCursor}
           </span>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{afterCursor}</span>

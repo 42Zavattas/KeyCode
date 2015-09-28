@@ -59,6 +59,7 @@ class Game extends React.Component {
 
         <SourceCode
           text={this.props.text}
+          isFinished={isFinished}
           currentWordIndex={this.state.currentWordIndex}
           typedWord={this.state.typedWord} />
 
