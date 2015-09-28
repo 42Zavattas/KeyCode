@@ -15,7 +15,7 @@ export default class Html extends React.Component {
           <title>{ pageTitle }</title>
           <meta name='viewport' content='width=device-width, user-scalable=no' />
           {
-            process.env.NODE_ENV === 'production' &&
+            process.env.NODE_ENV === 'prod' &&
             <link rel='stylesheet' href='/public/styles.css' />
           }
         </head>
