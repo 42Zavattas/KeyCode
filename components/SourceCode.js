@@ -6,6 +6,27 @@ export default class SourceCode extends React.Component {
     super(props);
   }
 
+  componentDidMount () {
+    this.follow();
+  }
+
+  componentDidUpdate () {
+    this.follow();
+  }
+
+  follow () {
+    let box = React.findDOMNode(this.refs.box);
+    let follow = React.findDOMNode(this.refs.follow);
+    let cur = React.findDOMNode(this.refs.cur);
+    let rectBox = box.getBoundingClientRect();
+    let rect = cur.getBoundingClientRect();
+    TweenMax.to(follow, 0.15, {
+      scaleX: rect.width + 5,
+      x: rect.left - rectBox.left - 2,
+      y: rect.top - rectBox.top + 23
+    });
+  }
+
   render () {
 
     const { text } = this.props;
@@ -45,9 +66,9 @@ export default class SourceCode extends React.Component {
     let wordToType = text.words[currentWordIndex];
 
     let styleByType = {
-      bad: { background: 'red', color: 'white' },
-      no: { background: 'rgba(255, 255, 255, 0.1)' },
-      cur: { background: 'white', color: 'black' }
+      bad: { background: 'rgba(255, 0, 0, 0.3)', color: 'white' },
+      no: {},
+      cur: { background: 'rgba(255, 255, 255, 0.5)', color: 'black' }
     };
 
     // split the current word by good/bad/no/cur typed
@@ -85,9 +106,14 @@ export default class SourceCode extends React.Component {
     afterCursor = afterCursor.join('');
 
     return (
-      <div className='SourceCode'>
+      <div className='SourceCode' ref='box'>
+        <div className='follow' ref='follow' />
         <pre>
-          {beforeCursor}<span style={{ borderBottom: '1px solid gray'}}>{onCursor}</span>{afterCursor}
+          <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{beforeCursor}</span>
+          <span ref='cur' style={{ color: 'white' }}>
+            {onCursor}
+          </span>
+          <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{afterCursor}</span>
         </pre>
       </div>
     );

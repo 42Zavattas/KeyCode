@@ -1,8 +1,19 @@
 .SourceCode {
+  position: relative;
   pre {
     font-family: 'Source Code Pro', monospace;
     padding: 1em;
+    line-height: 1.5em;
     background: $cdarken;
     color: $clight;
+  }
+  .follow {
+    transform-origin: center left;
+    height: 4px;
+    width: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(white, 0.5);
   }
 }
