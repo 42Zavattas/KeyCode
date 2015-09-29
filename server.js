@@ -6,7 +6,6 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import mongoose from 'mongoose';
 
 import app from './app';
 import config from './config';
@@ -15,26 +14,16 @@ import { createElementWithContext } from 'fluxible-addons-react';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
-mongoose.connect(config.mongo, { db: { safe: true } });
-
 const server = express();
 
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(compression());
 server.use(bodyParser.json());
+server.use('/api', require('./api'));
 
 /**
  * Isomorphic data fetching
  */
-
-import textService from './services/TextService';
-import userService from './services/UserService';
-
-const fetchrPlugin = app.getPlugin('FetchrPlugin');
-fetchrPlugin.registerService(textService);
-fetchrPlugin.registerService(userService);
-
-server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
 
 server.use((req, res, next) => {
 
