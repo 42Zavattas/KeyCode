@@ -2,6 +2,6 @@
 
 export default {
 
-  mongo: 'mongodb://zavatta:danyl@ds055822.mongolab.com:55822/keycode'
+  postgres: 'postgres://opzbsbhu:Zn_SCITPBm9YiEMtHQR_uTVTm6VLSuC0@horton.elephantsql.com:5432/opzbsbhu'
 
 }

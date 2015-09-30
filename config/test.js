@@ -2,6 +2,6 @@
 
 export default {
 
-  mongo: 'mongodb://localhost/keycode-test'
+  postgres: 'postgres://@localhost/keycode-test'
 
 }
