@@ -11,6 +11,7 @@ import Header from './Header';
 
 if (process.env.BROWSER === true) {
   require('gsap');
+  require('gsap/src/minified/plugins/ScrollToPlugin.min.js');
   require('../styles/app.scss');
 }
 

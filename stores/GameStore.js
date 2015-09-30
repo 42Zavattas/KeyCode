@@ -63,7 +63,7 @@ class GameStore extends BaseStore {
       ],
 
       // the text used
-      text: GameStore.buildText('if (id === 5) {\n  console.log(\'yallah\');\n}'),
+      text: GameStore.buildText('server.use(\'/public\', express.static(path.join(__dirname, \'/build\')));\nserver.use(compression());\nserver.use(bodyParser.json());\n\n/**\n * Isomorphic data fetching\n */\n\nimport textService from \'./services/TextService\';\nimport userService from \'./services/UserService\';\n\nconst fetchrPlugin = app.getPlugin(\'FetchrPlugin\');\nfetchrPlugin.registerService(textService);\nfetchrPlugin.registerService(userService);\n\nserver.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());\n'),
 
       // used to show a progress while loading text
       isLoadingText: false

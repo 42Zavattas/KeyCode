@@ -4,6 +4,8 @@ export default class SourceCode extends React.Component {
 
   constructor (props) {
     super(props);
+    this.scrolledY = 0;
+    this.scrolledX = 0;
   }
 
   componentDidMount () {
@@ -18,15 +20,55 @@ export default class SourceCode extends React.Component {
 
   follow () {
     if (this.props.isFinished) { return; }
-    let box = React.findDOMNode(this.refs.box);
-    let follow = React.findDOMNode(this.refs.follow);
+
+    // boxes
+    let box = React.findDOMNode(this);
+    let pre = React.findDOMNode(this.refs.pre);
+
+    // cursor
     let cur = React.findDOMNode(this.refs.cur);
-    let rectBox = box.getBoundingClientRect();
-    let rect = cur.getBoundingClientRect();
-    TweenMax.to(follow, 0.15, {
-      scaleX: rect.width + 5,
-      x: rect.left - rectBox.left - 2,
-      y: rect.top - rectBox.top + 30
+    let letter = React.findDOMNode(this.refs.letter);
+
+    // follower
+    let follow = React.findDOMNode(this.refs.follow);
+
+    // get rectangles
+    let containerRect = box.getBoundingClientRect();
+    let cursorRect = cur.getBoundingClientRect();
+    let letterRect = letter.getBoundingClientRect();
+
+    // create timeline
+    const t = new TimelineMax();
+
+    // calc cursor offset
+    let offsetTop = cursorRect.top - containerRect.top;
+    let offsetLeft = letterRect.left - containerRect.left;
+
+    let scroll = {};
+
+    // vertical scroll
+    if (offsetTop > containerRect.height / 2) {
+      this.scrolledY += offsetTop / 2;
+      scroll.y = this.scrolledY;
+    }
+
+    // horizontal scroll
+    if (offsetLeft > containerRect.width / 2) {
+      this.scrolledX += offsetLeft / 2;
+      scroll.x = this.scrolledX;
+    }
+    if (offsetLeft < 0) {
+      this.scrolledX = 0;
+      scroll.x = this.scrolledX;
+    }
+
+    t.set(pre, { scrollTo: scroll });
+
+    // update follow
+    t.to(follow, 0.15, {
+      scaleX: cursorRect.width + 5,
+      x: cursorRect.left - containerRect.left - 2,
+      y: cursorRect.top - containerRect.top + 30
     });
   }
 
@@ -79,7 +121,7 @@ export default class SourceCode extends React.Component {
       <span style={styleByType.no} key={1}>
         {onCursor.substr(0, typedWord.length)}
       </span>,
-      <span style={styleByType.cur} key={2}>
+      <span style={styleByType.cur} key={2} ref='letter'>
         {onCursor.substr(typedWord.length, 1)}
       </span>,
       <span style={styleByType.no} key={3}>
@@ -101,14 +143,14 @@ export default class SourceCode extends React.Component {
     afterCursor = afterCursor.join('');
 
     return (
-      <div className='SourceCode' ref='box'>
+      <div className='SourceCode'>
         {!this.props.isFinished && (
           <div
             style={followStyle}
             className='follow'
             ref='follow' />
         )}
-        <pre>
+        <pre ref='pre'>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{beforeCursor}</span>
           <span ref='cur' style={{ color: isBad ? 'red' : 'white' }}>
             {onCursor}
