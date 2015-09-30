@@ -10,7 +10,7 @@ export default class SourceCode extends React.Component {
 
   componentDidMount () {
     let follow = React.findDOMNode(this.refs.follow);
-    TweenMax.from(follow, 0.5, { opacity: 0 });
+    TweenMax.to(follow, 0.5, { opacity: 1 });
     this.follow();
   }
 
