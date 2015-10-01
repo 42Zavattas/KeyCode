@@ -29,6 +29,9 @@ body {
   background: $cprimary;
   color: $ctext;
   font-smooth: always;
+  ::selection {
+    background-color: rgba(black, 0.25);
+  }
 }
 
 a {
