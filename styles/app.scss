@@ -4,7 +4,8 @@
 $cdark: #455A64;
 $cdarken: darken($cdark, 20);
 $cprimary: #455A64;
-$caccent: #FF4081;
+$caccent: #009688;
+$cred: #FF5252;
 $ctext: #212121;
 $clight: #CFD8DC;
 $ctext2: #727272;
@@ -27,10 +28,15 @@ body {
   font-family: Coda, sans-serif;
   background: $cprimary;
   color: $ctext;
+  font-smooth: always;
 }
 
 a {
   color: $caccent;
+  text-decoration: none;
+  &:hover {
+    color: lighten($caccent, 3);
+  }
 }
 
 .brand {
@@ -64,6 +70,8 @@ a {
   flex-direction: column;
 
   .View {
+    max-width: 920px;
+    margin: 0 auto;
     padding: 0 1em 1em 1em;
     flex-grow: 1;
   }
@@ -77,3 +85,4 @@ a {
 @import './SourceCode.scss';
 @import './SourceInput.scss';
 @import './GameStats.scss';
+@import './utils.scss';

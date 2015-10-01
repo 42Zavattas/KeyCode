@@ -27,7 +27,6 @@ class Application extends React.Component {
         <div className='View'>
           <Handler context={this.props.context} />
         </div>
-        <Footer />
       </div>
     );
   }

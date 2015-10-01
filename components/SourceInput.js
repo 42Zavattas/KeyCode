@@ -29,6 +29,7 @@ export default class SourceInput extends React.Component {
         <input
           type='text'
           ref='input'
+          placeholder='Type here'
           value={this.props.typedWord}
           onKeyDown={this.handleKeyUp.bind(this)}
           onChange={this.handleChange.bind(this)} />

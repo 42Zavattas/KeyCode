@@ -8,12 +8,6 @@ export default class SourceCode extends React.Component {
     this.scrolledX = 0;
   }
 
-  componentDidMount () {
-    let follow = React.findDOMNode(this.refs.follow);
-    TweenMax.to(follow, 0.5, { opacity: 1 });
-    this.follow();
-  }
-
   componentDidUpdate () {
     this.follow();
   }
@@ -29,8 +23,7 @@ export default class SourceCode extends React.Component {
     let cur = React.findDOMNode(this.refs.cur);
     let letter = React.findDOMNode(this.refs.letter);
 
-    // follower
-    let follow = React.findDOMNode(this.refs.follow);
+    if (!letter) { return; }
 
     // get rectangles
     let containerRect = box.getBoundingClientRect();
@@ -48,13 +41,13 @@ export default class SourceCode extends React.Component {
 
     // vertical scroll
     if (offsetTop > containerRect.height / 2) {
-      this.scrolledY += offsetTop / 2;
+      this.scrolledY += offsetTop / 2 - 20;
       scroll.y = this.scrolledY;
     }
 
     // horizontal scroll
     if (offsetLeft > containerRect.width / 2) {
-      this.scrolledX += offsetLeft / 2;
+      this.scrolledX += offsetLeft / 2 - 20;
       scroll.x = this.scrolledX;
     }
     if (offsetLeft < 0) {
@@ -62,23 +55,19 @@ export default class SourceCode extends React.Component {
       scroll.x = this.scrolledX;
     }
 
-    t.set(pre, { scrollTo: scroll });
+    t.to(pre, 0.25, { scrollTo: scroll });
 
-    // update follow
-    t.to(follow, 0.15, {
-      scaleX: cursorRect.width + 5,
-      x: cursorRect.left - containerRect.left - 2,
-      y: cursorRect.top - containerRect.top + 30
-    });
   }
 
   render () {
 
-    const { text } = this.props;
     const {
+      text,
       typedWord,
       currentWordIndex
     } = this.props;
+
+    let colorRed = '#FF5252';
 
     let beforeCursor = [];
     let afterCursor = [];
@@ -99,7 +88,7 @@ export default class SourceCode extends React.Component {
       else {
         const style = {};
         if (token.bad) {
-          style.color = 'red';
+          style.color = colorRed;
         }
         beforeCursor.push(
           <span key={beforeCursor.length} style={style}>{token.val}</span>
@@ -111,48 +100,41 @@ export default class SourceCode extends React.Component {
     let wordToType = text.words[currentWordIndex];
 
     let styleByType = {
-      bad: { background: 'rgba(255, 0, 0, 0.3)', color: 'white' },
+      bad: { background: 'rgba(255, 255, 255, 0.1)', color: colorRed },
       no: { background: 'rgba(255, 255, 255, 0.1)' },
       cur: { background: 'rgba(255, 255, 255, 0.5)', color: 'black' }
     };
 
-    onCursor = (onCursor || '');
-    onCursor = [
-      <span style={styleByType.no} key={1}>
-        {onCursor.substr(0, typedWord.length)}
-      </span>,
-      <span style={styleByType.cur} key={2} ref='letter'>
-        {onCursor.substr(typedWord.length, 1)}
-      </span>,
-      <span style={styleByType.no} key={3}>
-        {onCursor.substr(typedWord.length + 1)}
-      </span>
-    ];
-
-    const followStyle = {};
-    let isBad = false;
-
-    if (wordToType) {
-      isBad = typedWord !== wordToType.substr(0, typedWord.length);
-
-      if (isBad) {
-        followStyle.backgroundColor = 'red';
-      }
-    }
+    onCursor = (onCursor || '')
+      .split('')
+      .map((letter, i) => {
+        let typedLetter = typedWord[i];
+        if (i === typedWord.length) {
+          return (
+            <span
+              ref='letter'
+              key={i}
+              style={styleByType.cur}>
+              {letter}
+            </span>
+          );
+        }
+        return (
+          <span
+            key={i}
+            style={styleByType[(typedLetter && letter !== typedLetter) ? 'bad' : 'no']}>
+            {letter}
+          </span>
+        );
+      });
 
     afterCursor = afterCursor.join('');
 
     return (
       <div className='SourceCode'>
-        {!this.props.isFinished && (
-          <div
-            style={followStyle}
-            className='follow'
-            ref='follow' />
-        )}
         <pre ref='pre'>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{beforeCursor}</span>
-          <span ref='cur' style={{ color: isBad ? 'red' : 'white' }}>
+          <span ref='cur'>
             {onCursor}
           </span>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{afterCursor}</span>

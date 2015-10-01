@@ -10,8 +10,14 @@
     padding: 1em;
     outline: none;
     border: 2px solid transparent;
+    &:hover {
+      background-color: rgba($caccent, .1);
+    }
     &:focus {
-      border-color: $caccent;
+      background-color: rgba($caccent, .25);
+    }
+    &::placeholder {
+      color: rgba(black, 0.3);
     }
   }
 }

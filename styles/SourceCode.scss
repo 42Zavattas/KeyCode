@@ -15,15 +15,4 @@
       height: 0;
     }
   }
-  .follow {
-    transform-origin: center left;
-    height: 4px;
-    width: 1px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    background: rgba(white, 0.5);
-    border-bottom: 1px solid black;
-  }
 }
