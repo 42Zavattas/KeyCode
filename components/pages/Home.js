@@ -6,7 +6,7 @@ import { NavLink } from 'fluxible-router';
 
 export default class Home extends React.Component {
 
-  render() {
+  render () {
     return (
       <div style={{ padding: '8em' }}>
         Hello.
