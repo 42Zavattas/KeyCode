@@ -5,7 +5,7 @@ export default `
 
     id SERIAL PRIMARY KEY,
 
-    name VARCHAR(42) NOT NULL,
+    name VARCHAR(42),
     email VARCHAR(42) UNIQUE,
 
     lognup VARCHAR(60),

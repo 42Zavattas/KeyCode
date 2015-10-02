@@ -53,7 +53,7 @@ exports.create = (email) => {
         to: _user.email,
         subject: 'Authentication',
         html: [
-          'Hello ' + (_user.name ? user.name : 'Anonymous') + ',<br><br>',
+          'Hello ' + (_user.name ? _user.name : 'Anonymous') + ',<br><br>',
           'To complete your login on <strong>KeyCode</strong>, please follow ',
           '<a href="',
           config.env === 'prod' ? 'http://keycode.sh/api/auth/' : 'http://localhost:3000/api/auth/',

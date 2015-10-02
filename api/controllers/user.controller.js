@@ -15,7 +15,7 @@ exports.getMe = (req, res) => {
 exports.create = (req, res) => {
   UserService.create(req.body.email)
     .then(function () {
-      res.status('200').end();
+      res.status('200').send({ message: 'Email sent.' });
     })
     .catch(function (err) {
       res.status(400).send({ message: err.message });
