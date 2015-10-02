@@ -46,6 +46,9 @@ var webpackConfig = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         BROWSER: JSON.stringify(true)
       }
+    }),
+    new webpack.ProvidePlugin({
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
   devtool: 'eval'

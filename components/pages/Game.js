@@ -50,7 +50,7 @@ class Game extends React.Component {
     this.increment();
   }
 
-  render() {
+  render () {
 
     let isFinished = this.state.currentWordIndex >= this.props.text.words.length;
 
