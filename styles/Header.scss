@@ -25,3 +25,13 @@
   padding: 2em;
   cursor: pointer;
 }
+
+.Logout {
+  color: $clight;
+  cursor: pointer;
+  font-size: 20px;
+  transition: color 250ms ease-in;
+  &:hover {
+    color: darken($clight, 20);
+  }
+}

@@ -8,6 +8,8 @@ export default `
     name VARCHAR(42),
     email VARCHAR(42) UNIQUE,
 
+    gold INTEGER DEFAULT 0,
+
     lognup VARCHAR(60),
     lognupat TIMESTAMPTZ,
 

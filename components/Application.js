@@ -5,6 +5,8 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 
 import ApplicationStore from '../stores/ApplicationStore';
+import AuthStore from '../stores/AuthStore';
+import userLogin from '../actions/userLogin';
 
 import Footer from './Footer';
 import Header from './Header';
@@ -31,6 +33,10 @@ class Application extends React.Component {
     );
   }
 
+  componentDidMount () {
+    this.props.context.executeAction(userLogin);
+  }
+
   componentDidUpdate (prevProps, prevState) {
     const newProps = this.props;
     if (newProps.pageTitle === prevProps.pageTitle) { return; }
@@ -41,9 +47,9 @@ class Application extends React.Component {
 
 export default handleHistory(provideContext(connectToStores(
   Application,
-  [ApplicationStore],
+  [ApplicationStore, AuthStore],
   (context, props) => {
-    var appStore = context.getStore(ApplicationStore);
+    let appStore = context.getStore(ApplicationStore);
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),

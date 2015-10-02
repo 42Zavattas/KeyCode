@@ -3,8 +3,17 @@ import { NavLink } from 'fluxible-router';
 
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import AuthStore from '../stores/AuthStore';
+import userLogout from '../actions/userLogout';
 
 class Header extends React.Component {
+
+  constructor (props) {
+    super(props);
+  }
+
+  logout () {
+    this.props.context.executeAction(userLogout);
+  }
 
   render () {
     return (
@@ -22,12 +31,13 @@ class Header extends React.Component {
           {this.props.isLogged && (
             <div className='f'>
               <div className='GoldEarned p1 f fai'>
-                530
+                {this.props.user.gold}
                 <div className='GoldIcon'></div>
               </div>
               <div className='p1'>
                 <div className='ProfilePic' />
               </div>
+              <i onClick={this.logout.bind(this)} className="Logout f fai fa fa-sign-out p1"></i>
             </div>
           )}
 

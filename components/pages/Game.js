@@ -82,7 +82,7 @@ class Game extends React.Component {
 }
 
 export default connectToStores(Game, [GameStore], (context) => {
-  var gameStore = context.getStore(GameStore);
+  let gameStore = context.getStore(GameStore);
   return {
     players: gameStore.getPlayers(),
     text: gameStore.getText()

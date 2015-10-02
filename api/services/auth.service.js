@@ -19,14 +19,14 @@ exports.auth = (token) => {
   let _user;
 
   return db.oneOrNone('SELECT * FROM users WHERE lognup = $1', token)
-    .then(function (user) {
+    .then(user => {
       if (!token || !user) { throw new Error('No matching user.'); }
-      if (!moment().diff(user.lognupat, 'minutes') < 10) { throw new Error('Token expired.'); }
+      if (moment().diff(user.lognupat, 'minutes') > 10) { throw new Error('Token expired.'); }
       _user = user;
 
       return db.none('UPDATE users SET lognup = null WHERE id = $1', user.id);
     })
-    .then(function () {
+    .then(() => {
       return exports.signToken(_user.id);
     });
 
@@ -38,13 +38,13 @@ exports.auth = (token) => {
 exports.isAuthenticated = () => {
   return compose()
     .use(checkJwt)
-    .use(function (req, res, next) {
+    .use((req, res, next) => {
       UserService.getById(req.user.id)
-        .then(function (user) {
+        .then(user => {
           req.user = user;
           next();
         })
-        .catch(next);
+        .catch(err => { next(err.message); });
     });
 };
 

@@ -12,8 +12,8 @@ import config from '../../config';
 let transporter = nodemailer.createTransport();
 
 exports.getById = (id) => {
-  return db.one('SELECT * FROM users WHERE id = $id', id)
-    .catch(function () {
+  return db.one('SELECT * FROM users WHERE id = $1', id)
+    .catch(err => {
       throw new Error('No such user.');
     });
 };
@@ -27,7 +27,7 @@ exports.create = (email) => {
   let _user;
 
   return db.oneOrNone('SELECT * FROM users WHERE email = $1', email)
-    .then(function (user) {
+    .then(user => {
 
       if (user) { return user; }
 
@@ -35,7 +35,7 @@ exports.create = (email) => {
         INSERT INTO users(email) VALUES ($1) RETURNING email;
       `, email);
     })
-    .then(function (user) {
+    .then(user => {
       if (user.banned) { throw new Error('You are banned from KeyCode.'); }
       if (user.lognupat && moment().diff(user.lognupat, 'minutes') < 10) { throw new Error('You already tried authenticating less than 10 minutes ago.'); }
 
@@ -46,7 +46,7 @@ exports.create = (email) => {
         UPDATE users SET lognup = $1, lognupat = $2 WHERE id = $3;
       `, [_user.token, moment(), _user.id]);
     })
-    .then(function () {
+    .then(() => {
 
       return q.nfcall(transporter.sendMail.bind(transporter), {
         from: 'bgronon@gmail.com',

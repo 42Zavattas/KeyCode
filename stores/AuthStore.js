@@ -9,6 +9,10 @@ export default class AuthStore extends BaseStore {
     return parts.pop().split(';').shift();
   }
 
+  static removeToken () {
+    document.cookie = 'token =; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+  }
+
   constructor (dispatcher) {
     super(dispatcher);
     this._user = null;
@@ -35,29 +39,43 @@ export default class AuthStore extends BaseStore {
   }
 
   handleLogin () {
+
+    let token = AuthStore.getToken();
+    if (!token) { return; }
+
     fetch('/api/users/me', {
       method: 'GET',
-      headers: { Authorization: 'Bearer ' + 'tttt' }
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
     })
+    .then(res => { return res.json(); })
     .then(user => {
-      console.log(user);
+      this._user = user;
+      this._jwt = token;
+      this.emitChange();
     })
-    .catch(err => {
-      console.log(err);
+    .catch(() => {
+      this.handleLogout();
     });
-    this._jwt = jwt;
-    this._user = {};
-    this.emitChange();
+
   }
 
   handleLogout () {
     this._jwt = null;
     this._user = null;
+    AuthStore.removeToken();
     this.emitChange();
   }
 
   getUser () {
     return this._user;
+  }
+
+  getToken () {
+    return this._jwt;
   }
 
   getLognupMessage () {
