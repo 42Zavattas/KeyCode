@@ -15,10 +15,10 @@ export default {
   db,
 
   init: () => {
-    return q.all([
-      db.query(User),
-      db.query(Text)
-    ]);
+    return db.query(User)
+      .then(function () {
+        return db.query(Text);
+      });
   }
 
 }

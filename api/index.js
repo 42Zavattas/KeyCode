@@ -8,4 +8,6 @@ const router = express.Router();
 
 router.post('/users', UserCtrl.create);
 
+router.get('/auth/:token', UserCtrl.auth);
+
 export default router;

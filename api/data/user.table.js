@@ -9,7 +9,7 @@ export default `
     email VARCHAR(42) UNIQUE,
 
     lognup VARCHAR(60),
-    lognupat DATE,
+    lognupat TIMESTAMPTZ,
 
     banned BOOLEAN,
     admin BOOLEAN

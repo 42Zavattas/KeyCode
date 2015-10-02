@@ -9,6 +9,7 @@ const env = process.env.NODE_ENV || 'dev';
 
 export default _.merge({
 
-  env
+  env,
+  secret: process.env.SECRET_KEY
 
 }, require('./' + env));
