@@ -8,9 +8,15 @@ import moment from 'moment';
 
 import { db } from '../data';
 import config from '../../config';
-import AuthService from './auth.service';
 
 let transporter = nodemailer.createTransport();
+
+exports.getById = (id) => {
+  return db.one('SELECT * FROM users WHERE id = $id', id)
+    .catch(function () {
+      throw new Error('No such user.');
+    });
+};
 
 exports.create = (name, email) => {
 
@@ -57,24 +63,6 @@ exports.create = (name, email) => {
         ].join('')
       });
 
-    });
-
-};
-
-exports.auth = (token) => {
-
-  let _user;
-
-  return db.oneOrNone('SELECT * FROM users WHERE lognup = $1', token)
-    .then(function (user) {
-      if (!token || !user) { throw new Error('No matching user.'); }
-      if (!moment().diff(user.lognupat, 'minutes') < 10) { throw new Error('Token expired.'); }
-      _user = user;
-
-      return db.none('UPDATE users SET lognup = null WHERE id = $1', user.id);
-    })
-    .then(function () {
-      return AuthService.signToken(_user.id);
     });
 
 };

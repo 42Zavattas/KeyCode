@@ -1,6 +1,13 @@
 'use strict';
 
-import { UserService } from '../services';
+import { UserService, AuthService } from '../services';
+
+/**
+ * Return me
+ */
+exports.getMe = (req, res) => {
+  res.status(200).send(req.user);
+};
 
 /**
  * Create a new user
@@ -19,7 +26,7 @@ exports.create = (req, res) => {
  * Authenticate using the lognup technology
  */
 exports.auth = (req, res) => {
-  UserService.auth(req.params.token)
+  AuthService.auth(req.params.token)
     .then(function (jwt) {
       res.cookie('token', jwt);
       res.redirect('/');
