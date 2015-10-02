@@ -25,7 +25,7 @@ class Application extends React.Component {
 
     return (
       <div className='App'>
-        <Header />
+        <Header context={this.props.context} />
         <div className='View'>
           <Handler context={this.props.context} />
         </div>
