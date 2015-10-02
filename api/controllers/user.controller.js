@@ -13,7 +13,7 @@ exports.getMe = (req, res) => {
  * Create a new user
  */
 exports.create = (req, res) => {
-  UserService.create(req.body.name, req.body.email)
+  UserService.create(req.body.email)
     .then(function () {
       res.status('200').end();
     })

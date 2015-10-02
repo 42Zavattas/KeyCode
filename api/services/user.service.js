@@ -18,10 +18,10 @@ exports.getById = (id) => {
     });
 };
 
-exports.create = (name, email) => {
+exports.create = (email) => {
 
-  if (!name || !email) {
-    return q.reject(new Error('Missing data'));
+  if (!email || email.length < 4 || !validator.isEmail(email)) {
+    return q.reject(new Error('Invalid email.'));
   }
 
   let _user;
@@ -30,11 +30,10 @@ exports.create = (name, email) => {
     .then(function (user) {
 
       if (user) { return user; }
-      if (!validator.isEmail(email)) { throw new Error('Invalid email.'); }
 
       return db.one(`
-        INSERT INTO users(name, email) VALUES ($1, $2) RETURNING email;
-      `, [name, email]);
+        INSERT INTO users(email) VALUES ($1) RETURNING email;
+      `, email);
     })
     .then(function (user) {
       if (user.banned) { throw new Error('You are banned from KeyCode.'); }
@@ -54,7 +53,7 @@ exports.create = (name, email) => {
         to: _user.email,
         subject: 'Authentication',
         html: [
-          'Hello ' + _user.name + ',<br><br>',
+          'Hello ' + (_user.name ? user.name : 'Anonymous') + ',<br><br>',
           'To complete your login on <strong>KeyCode</strong>, please follow ',
           '<a href="',
           config.env === 'prod' ? 'http://keycode.sh/api/auth/' : 'http://localhost:3000/api/auth/',
