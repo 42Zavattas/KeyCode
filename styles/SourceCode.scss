@@ -3,13 +3,12 @@
   overflow: hidden;
   position: relative;
   pre {
+    max-width: 650px;
     font-family: 'Source Code Pro', monospace;
     padding: 1em;
-    font-size: 20px;
     line-height: 2em;
     background: $cdarken;
     color: $clight;
-    text-shadow: rgba(black, 0.8) 0 1px 0;
     max-height: 450px;
     overflow: auto;
     &::-webkit-scrollbar {

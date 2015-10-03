@@ -2,14 +2,13 @@
   background: rgba(black, 0.2);
   input {
     font-family: 'Source Code Pro', monospace;
-    border: none;
     background: transparent;
     width: 100%;
     display: block;
     color: $clight;
     padding: 1em;
     outline: none;
-    border: 2px solid transparent;
+    border: none;
     &:hover {
       background-color: rgba($caccent, .1);
     }

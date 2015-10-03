@@ -58,7 +58,7 @@ class Header extends React.Component {
 
           {!this.props.isLogged && (
             <NavLink
-              className='ZavButton'
+              className='ZavButton high'
               routeName='login'
               style={{ padding: '0.5em 1em' }}>
               <i
