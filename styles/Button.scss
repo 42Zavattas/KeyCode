@@ -1,0 +1,39 @@
+.ZavButton {
+  cursor: pointer;
+  background: rgba($cdarken1, 0.7);
+  border: 1px solid transparent;
+  color: $cdarken;
+  outline: none;
+  padding: 1em;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  &.high {
+    color: rgba($clight, 0.5);
+  }
+
+  &:hover { background: rgba($cdarken1, 0.8); }
+  &:active  { background: rgba($cdarken1, 0.9); }
+  &:focus  { border-color: rgba($cdarken, 0.4); }
+}
+
+.ZavInput {
+  font-family: 'Source Code Pro', monospace;
+  border: none;
+  display: block;
+  width: 100%;
+  color: rgba($clight, 0.5);
+  background-color: rgba($caccent, .1);
+  padding: 1em;
+  outline: none;
+  &:hover {
+    background-color: rgba($caccent, .1);
+  }
+  &:focus {
+    background-color: rgba($caccent, .25);
+  }
+  &::placeholder {
+    color: rgba(black, 0.3);
+  }
+}

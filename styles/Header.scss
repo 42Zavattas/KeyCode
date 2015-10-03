@@ -1,7 +1,10 @@
 .Header {
+  min-width: 680px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  padding: 1em;
+  margin-bottom: 2em;
 
   .GoldEarned {
     color: $clight;
@@ -19,11 +22,6 @@
     border-radius: 50%;
     background: rgba(black, 0.3);
   }
-}
-
-.Header-item {
-  padding: 2em;
-  cursor: pointer;
 }
 
 .Logout {

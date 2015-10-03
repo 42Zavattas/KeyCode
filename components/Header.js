@@ -19,11 +19,12 @@ class Header extends React.Component {
     return (
       <div className='Header'>
         <div className='f'>
-          <NavLink className='Header-item active' routeName='home'>
+          <NavLink routeName='home' style={{ padding: '1em', marginRight: '1em' }}>
             KeyCode
           </NavLink>
-          <NavLink className='Header-item active' routeName='game'>
-            Game
+          <NavLink className='ZavButton high' routeName='game' style={{ padding: '0.5em 1em' }}>
+            <i className='ion-ios-keypad' style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+           Play
           </NavLink>
         </div>
         <div className='f mla fai'>
@@ -42,8 +43,9 @@ class Header extends React.Component {
           )}
 
           {!this.props.isLogged && (
-            <NavLink routeName='login' className='Header-item'>
-              Login
+            <NavLink className='ZavButton' routeName='login' style={{ padding: '0.5em 1em' }}>
+              <i className='ion-social-github' style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+              Login with GitHub
             </NavLink>
           )}
 

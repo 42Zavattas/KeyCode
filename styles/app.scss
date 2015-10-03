@@ -2,6 +2,8 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
 
 $cdark: #455A64;
+$cdarken2: #374850;
+$cdarken1: darken($cdark, 10);
 $cdarken: darken($cdark, 20);
 $cprimary: #455A64;
 $caccent: #009688;
@@ -37,9 +39,6 @@ body {
 a {
   color: $caccent;
   text-decoration: none;
-  &:hover {
-    color: lighten($caccent, 3);
-  }
 }
 
 .brand {
@@ -74,6 +73,7 @@ a {
 
   .View {
     max-width: 920px;
+    min-width: 680px;
     margin: 0 auto;
     padding: 0 1em 1em 1em;
     flex-grow: 1;
@@ -88,4 +88,5 @@ a {
 @import './SourceCode.scss';
 @import './SourceInput.scss';
 @import './GameStats.scss';
+@import './Button.scss';
 @import './utils.scss';

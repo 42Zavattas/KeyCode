@@ -26,6 +26,7 @@ class Login extends React.Component {
       <div className='Login'>
         <p>Enter your email to login.</p>
         <input
+          className='ZavInput'
           value={this.state.email}
           onChange={this.handleInput.bind(this)}
           onKeyDown={this.handleInput.bind(this)}
