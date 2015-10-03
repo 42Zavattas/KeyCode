@@ -1,4 +1,4 @@
-/* globals document */
+'use strict';
 
 import React from 'react';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
@@ -8,7 +8,6 @@ import ApplicationStore from '../stores/ApplicationStore';
 import AuthStore from '../stores/AuthStore';
 import userLogin from '../actions/userLogin';
 
-import Footer from './Footer';
 import Header from './Header';
 
 if (process.env.BROWSER === true) {
@@ -19,9 +18,19 @@ if (process.env.BROWSER === true) {
 
 class Application extends React.Component {
 
+  componentDidMount () {
+    this.props.context.executeAction(userLogin);
+  }
+
+  componentDidUpdate (prevProps) {
+    const newProps = this.props;
+    if (newProps.pageTitle === prevProps.pageTitle) { return; }
+    document.title = newProps.pageTitle;
+  }
+
   render () {
 
-    var Handler = this.props.currentRoute.get('handler');
+    const Handler = this.props.currentRoute.get('handler');
 
     return (
       <div className='App'>
@@ -33,23 +42,13 @@ class Application extends React.Component {
     );
   }
 
-  componentDidMount () {
-    this.props.context.executeAction(userLogin);
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    const newProps = this.props;
-    if (newProps.pageTitle === prevProps.pageTitle) { return; }
-    document.title = newProps.pageTitle;
-  }
-
 }
 
 export default handleHistory(provideContext(connectToStores(
   Application,
   [ApplicationStore, AuthStore],
-  (context, props) => {
-    let appStore = context.getStore(ApplicationStore);
+  context => {
+    const appStore = context.getStore(ApplicationStore);
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),

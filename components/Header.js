@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import { NavLink } from 'fluxible-router';
 
@@ -19,13 +21,23 @@ class Header extends React.Component {
     return (
       <div className='Header'>
         <div className='f'>
-          <NavLink routeName='home' style={{ padding: '1em', marginRight: '1em' }}>
-            KeyCode
+
+          <NavLink
+            routeName='home'
+            style={{ padding: '1em', marginRight: '1em' }}>
+            {'KeyCode'}
           </NavLink>
-          <NavLink className='ZavButton high' routeName='game' style={{ padding: '0.5em 1em' }}>
-            <i className='ion-ios-keypad' style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
-           Play
+
+          <NavLink
+            className='ZavButton high'
+            routeName='game'
+            style={{ padding: '0.5em 1em' }}>
+            <i
+              className='ion-ios-keypad'
+              style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+            {'Play'}
           </NavLink>
+
         </div>
         <div className='f mla fai'>
 
@@ -38,13 +50,20 @@ class Header extends React.Component {
               <div className='p1'>
                 <div className='ProfilePic' />
               </div>
-              <i onClick={this.logout.bind(this)} className="Logout f fai fa fa-sign-out p1"></i>
+              <i
+                onClick={this.logout.bind(this)}
+                className='Logout f fai fa fa-sign-out p1'></i>
             </div>
           )}
 
           {!this.props.isLogged && (
-            <NavLink className='ZavButton' routeName='login' style={{ padding: '0.5em 1em' }}>
-              <i className='ion-social-github' style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+            <NavLink
+              className='ZavButton'
+              routeName='login'
+              style={{ padding: '0.5em 1em' }}>
+              <i
+                className='ion-social-github'
+                style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
               Login with GitHub
             </NavLink>
           )}
@@ -56,8 +75,8 @@ class Header extends React.Component {
 
 }
 
-export default connectToStores(Header, [AuthStore], (context) => {
-  let authStore = context.getStore(AuthStore);
+export default connectToStores(Header, [AuthStore], context => {
+  const authStore = context.getStore(AuthStore);
   return {
     isLogged: authStore.isLogged(),
     user: authStore.getUser()

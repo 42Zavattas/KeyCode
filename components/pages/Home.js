@@ -1,8 +1,6 @@
-import React from 'react';
+'use strict';
 
-import connectToStores from 'fluxible-addons-react/connectToStores';
-import provideContext from 'fluxible-addons-react/provideContext';
-import { NavLink } from 'fluxible-router';
+import React from 'react';
 
 export default class Home extends React.Component {
 

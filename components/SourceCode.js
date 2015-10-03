@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 
 export default class SourceCode extends React.Component {
@@ -16,28 +18,28 @@ export default class SourceCode extends React.Component {
     if (this.props.isFinished) { return; }
 
     // boxes
-    let box = React.findDOMNode(this);
-    let pre = React.findDOMNode(this.refs.pre);
+    const box = React.findDOMNode(this);
+    const pre = React.findDOMNode(this.refs.pre);
 
     // cursor
-    let cur = React.findDOMNode(this.refs.cur);
-    let letter = React.findDOMNode(this.refs.letter);
+    const cur = React.findDOMNode(this.refs.cur);
+    const letter = React.findDOMNode(this.refs.letter);
 
     if (!letter) { return; }
 
     // get rectangles
-    let containerRect = box.getBoundingClientRect();
-    let cursorRect = cur.getBoundingClientRect();
-    let letterRect = letter.getBoundingClientRect();
+    const containerRect = box.getBoundingClientRect();
+    const cursorRect = cur.getBoundingClientRect();
+    const letterRect = letter.getBoundingClientRect();
 
     // create timeline
     const t = new TimelineMax();
 
     // calc cursor offset
-    let offsetTop = cursorRect.top - containerRect.top;
-    let offsetLeft = letterRect.left - containerRect.left;
+    const offsetTop = cursorRect.top - containerRect.top;
+    const offsetLeft = letterRect.left - containerRect.left;
 
-    let scroll = {};
+    const scroll = {};
 
     // vertical scroll
     if (offsetTop > containerRect.height / 2) {
@@ -67,9 +69,9 @@ export default class SourceCode extends React.Component {
       currentWordIndex
     } = this.props;
 
-    let colorRed = '#FF5252';
+    const colorRed = '#FF5252';
 
-    let beforeCursor = [];
+    const beforeCursor = [];
     let afterCursor = [];
     let onCursor;
 
@@ -84,22 +86,24 @@ export default class SourceCode extends React.Component {
         }
         ++wordIndex;
       }
-      if (onCursor) { afterCursor.push(token.val); }
-      else {
+      if (onCursor) {
+        afterCursor.push(token.val);
+      } else {
         const style = {};
         if (token.bad) {
           style.color = colorRed;
         }
         beforeCursor.push(
-          <span key={beforeCursor.length} style={style}>{token.val}</span>
+          <span
+            key={beforeCursor.length}
+            style={style}>
+            {token.val}
+          </span>
         );
       }
     });
 
-    // get the right word to type
-    let wordToType = text.words[currentWordIndex];
-
-    let styleByType = {
+    const styleByType = {
       bad: { background: 'rgba(255, 255, 255, 0.1)', color: colorRed },
       no: { background: 'rgba(255, 255, 255, 0.1)' },
       cur: { background: 'rgba(255, 255, 255, 0.5)', color: 'black' }
@@ -108,7 +112,7 @@ export default class SourceCode extends React.Component {
     onCursor = (onCursor || '')
       .split('')
       .map((letter, i) => {
-        let typedLetter = typedWord[i];
+        const typedLetter = typedWord[i];
         if (i === typedWord.length) {
           return (
             <span

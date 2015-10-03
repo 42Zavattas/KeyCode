@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 
 import SourceCode from '../SourceCode';
@@ -44,15 +46,15 @@ class Game extends React.Component {
   }
 
   handleValidateWord (typedWord) {
-    let wantedWord = this.props.text.words[this.state.currentWordIndex];
-    let action = (typedWord !== wantedWord) ? typeBadWord : typeGoodWord;
+    const wantedWord = this.props.text.words[this.state.currentWordIndex];
+    const action = (typedWord !== wantedWord) ? typeBadWord : typeGoodWord;
     this.props.context.executeAction(action, this.state.currentWordIndex);
     this.increment();
   }
 
   render () {
 
-    let isFinished = this.state.currentWordIndex >= this.props.text.words.length;
+    const isFinished = this.state.currentWordIndex >= this.props.text.words.length;
 
     return (
       <div className='Game'>
@@ -81,8 +83,8 @@ class Game extends React.Component {
   }
 }
 
-export default connectToStores(Game, [GameStore], (context) => {
-  let gameStore = context.getStore(GameStore);
+export default connectToStores(Game, [GameStore], context => {
+  const gameStore = context.getStore(GameStore);
   return {
     players: gameStore.getPlayers(),
     text: gameStore.getText()

@@ -6,4 +6,4 @@ import TextCtrl from './text.controller';
 export default {
   UserCtrl,
   TextCtrl
-}
+};

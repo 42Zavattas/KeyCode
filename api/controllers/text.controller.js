@@ -1,6 +1,10 @@
 'use strict';
 
-// AMD style, find a way?
-export function create (req, res) {
+/**
+ * @param {Object} req Express request
+ * @param {Object} res Exress result
+ * @returns {Null} nothing
+ */
+exports.create = (req, res) => {
   res.status('200').end();
-}
+};

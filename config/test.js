@@ -4,4 +4,4 @@ export default {
 
   postgres: 'postgres://@localhost/keycode-test'
 
-}
+};

@@ -6,7 +6,7 @@
     "build": "webpack & webpack --config webpack.config.production.js",
     "prod": "npm run build && NODE_ENV=prod npm start",
     "dev": "node webpack-dev-server.js & PORT=3001 nodemon start.js -e js",
-    "lint": "eslint ./{components,stores,actions,api,config}/**/*.js ./*.js",
+    "lint": "eslint ./{components,stores,actions,api,config}/*.js ./{components,stores,actions,api,config}/**/*.js",
     "start": "node start.js"
   },
   "dependencies": {
@@ -45,7 +45,9 @@
     "bundle-loader": "^0.5.0",
     "css-loader": "^0.18.0",
     "eslint": "^1.6.0",
-    "eslint-config-zavatta": "^1.0.0",
+    "eslint-config-zavatta": "^1.1.2",
+    "eslint-config-zavatta-react": "^1.0.0",
+    "eslint-plugin-react": "^3.5.1",
     "exports-loader": "^0.6.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "imports-loader": "^0.6.4",

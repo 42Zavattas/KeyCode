@@ -1,3 +1,10 @@
 {
-  "extends": "zavatta"
+  "extends": [
+    "zavatta",
+    "zavatta-react"
+  ],
+  "globals": {
+    "TweenMax": false,
+    "TimelineMax": false
+  }
 }

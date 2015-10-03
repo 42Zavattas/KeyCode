@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 
 import connectToStores from 'fluxible-addons-react/connectToStores';
@@ -30,7 +32,8 @@ class Login extends React.Component {
           value={this.state.email}
           onChange={this.handleInput.bind(this)}
           onKeyDown={this.handleInput.bind(this)}
-          type='text' placeholder='Email'/>
+          type='text'
+          placeholder='Email'/>
         <p>{this.props.lognupMessage}</p>
       </div>
     );
@@ -38,8 +41,8 @@ class Login extends React.Component {
 
 }
 
-export default connectToStores(Login, [AuthStore], (context) => {
-  let authStore = context.getStore(AuthStore);
+export default connectToStores(Login, [AuthStore], context => {
+  const authStore = context.getStore(AuthStore);
   return {
     isLogged: authStore.isLogged(),
     lognupMessage: authStore.getLognupMessage()

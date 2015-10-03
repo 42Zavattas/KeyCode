@@ -9,16 +9,14 @@ import moment from 'moment';
 import { db } from '../data';
 import config from '../../config';
 
-let transporter = nodemailer.createTransport();
+const transporter = nodemailer.createTransport();
 
-exports.getById = (id) => {
+exports.getById = id => {
   return db.one('SELECT * FROM users WHERE id = $1', id)
-    .catch(err => {
-      throw new Error('No such user.');
-    });
+    .catch(err => { throw err; });
 };
 
-exports.create = (email) => {
+exports.create = email => {
 
   if (!email || email.length < 4 || !validator.isEmail(email)) {
     return q.reject(new Error('Invalid email.'));
@@ -28,7 +26,6 @@ exports.create = (email) => {
 
   return db.oneOrNone('SELECT * FROM users WHERE email = $1', email)
     .then(user => {
-
       if (user) { return user; }
 
       return db.one(`
@@ -52,14 +49,11 @@ exports.create = (email) => {
         from: 'bgronon@gmail.com',
         to: _user.email,
         subject: 'Authentication',
-        html: [
-          'Hello ' + (_user.name ? _user.name : 'Anonymous') + ',<br><br>',
-          'To complete your login on <strong>KeyCode</strong>, please follow ',
-          '<a href="',
-          config.env === 'prod' ? 'http://keycode.sh/api/auth/' : 'http://localhost:3000/api/auth/',
-          _user.token,
-          '">This link</a>.'
-        ].join('')
+        html: `
+          Hello ${_user.name ? _user.name : 'Anonymous'},<br/><br/>
+          To complete your login on <strong>KeyCode</strong>, please follow
+          <a href="${config.env === 'prod' ? 'http://keycode.sh/api/auth/' : 'http://localhost:3000/api/auth/'}${_user.token}">This link</a>.
+        `
       });
 
     });

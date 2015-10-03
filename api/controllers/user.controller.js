@@ -3,18 +3,33 @@
 import { UserService, AuthService } from '../services';
 
 /**
- * Return me
+ * Return the current user
+ *
+ * @param {Object} req Express request
+ * @param {Object} res Exress result
+ * @returns {Object} user
  */
 exports.getMe = (req, res) => {
   res.status(200).send(req.user);
 };
 
+/**
+ * Update the current user
+ *
+ * @param {Object} req Express request
+ * @param {Object} res Exress result
+ * @returns {Null} nothing
+ */
 exports.putMe = (req, res) => {
   res.status(404).send({ message: 'Route under construction.' });
 };
 
 /**
  * Create a new user
+ *
+ * @param {Object} req Express request
+ * @param {Object} res Exress result
+ * @returns {Null} nothing
  */
 exports.create = (req, res) => {
   UserService.create(req.body.email)
@@ -27,7 +42,11 @@ exports.create = (req, res) => {
 };
 
 /**
- * Authenticate using the lognup technology
+ * Authenticate using lognup technology
+ *
+ * @param {Object} req Express request
+ * @param {Object} res Exress result
+ * @returns {Null} nothing
  */
 exports.auth = (req, res) => {
   AuthService.auth(req.params.token)

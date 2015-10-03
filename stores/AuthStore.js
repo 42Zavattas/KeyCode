@@ -1,16 +1,18 @@
+'use strict';
+
 import BaseStore from 'fluxible/addons/BaseStore';
 
 export default class AuthStore extends BaseStore {
 
   static getToken () {
-    let val = '; ' + document.cookie;
-    let parts = val.split('; token=');
+    const val = `; ${document.cookie}`;
+    const parts = val.split('; token=');
     if (parts.length !== 2) { return null; }
     return parts.pop().split(';').shift();
   }
 
   static removeToken () {
-    document.cookie = 'token =; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    document.cookie = 'token =; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
   constructor (dispatcher) {
@@ -40,13 +42,13 @@ export default class AuthStore extends BaseStore {
 
   handleLogin () {
 
-    let token = AuthStore.getToken();
+    const token = AuthStore.getToken();
     if (!token) { return; }
 
     fetch('/api/users/me', {
       method: 'GET',
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json'
       }

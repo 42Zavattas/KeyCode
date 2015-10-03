@@ -1,3 +1,5 @@
+'use strict';
+
 import BaseStore from 'fluxible/addons/BaseStore';
 
 import routesConfig from '../routes';

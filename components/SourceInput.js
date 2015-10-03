@@ -1,18 +1,20 @@
+'use strict';
+
 import React from 'react';
 
 export default class SourceInput extends React.Component {
 
   componentDidMount () {
+
     // focus input at start
     React.findDOMNode(this.refs.input).focus();
   }
 
   handleChange (e) {
-    let val = e.target.value;
+    const val = e.target.value;
     if (val[val.length - 1] === ' ') {
       this.props.onValidate(val.substring(0, val.length - 1));
-    }
-    else {
+    } else {
       this.props.onChange(val);
     }
   }

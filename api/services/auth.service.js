@@ -13,8 +13,10 @@ const checkJwt = expressJwt({ secret: config.secret });
 
 /**
  * Sign a token
+ * @param {String} token The lognup token
+ * @returns {String} jwt
  */
-exports.auth = (token) => {
+exports.auth = token => {
 
   let _user;
 
@@ -34,6 +36,7 @@ exports.auth = (token) => {
 
 /**
  * Middleware to check if a user is authenticated.
+ * @returns {Middleware} mid
  */
 exports.isAuthenticated = () => {
   return compose()
@@ -50,7 +53,9 @@ exports.isAuthenticated = () => {
 
 /**
  * Sign a token for 48 hours.
+ * @param {String} id The userId
+ * @returns {String} token
  */
-exports.signToken = (id) => {
+exports.signToken = id => {
   return jwt.sign({ id }, config.secret, { expiresInMinutes: 60 * 48 });
 };

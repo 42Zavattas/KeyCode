@@ -1,3 +1,5 @@
+'use strict';
+
 import { RouteStore } from 'fluxible-router';
 import routes from '../routes';
 
