@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import GithubButton from '../GithubButton';
-import Loader from '../Loader';
+import { GithubButton, Loader } from '../ui';
 
 export default class Home extends React.Component {
 

@@ -7,7 +7,7 @@ import connectToStores from 'fluxible-addons-react/connectToStores';
 import AuthStore from '../stores/AuthStore';
 import { logout } from '../actions/auth';
 
-import GithubButton from './GithubButton';
+import { GithubButton } from './ui';
 
 class Header extends React.Component {
 

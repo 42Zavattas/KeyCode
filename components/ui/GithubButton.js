@@ -3,8 +3,8 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
 
-import { AuthStore } from '../stores';
-import { login, logout } from '../actions/auth';
+import { AuthStore } from '../../stores';
+import { login, logout } from '../../actions/auth';
 
 class GithubButton extends React.Component {
 
