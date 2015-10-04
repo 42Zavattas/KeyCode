@@ -1,0 +1,12 @@
+.Loader {
+  user-select: none;
+  cursor: default;
+  display: flex;
+  .Loader-letter {
+    width: 20px;
+    text-align: center;
+    color: rgba(black, 0.5);
+    border: 1px solid rgba(black, 0.2);
+    border-bottom-width: 3px;
+  }
+}
