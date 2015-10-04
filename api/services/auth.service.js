@@ -8,7 +8,6 @@ import { Strategy } from 'passport-github';
 
 import UserService from './user.service';
 import config from '../../config';
-import { db } from '../data';
 
 const checkJwt = expressJwt({ secret: config.secret });
 
