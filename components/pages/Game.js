@@ -13,52 +13,33 @@ import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
 
 // actions
-import { beginTest, typeWord } from '../../actions/game';
+import { beginTest, updateWord, typeWord } from '../../actions/game';
 
 class Game extends React.Component {
 
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      currentWordIndex: 0,
-      typedWord: ''
-    };
-  }
-
-  increment () {
-    if (this.state.currentWordIndex === this.props.text.words.length) { return; }
-    this.setState({
-      currentWordIndex: this.state.currentWordIndex + 1,
-      typedWord: ''
-    });
-  }
-
   handleType (val) {
     if (!this.props.isPlaying) {
+
+      // start timer
       this.props.context.executeAction(beginTest);
     }
-    this.setState({
-      typedWord: val
-    });
+
+    // update word
+    this.props.context.executeAction(updateWord, val);
   }
 
-  handleValidateWord (typedWord) {
-    const { currentWordIndex } = this.state;
-    this.props.context.executeAction(typeWord, {
-      wordIndex: currentWordIndex,
-      typedWord
-    });
-    this.increment();
+  handleValidateWord () {
+    this.props.context.executeAction(typeWord);
   }
 
   render () {
 
-    const { currentWordIndex, typedWord } = this.state;
     const {
+      currentWordIndex,
+      typedWord,
       text,
-      players,
       isFinished,
+      typedLetters,
       duration
     } = this.props;
 
@@ -82,8 +63,8 @@ class Game extends React.Component {
         {isFinished && (
           <GameStats
             duration={duration}
-            text={text}
-            players={players} />
+            typedLetters={typedLetters}
+            text={text} />
         )}
 
       </div>
@@ -94,10 +75,12 @@ class Game extends React.Component {
 export default connectToStores(Game, [GameStore], context => {
   const gameStore = context.getStore(GameStore);
   return {
-    players: gameStore.getPlayers(),
     text: gameStore.getText(),
+    currentWordIndex: gameStore.currentWordIndex(),
+    typedWord: gameStore.typedWord(),
     isPlaying: gameStore.isPlaying(),
     isFinished: gameStore.isFinished(),
+    typedLetters: gameStore.typedLetters(),
     duration: gameStore.getDuration()
   };
 });

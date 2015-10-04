@@ -12,15 +12,12 @@ export default class GameStats extends React.Component {
 
     const {
       text,
-      players,
-      duration
+      duration,
+      typedLetters
     } = this.props;
 
-    // for the moment, only 1 player
-    const player = players[0];
-
-    const accuracy = Math.round((player.typedLetters / text.words.join('').length) * 100);
-    const wordsTyped = player.typedLetters / text.averageLettersByWord;
+    const accuracy = Math.round((typedLetters / text.words.join('').length) * 100);
+    const wordsTyped = typedLetters / text.averageLettersByWord;
     const minutes = (duration / 1000 / 60);
     const wpm = Math.ceil((1 / minutes) * wordsTyped);
 

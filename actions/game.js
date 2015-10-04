@@ -2,8 +2,12 @@
 
 import moment from 'moment';
 
-export function typeWord (context, payload) {
-  context.dispatch('TYPE_WORD', payload);
+export function updateWord (context, payload) {
+  context.dispatch('UPDATE_WORD', payload);
+}
+
+export function typeWord (context) {
+  context.dispatch('TYPE_WORD');
 }
 
 export function beginTest (context) {

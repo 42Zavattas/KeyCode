@@ -13,15 +13,15 @@ export default class SourceInput extends React.Component {
   handleChange (e) {
     const val = e.target.value;
     if (val[val.length - 1] === ' ') {
-      this.props.onValidate(val.substring(0, val.length - 1));
+      this.props.onValidate();
     } else {
       this.props.onChange(val);
     }
   }
 
-  handleKeyUp (e) {
+  handleKeyDown (e) {
     if (e.which === 13) {
-      this.props.onValidate(e.target.value);
+      this.props.onValidate();
     }
   }
 
@@ -33,7 +33,7 @@ export default class SourceInput extends React.Component {
           ref='input'
           placeholder='Type here'
           value={this.props.typedWord}
-          onKeyDown={this.handleKeyUp.bind(this)}
+          onKeyDown={this.handleKeyDown.bind(this)}
           onChange={this.handleChange.bind(this)} />
       </div>
     );

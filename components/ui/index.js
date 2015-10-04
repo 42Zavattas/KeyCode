@@ -1,3 +1,5 @@
+'use strict';
+
 import GithubButton from './GithubButton';
 import Loader from './Loader';
 

@@ -12,12 +12,14 @@ class GameStore extends BaseStore {
 
     _.assign(this, {
 
-      // the list of players in the game
-      players: [
+      // number of letter typed
+      _typedLetters: 0,
 
-        // mocked current player
-        { name: 'me', typedWords: 0, typedLetters: 0 }
-      ],
+      // current word index
+      _currentWordIndex: 0,
+
+      // typed word
+      _typedWord: '',
 
       // the text used
       text: Parser.parseText('context\n  .getActionContext()\n  .executeAction(navigateAction, { url: req.url }, (err) => {\n    if (err) {\n      if (err.statusCode && err.statusCode === 404) { next(); }\n      else { next(err); }\n      return;\n    }\n'),
@@ -41,29 +43,31 @@ class GameStore extends BaseStore {
   getPlayers () { return this.players; }
   getText () { return this.text; }
   getDuration () {
-    if (!this._startDate || !this._endDate) {
-      return null;
-    }
+    if (!this._startDate || !this._endDate) { return null; }
     return this._endDate.diff(this._startDate);
   }
+  typedLetters () { return this._typedLetters; }
   isPlaying () { return this._isPlaying; }
   isFinished () { return this._isFinished; }
+  currentWordIndex () { return this._currentWordIndex; }
+  typedWord () { return this._typedWord; }
 
-  handleTypeWord ({ wordIndex, typedWord }) {
+  handleTypeWord () {
     if (!this._startDate) {
       this._startDate = moment();
     }
-    const chunk = this.text.wordsChunks[wordIndex];
-    if (chunk.val !== typedWord) {
+    const chunk = this.text.wordsChunks[this._currentWordIndex];
+    if (chunk.val !== this._typedWord) {
       chunk.bad = true;
     } else {
-      ++this.players[0].typedWords;
-      this.players[0].typedLetters += chunk.val.length;
+      this._typedLetters += chunk.val.length;
     }
-    if (wordIndex >= this.text.words.length - 1) {
+    if (this._currentWordIndex >= this.text.words.length - 1) {
       this._isFinished = true;
       this._endDate = moment();
     }
+    ++this._currentWordIndex;
+    this._typedWord = '';
     this.emitChange();
   }
 
@@ -73,12 +77,18 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleUpdateWord (word) {
+    this._typedWord = word;
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
   BEGIN_TEST: 'handleBeginTest',
+  UPDATE_WORD: 'handleUpdateWord',
   TYPE_WORD: 'handleTypeWord'
 };
 
