@@ -2,11 +2,7 @@
 
 export function login (context) {
   context.dispatch('START_LOGIN');
-  setTimeout(() => {
-    context.dispatch('LOGIN_SUCCESS', {
-      username: 'foo'
-    });
-  }, 1e3);
+  window.location.href = '/api/auth';
 }
 
 export function logout (context) {

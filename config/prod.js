@@ -2,6 +2,8 @@
 
 export default {
 
-  postgres: process.env.POSTGRES_PROD
+  postgres: process.env.POSTGRES_PROD,
+
+  callbackURL: 'http://keycode.sh/api/auth/callback'
 
 };

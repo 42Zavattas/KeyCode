@@ -5,16 +5,16 @@ export default `
 
     id SERIAL PRIMARY KEY,
 
-    name VARCHAR(42),
+    name VARCHAR,
+    avatar VARCHAR,
     email VARCHAR(42) UNIQUE,
 
     gold INTEGER DEFAULT 0,
 
-    lognup VARCHAR(60),
-    lognupat TIMESTAMPTZ,
-
     banned BOOLEAN,
-    admin BOOLEAN
+    admin BOOLEAN,
+
+    githubId INTEGER
 
   );
 `;

@@ -11,6 +11,8 @@ const envConfig = require(`./${env}`);
 export default _.merge({
 
   env,
-  secret: process.env.SECRET_KEY
+  secret: process.env.SECRET_KEY,
+  githubId: process.env.GITHUB_ID,
+  githubSecret: process.env.GITHUB_SECRET
 
 }, envConfig);

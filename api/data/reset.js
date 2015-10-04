@@ -8,9 +8,9 @@ import User from './user.table';
 /**
  * Use at your own risks, will drop the tables and recreate them.
  */
-db.query('DROP TABLE texts')
+db.query('DROP TABLE IF EXISTS texts')
   .then(() => {
-    return db.query('DROP TABLE users');
+    return db.query('DROP TABLE IF EXISTS users');
   })
   .then(() => {
     return db.query(User);
