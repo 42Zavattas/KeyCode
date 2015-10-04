@@ -8,6 +8,7 @@ import ApplicationStore from '../stores/ApplicationStore';
 import AuthStore from '../stores/AuthStore';
 
 import Header from './Header';
+import Footer from './Footer';
 
 if (process.env.BROWSER === true) {
   require('gsap');
@@ -33,6 +34,7 @@ class Application extends React.Component {
         <div className='View'>
           <Handler context={this.props.context} />
         </div>
+        <Footer />
       </div>
     );
   }

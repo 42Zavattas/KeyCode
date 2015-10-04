@@ -38,6 +38,7 @@ body {
 
 a {
   color: $caccent;
+  font-weight: bold;
   text-decoration: none;
 }
 
@@ -72,9 +73,7 @@ a {
   flex-direction: column;
 
   .View {
-    max-width: 920px;
     min-width: 680px;
-    margin: 0 auto;
     padding: 0 1em 1em 1em;
     flex-grow: 1;
   }
