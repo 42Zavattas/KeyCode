@@ -41,7 +41,13 @@ export default class Parser {
       });
     }
 
+    // some stats
+    const nbLetters = words.reduce((t, w) => t + w.length, 0);
+    const averageLettersByWord = nbLetters / words.length;
+
     return {
+      nbLetters,
+      averageLettersByWord,
       chunks,
       wordsChunks: chunks.filter(c => c.type === 'word'),
       words

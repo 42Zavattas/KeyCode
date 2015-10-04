@@ -3,6 +3,7 @@
 import BaseStore from 'fluxible/addons/BaseStore';
 import Parser from '../utils/Parser';
 import _ from 'lodash';
+import moment from 'moment';
 
 class GameStore extends BaseStore {
 
@@ -19,32 +20,56 @@ class GameStore extends BaseStore {
       ],
 
       // the text used
-      text: Parser.parseText('if (a === b) {\n  alert();\n}'),
+      text: Parser.parseText('context\n  .getActionContext()\n  .executeAction(navigateAction, { url: req.url }, (err) => {\n    if (err) {\n      if (err.statusCode && err.statusCode === 404) { next(); }\n      else { next(err); }\n      return;\n    }\n'),
 
       // used to show a progress while loading text
-      isLoadingText: false
+      isLoadingText: false,
+
+      // used to see if a test is in progress
+      _isPlaying: false,
+
+      // used to see if test is finished
+      _isFinished: false,
+
+      // begin/end timestamps
+      _startDate: null,
+      _endDate: null
 
     });
   }
 
   getPlayers () { return this.players; }
   getText () { return this.text; }
+  getDuration () {
+    if (!this._startDate || !this._endDate) {
+      return null;
+    }
+    return this._endDate.diff(this._startDate);
+  }
+  isPlaying () { return this._isPlaying; }
+  isFinished () { return this._isFinished; }
 
-  handleAddUserToGame (player) {
-    this.players.push(player);
+  handleTypeWord ({ wordIndex, typedWord }) {
+    if (!this._startDate) {
+      this._startDate = moment();
+    }
+    const chunk = this.text.wordsChunks[wordIndex];
+    if (chunk.val !== typedWord) {
+      chunk.bad = true;
+    } else {
+      ++this.players[0].typedWords;
+      this.players[0].typedLetters += chunk.val.length;
+    }
+    if (wordIndex >= this.text.words.length - 1) {
+      this._isFinished = true;
+      this._endDate = moment();
+    }
     this.emitChange();
   }
 
-  handleTypeBadWord (wordIndex) {
-    const chunk = this.text.wordsChunks[wordIndex];
-    chunk.bad = true;
-    this.emitChange();
-  }
-
-  handleTypeGoodWord (wordIndex) {
-    const chunk = this.text.wordsChunks[wordIndex];
-    ++this.players[0].typedWords;
-    this.players[0].typedLetters += chunk.val.length;
+  handleBeginTest (momentDate) {
+    this._isPlaying = true;
+    this._startDate = momentDate;
     this.emitChange();
   }
 
@@ -53,9 +78,8 @@ class GameStore extends BaseStore {
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
-  USER_JOIN_GAME: 'handleAddUserToGame',
-  TYPE_BAD_WORD: 'handleTypeBadWord',
-  TYPE_GOOD_WORD: 'handleTypeGoodWord'
+  BEGIN_TEST: 'handleBeginTest',
+  TYPE_WORD: 'handleTypeWord'
 };
 
 export default GameStore;

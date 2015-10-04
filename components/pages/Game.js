@@ -13,8 +13,7 @@ import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
 
 // actions
-import typeBadWord from '../../actions/typeBadWord';
-import typeGoodWord from '../../actions/typeGoodWord';
+import { beginTest, typeWord } from '../../actions/game';
 
 class Game extends React.Component {
 
@@ -36,23 +35,32 @@ class Game extends React.Component {
   }
 
   handleType (val) {
+    if (!this.props.isPlaying) {
+      this.props.context.executeAction(beginTest);
+    }
     this.setState({
       typedWord: val
     });
   }
 
   handleValidateWord (typedWord) {
-    const wantedWord = this.props.text.words[this.state.currentWordIndex];
-    const action = (typedWord !== wantedWord) ? typeBadWord : typeGoodWord;
-    this.props.context.executeAction(action, this.state.currentWordIndex);
+    const { currentWordIndex } = this.state;
+    this.props.context.executeAction(typeWord, {
+      wordIndex: currentWordIndex,
+      typedWord
+    });
     this.increment();
   }
 
   render () {
 
     const { currentWordIndex, typedWord } = this.state;
-    const { text, players } = this.props;
-    const isFinished = currentWordIndex >= text.words.length;
+    const {
+      text,
+      players,
+      isFinished,
+      duration
+    } = this.props;
 
     return (
       <div className='Game'>
@@ -73,6 +81,7 @@ class Game extends React.Component {
 
         {isFinished && (
           <GameStats
+            duration={duration}
             text={text}
             players={players} />
         )}
@@ -86,6 +95,9 @@ export default connectToStores(Game, [GameStore], context => {
   const gameStore = context.getStore(GameStore);
   return {
     players: gameStore.getPlayers(),
-    text: gameStore.getText()
+    text: gameStore.getText(),
+    isPlaying: gameStore.isPlaying(),
+    isFinished: gameStore.isFinished(),
+    duration: gameStore.getDuration()
   };
 });
