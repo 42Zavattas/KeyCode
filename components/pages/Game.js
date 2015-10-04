@@ -1,14 +1,18 @@
 'use strict';
 
+// modules
 import React from 'react';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 
+// stores
+import GameStore from '../../stores/GameStore';
+
+// components
 import SourceCode from '../SourceCode';
 import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
 
-import connectToStores from 'fluxible-addons-react/connectToStores';
-import GameStore from '../../stores/GameStore';
-
+// actions
 import typeBadWord from '../../actions/typeBadWord';
 import typeGoodWord from '../../actions/typeGoodWord';
 
@@ -21,14 +25,6 @@ class Game extends React.Component {
       currentWordIndex: 0,
       typedWord: ''
     };
-  }
-
-  decrement () {
-    if (this.state.currentWordIndex === 0) { return; }
-    this.setState({
-      currentWordIndex: this.state.currentWordIndex - 1,
-      typedWord: ''
-    });
   }
 
   increment () {
@@ -54,28 +50,31 @@ class Game extends React.Component {
 
   render () {
 
-    const isFinished = this.state.currentWordIndex >= this.props.text.words.length;
+    const { currentWordIndex, typedWord } = this.state;
+    const { text, players } = this.props;
+    const isFinished = currentWordIndex >= text.words.length;
 
     return (
       <div className='Game'>
 
-        <SourceCode
-          text={this.props.text}
-          isFinished={isFinished}
-          currentWordIndex={this.state.currentWordIndex}
-          typedWord={this.state.typedWord} />
-
         {!isFinished && (
-          <SourceInput
-            typedWord={this.state.typedWord}
-            onChange={this.handleType.bind(this)}
-            onValidate={this.handleValidateWord.bind(this)} />
+          <div>
+            <SourceCode
+              text={text}
+              isFinished={isFinished}
+              currentWordIndex={currentWordIndex}
+              typedWord={typedWord} />
+            <SourceInput
+              typedWord={typedWord}
+              onChange={this.handleType.bind(this)}
+              onValidate={this.handleValidateWord.bind(this)} />
+          </div>
         )}
 
         {isFinished && (
           <GameStats
-            text={this.props.text}
-            players={this.props.players} />
+            text={text}
+            players={players} />
         )}
 
       </div>
