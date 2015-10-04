@@ -20,6 +20,11 @@ export default class AuthStore extends BaseStore {
     this._user = null;
     this._jwt = null;
     this._lognupMessage = null;
+    this._isLogging = false;
+  }
+
+  isLogging () {
+    return this._isLogging;
   }
 
   handleLognup (email) {
@@ -40,8 +45,18 @@ export default class AuthStore extends BaseStore {
 
   }
 
-  handleLogin () {
+  handleStartLogin () {
+    this._isLogging = true;
+    this.emitChange();
+  }
 
+  handleLogin (user) {
+
+    this._isLogging = false;
+    this._user = user;
+    this.emitChange();
+
+    /*
     const token = AuthStore.getToken();
     if (!token) { return; }
 
@@ -59,13 +74,16 @@ export default class AuthStore extends BaseStore {
       this._jwt = token;
       this.emitChange();
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err);
+      this._isLogging = false;
       this.handleLogout();
-    });
+    });*/
 
   }
 
   handleLogout () {
+    this._isLogged = false;
     this._jwt = null;
     this._user = null;
     AuthStore.removeToken();
@@ -93,6 +111,9 @@ export default class AuthStore extends BaseStore {
 AuthStore.storeName = 'AuthStore';
 
 AuthStore.handlers = {
+  START_LOGIN: 'handleStartLogin',
+  LOGIN_SUCCESS: 'handleLogin',
+  LOGOUT: 'handleLogout',
   USER_LOGNUP: 'handleLognup',
   USER_LOGIN: 'handleLogin',
   USER_LOGOUT: 'handleLogout'

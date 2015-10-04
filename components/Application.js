@@ -6,7 +6,6 @@ import { handleHistory } from 'fluxible-router';
 
 import ApplicationStore from '../stores/ApplicationStore';
 import AuthStore from '../stores/AuthStore';
-import userLogin from '../actions/userLogin';
 
 import Header from './Header';
 
@@ -17,10 +16,6 @@ if (process.env.BROWSER === true) {
 }
 
 class Application extends React.Component {
-
-  componentDidMount () {
-    this.props.context.executeAction(userLogin);
-  }
 
   componentDidUpdate (prevProps) {
     const newProps = this.props;
