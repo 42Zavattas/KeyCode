@@ -6,5 +6,5 @@ export function login (context) {
 }
 
 export function logout (context) {
-  context.dispatch('LOGOUT');
+  context.dispatch('USER_LOGOUT');
 }

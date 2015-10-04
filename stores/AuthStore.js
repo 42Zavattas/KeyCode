@@ -23,71 +23,26 @@ export default class AuthStore extends BaseStore {
     this._isLogging = false;
   }
 
-  isLogging () {
-    return this._isLogging;
-  }
-
-  handleLognup (email) {
-
-    fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
-    })
-    .then(res => { return res.json(); })
-    .then(data => {
-      this._lognupMessage = data.message;
-      this.emitChange();
-    });
-
-  }
-
   handleStartLogin () {
     this._isLogging = true;
     this.emitChange();
   }
 
   handleLogin (user) {
-
     this._isLogging = false;
     this._user = user;
     this.emitChange();
-
-    /*
-    const token = AuthStore.getToken();
-    if (!token) { return; }
-
-    fetch('/api/users/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => { return res.json(); })
-    .then(user => {
-      this._user = user;
-      this._jwt = token;
-      this.emitChange();
-    })
-    .catch(err => {
-      console.log(err);
-      this._isLogging = false;
-      this.handleLogout();
-    });*/
-
   }
 
   handleLogout () {
-    this._isLogged = false;
     this._jwt = null;
     this._user = null;
     AuthStore.removeToken();
     this.emitChange();
+  }
+
+  isLogging () {
+    return this._isLogging;
   }
 
   getUser () {
@@ -112,9 +67,5 @@ AuthStore.storeName = 'AuthStore';
 
 AuthStore.handlers = {
   START_LOGIN: 'handleStartLogin',
-  LOGIN_SUCCESS: 'handleLogin',
-  LOGOUT: 'handleLogout',
-  USER_LOGNUP: 'handleLognup',
-  USER_LOGIN: 'handleLogin',
   USER_LOGOUT: 'handleLogout'
 };

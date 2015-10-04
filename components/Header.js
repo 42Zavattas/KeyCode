@@ -5,7 +5,7 @@ import { NavLink } from 'fluxible-router';
 
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import AuthStore from '../stores/AuthStore';
-import userLogout from '../actions/userLogout';
+import { logout } from '../actions/auth';
 
 import GithubButton from './GithubButton';
 
@@ -16,7 +16,7 @@ class Header extends React.Component {
   }
 
   logout () {
-    this.props.context.executeAction(userLogout);
+    this.props.context.executeAction(logout);
   }
 
   render () {

@@ -8,13 +8,6 @@ export default {
     title: 'Home',
     handler: require('./components/pages/Home')
   },
-  login: {
-    path: '/login',
-    method: 'get',
-    page: 'login',
-    title: 'Login',
-    handler: require('./components/pages/Login')
-  },
   game: {
     path: '/game',
     method: 'get',
