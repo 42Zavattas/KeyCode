@@ -1,6 +1,7 @@
+'use strict';
+
 import React from 'react';
 import path from 'path';
-import debugLib from 'debug';
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
@@ -13,7 +14,6 @@ import HtmlComponent from './components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
 
 const htmlComponent = React.createFactory(HtmlComponent);
-
 const server = express();
 
 server.use('/public', express.static(path.join(__dirname, '/build')));
@@ -27,19 +27,17 @@ server.use('/api', require('./api'));
 
 server.use((req, res, next) => {
 
-  let context = app.createContext();
+  const context = app.createContext();
 
   context
     .getActionContext()
-    .executeAction(navigateAction, { url: req.url }, (err) => {
+    .executeAction(navigateAction, { url: req.url }, err => {
       if (err) {
-        if (err.statusCode && err.statusCode === 404) { next(); }
-        else { next(err); }
-        return;
+        if (err.statusCode && err.statusCode === 404) { return next(); }
+        return next(err);
       }
 
-      const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
-
+      const exposed = `window.App=${serialize(app.dehydrate(context))};`;
       const html = React.renderToStaticMarkup(htmlComponent({
         clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
         context: context.getComponentContext(),
@@ -48,7 +46,7 @@ server.use((req, res, next) => {
       }));
 
       res.type('html');
-      res.write('<!DOCTYPE html>' + html);
+      res.write(`<!DOCTYPE html>${html}`);
       res.end();
 
     });
@@ -57,6 +55,11 @@ server.use((req, res, next) => {
 const port = process.env.PORT || 3000;
 
 server.listen(port);
-console.log('Application listening on port ' + port);
+
+/* eslint-disable no-console */
+
+console.log(`Application listening on port ${port}`);
+
+/* eslint-enable no-console */
 
 export default server;
