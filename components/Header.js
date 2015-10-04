@@ -45,10 +45,12 @@ class Header extends React.Component {
 
           {this.props.isLogged && (
             <div className='f fai'>
-              <div className='ProfilePic' style={{
-                backgroundImage: 'url(https://avatars2.githubusercontent.com/u/6033345?v=3&s=400)',
-                backgroundSize: '100%'
-              }} />
+              <div
+                className='ProfilePic'
+                style={{
+                  backgroundImage: 'url(https://avatars2.githubusercontent.com/u/6033345?v=3&s=400)',
+                  backgroundSize: '100%'
+                }} />
             </div>
           )}
 
