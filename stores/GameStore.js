@@ -66,6 +66,7 @@ class GameStore extends BaseStore {
     const wordsTyped = this._typedLetters / this.text.averageLettersByWord;
     const duration = this.getDuration();
     const minutes = (duration / 1000 / 60);
+    if (!minutes) { return; }
     let wpm = (1 / minutes) * wordsTyped;
     wpm = Math.ceil(wpm * (accuracy / 100));
 
@@ -80,6 +81,7 @@ class GameStore extends BaseStore {
       this._startDate = moment();
     }
     const chunk = this.text.wordsChunks[this._currentWordIndex];
+    if (!chunk) { return; }
     if (chunk.val !== this._typedWord) {
       chunk.bad = true;
     } else {
