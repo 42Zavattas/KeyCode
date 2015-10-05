@@ -12,6 +12,12 @@ class GameStore extends BaseStore {
 
     _.assign(this, {
 
+      // stats on the current game
+      _stats: {
+        wpm: 0,
+        accuracy: 0
+      },
+
       // number of letter typed
       _typedLetters: 0,
 
@@ -37,17 +43,16 @@ class GameStore extends BaseStore {
       _isFocused: false,
 
       // begin/end timestamps
-      _startDate: null,
-      _endDate: null
+      _startDate: null
 
     });
   }
 
-  getPlayers () { return this.players; }
+  getStats () { return this._stats; }
   getText () { return this.text; }
   getDuration () {
-    if (!this._startDate || !this._endDate) { return null; }
-    return this._endDate.diff(this._startDate);
+    if (!this._startDate) { throw new Error('Nope !'); }
+    return moment().diff(this._startDate);
   }
   typedLetters () { return this._typedLetters; }
   isPlaying () { return this._isPlaying; }
@@ -55,6 +60,19 @@ class GameStore extends BaseStore {
   currentWordIndex () { return this._currentWordIndex; }
   typedWord () { return this._typedWord; }
   isFocused () { return this._isFocused; }
+
+  calcStats () {
+    const accuracy = Math.round((this._typedLetters / this.text.words.join('').length) * 100);
+    const wordsTyped = this._typedLetters / this.text.averageLettersByWord;
+    const duration = this.getDuration();
+    const minutes = (duration / 1000 / 60);
+    const wpm = Math.ceil((1 / minutes) * wordsTyped);
+
+    _.assign(this._stats, {
+      accuracy,
+      wpm
+    });
+  }
 
   handleTypeWord () {
     if (!this._startDate) {
@@ -72,6 +90,7 @@ class GameStore extends BaseStore {
     }
     ++this._currentWordIndex;
     this._typedWord = '';
+    this.calcStats();
     this.emitChange();
   }
 

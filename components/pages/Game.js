@@ -41,12 +41,11 @@ class Game extends React.Component {
   render () {
 
     const {
+      stats,
       currentWordIndex,
       typedWord,
       text,
       isFinished,
-      typedLetters,
-      duration
     } = this.props;
 
     return (
@@ -54,6 +53,7 @@ class Game extends React.Component {
 
         {!isFinished && (
           <div>
+
             <SourceCode
               context={this.props.context}
               isFocused={this.props.isFocused}
@@ -61,21 +61,23 @@ class Game extends React.Component {
               isFinished={isFinished}
               currentWordIndex={currentWordIndex}
               typedWord={typedWord} />
+
             <SourceInput
               isFocused={this.props.isFocused}
               context={this.props.context}
               typedWord={typedWord}
               onChange={this.handleType.bind(this)}
               onValidate={this.handleValidateWord.bind(this)} />
+
           </div>
         )}
 
         {isFinished && (
           <GameStats
-            duration={duration}
-            typedLetters={typedLetters}
-            text={text} />
+            stats={stats} />
         )}
+
+        {`accuracy ${stats.accuracy}    wpm ${stats.wpm}`}
 
       </div>
     );
@@ -85,13 +87,12 @@ class Game extends React.Component {
 export default connectToStores(Game, [GameStore], context => {
   const gameStore = context.getStore(GameStore);
   return {
+    stats: gameStore.getStats(),
     text: gameStore.getText(),
     currentWordIndex: gameStore.currentWordIndex(),
     typedWord: gameStore.typedWord(),
     isPlaying: gameStore.isPlaying(),
     isFinished: gameStore.isFinished(),
-    typedLetters: gameStore.typedLetters(),
-    isFocused: gameStore.isFocused(),
-    duration: gameStore.getDuration()
+    isFocused: gameStore.isFocused()
   };
 });
