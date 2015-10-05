@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { Pie } from './ui';
+
 export default class GameStats extends React.Component {
 
   constructor (props) {
@@ -16,7 +18,8 @@ export default class GameStats extends React.Component {
 
     return (
       <div className='GameStats'>
-        accuracy: {stats.accuracy}%<br />
+        accuracy:
+        <Pie percent={stats.accuracy} />
         wpm: {stats.wpm}
       </div>
     );
