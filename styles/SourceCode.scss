@@ -1,4 +1,7 @@
 .SourceCode {
+  transition: 0.15s linear opacity;
+  user-select: none;
+  cursor: default;
   width: 100%;
   overflow: hidden;
   position: relative;

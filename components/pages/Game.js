@@ -13,9 +13,15 @@ import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
 
 // actions
-import { beginTest, updateWord, typeWord } from '../../actions/game';
+import { beginTest, updateWord, typeWord, setFocus } from '../../actions/game';
 
 class Game extends React.Component {
+
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.context.executeAction(setFocus, true);
+    });
+  }
 
   handleType (val) {
     if (!this.props.isPlaying) {
@@ -49,11 +55,15 @@ class Game extends React.Component {
         {!isFinished && (
           <div>
             <SourceCode
+              context={this.props.context}
+              isFocused={this.props.isFocused}
               text={text}
               isFinished={isFinished}
               currentWordIndex={currentWordIndex}
               typedWord={typedWord} />
             <SourceInput
+              isFocused={this.props.isFocused}
+              context={this.props.context}
               typedWord={typedWord}
               onChange={this.handleType.bind(this)}
               onValidate={this.handleValidateWord.bind(this)} />
@@ -81,6 +91,7 @@ export default connectToStores(Game, [GameStore], context => {
     isPlaying: gameStore.isPlaying(),
     isFinished: gameStore.isFinished(),
     typedLetters: gameStore.typedLetters(),
+    isFocused: gameStore.isFocused(),
     duration: gameStore.getDuration()
   };
 });

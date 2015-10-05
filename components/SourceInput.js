@@ -2,12 +2,15 @@
 
 import React from 'react';
 
+import { setFocus } from '../actions/game';
+
 export default class SourceInput extends React.Component {
 
-  componentDidMount () {
-
-    // focus input at start
-    React.findDOMNode(this.refs.input).focus();
+  componentDidUpdate () {
+    const input = React.findDOMNode(this.refs.input);
+    if (this.props.isFocused && input !== document.activeElement) {
+      input.focus();
+    }
   }
 
   handleChange (e) {
@@ -25,6 +28,15 @@ export default class SourceInput extends React.Component {
     }
   }
 
+  handleBlur () {
+    this.props.context.executeAction(setFocus, false);
+  }
+
+  handleFocus () {
+    if (this.props.isFocused) { return; }
+    this.props.context.executeAction(setFocus, true);
+  }
+
   render () {
     return (
       <div className='SourceInput'>
@@ -33,6 +45,8 @@ export default class SourceInput extends React.Component {
           ref='input'
           placeholder='Type here'
           value={this.props.typedWord}
+          onFocus={this.handleFocus.bind(this)}
+          onBlur={this.handleBlur.bind(this)}
           onKeyDown={this.handleKeyDown.bind(this)}
           onChange={this.handleChange.bind(this)} />
       </div>

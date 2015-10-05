@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { setFocus } from '../actions/game';
+
 export default class SourceCode extends React.Component {
 
   constructor (props) {
@@ -61,11 +63,16 @@ export default class SourceCode extends React.Component {
 
   }
 
+  handleClick () {
+    this.props.context.executeAction(setFocus, true);
+  }
+
   render () {
 
     const {
       text,
       typedWord,
+      isFocused,
       currentWordIndex
     } = this.props;
 
@@ -118,7 +125,7 @@ export default class SourceCode extends React.Component {
             <span
               ref='letter'
               key={i}
-              style={styleByType.cur}>
+              style={isFocused ? styleByType.cur : styleByType.no}>
               {letter}
             </span>
           );
@@ -146,7 +153,10 @@ export default class SourceCode extends React.Component {
     afterCursor = afterCursor.join('');
 
     return (
-      <div className='SourceCode'>
+      <div
+        style={{ opacity: isFocused ? 1 : 0.8 }}
+        className='SourceCode'
+        onClick={this.handleClick.bind(this)}>
         <pre ref='pre'>
           <span style={{ color: 'rgba(255, 255, 255, 0.6)' }}>{beforeCursor}</span>
           <span ref='cur'>

@@ -33,6 +33,9 @@ class GameStore extends BaseStore {
       // used to see if test is finished
       _isFinished: false,
 
+      // input is focused ?
+      _isFocused: false,
+
       // begin/end timestamps
       _startDate: null,
       _endDate: null
@@ -51,6 +54,7 @@ class GameStore extends BaseStore {
   isFinished () { return this._isFinished; }
   currentWordIndex () { return this._currentWordIndex; }
   typedWord () { return this._typedWord; }
+  isFocused () { return this._isFocused; }
 
   handleTypeWord () {
     if (!this._startDate) {
@@ -82,11 +86,17 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleSetFocus (isFocused) {
+    this._isFocused = isFocused;
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  INPUT_SET_FOCUS: 'handleSetFocus',
   BEGIN_TEST: 'handleBeginTest',
   UPDATE_WORD: 'handleUpdateWord',
   TYPE_WORD: 'handleTypeWord'

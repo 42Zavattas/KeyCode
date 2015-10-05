@@ -13,3 +13,7 @@ export function typeWord (context) {
 export function beginTest (context) {
   context.dispatch('BEGIN_TEST', moment());
 }
+
+export function setFocus (context, payload) {
+  context.dispatch('INPUT_SET_FOCUS', payload);
+}
