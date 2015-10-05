@@ -66,7 +66,8 @@ class GameStore extends BaseStore {
     const wordsTyped = this._typedLetters / this.text.averageLettersByWord;
     const duration = this.getDuration();
     const minutes = (duration / 1000 / 60);
-    const wpm = Math.ceil((1 / minutes) * wordsTyped);
+    let wpm = (1 / minutes) * wordsTyped;
+    wpm = Math.ceil(wpm * (accuracy / 100));
 
     _.assign(this._stats, {
       accuracy,
