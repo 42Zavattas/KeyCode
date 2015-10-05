@@ -112,6 +112,7 @@ export default class SourceCode extends React.Component {
 
     const styleByType = {
       bad: { background: 'rgba(255, 255, 255, 0.1)', color: colorRed },
+      badHigh: { background: colorRed },
       no: { background: 'rgba(255, 255, 255, 0.1)' },
       cur: { background: 'rgba(255, 255, 255, 0.5)', color: 'black' }
     };
@@ -143,7 +144,7 @@ export default class SourceCode extends React.Component {
       onCursor.push(
         <span
           key={typedWord.length}
-          style={styleByType.cur}>
+          style={typedWord === wantedWord ? styleByType.cur : styleByType.badHigh}>
           {' '}
         </span>
       );
