@@ -1,2 +1,52 @@
 .Game {
 }
+
+.GameStats {
+  color: $clight;
+  font-size: 4em;
+}
+
+.SourceInput {
+  background: rgba(black, 0.2);
+  input {
+    font-family: 'Source Code Pro', monospace;
+    background: transparent;
+    width: 100%;
+    display: block;
+    color: $clight;
+    padding: 1em;
+    outline: none;
+    border: none;
+    &:hover {
+      background-color: rgba($caccent, .1);
+    }
+    &:focus {
+      background-color: rgba($caccent, .25);
+    }
+    &::placeholder {
+      color: rgba(black, 0.3);
+    }
+  }
+}
+
+.SourceCode {
+  transition: 0.15s linear opacity;
+  user-select: none;
+  cursor: default;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  pre {
+    max-width: 100%;
+    font-family: 'Source Code Pro', monospace;
+    padding: 1em;
+    line-height: 2em;
+    background: $cdarken;
+    color: $clight;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+  }
+}
