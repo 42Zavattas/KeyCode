@@ -70,7 +70,7 @@ export default class SourceCode extends React.Component {
     } = this.props;
 
     const colorRed = '#FF5252';
-
+    const wantedWord = text.words[currentWordIndex];
     const beforeCursor = [];
     let afterCursor = [];
     let onCursor;
@@ -131,6 +131,17 @@ export default class SourceCode extends React.Component {
           </span>
         );
       });
+
+    if (typedWord.length >= wantedWord.length) {
+      onCursor.push(
+        <span
+          key={typedWord.length}
+          style={styleByType.cur}>
+          {' '}
+        </span>
+      );
+      if (afterCursor[0] === ' ') { afterCursor[0] = afterCursor[0].substr(1); }
+    }
 
     afterCursor = afterCursor.join('');
 
