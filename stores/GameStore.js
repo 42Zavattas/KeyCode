@@ -9,7 +9,10 @@ class GameStore extends BaseStore {
 
   constructor (dispatcher) {
     super(dispatcher);
+    this.init();
+  }
 
+  init () {
     _.assign(this, {
 
       // stats on the current game
@@ -113,11 +116,17 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleReset () {
+    this.init();
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  RESET_GAME: 'handleReset',
   INPUT_SET_FOCUS: 'handleSetFocus',
   BEGIN_TEST: 'handleBeginTest',
   UPDATE_WORD: 'handleUpdateWord',

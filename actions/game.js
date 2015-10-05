@@ -17,3 +17,7 @@ export function beginTest (context) {
 export function setFocus (context, payload) {
   context.dispatch('INPUT_SET_FOCUS', payload);
 }
+
+export function reset (context) {
+  context.dispatch('RESET_GAME');
+}

@@ -6,6 +6,12 @@ import { setFocus } from '../actions/game';
 
 export default class SourceInput extends React.Component {
 
+  componentDidMount () {
+    setTimeout(() => {
+      this.props.context.executeAction(setFocus, true);
+    });
+  }
+
   componentDidUpdate () {
     const input = React.findDOMNode(this.refs.input);
     if (this.props.isFocused && input !== document.activeElement) {

@@ -15,14 +15,30 @@ import GameStats from '../GameStats';
 import { Slider } from '../ui';
 
 // actions
-import { beginTest, updateWord, typeWord, setFocus } from '../../actions/game';
+import { beginTest, updateWord, typeWord, reset } from '../../actions/game';
 
 class Game extends React.Component {
 
-  componentDidMount () {
-    setTimeout(() => {
-      this.props.context.executeAction(setFocus, true);
-    });
+  constructor (props) {
+    super(props);
+
+    // handle 'restart' listener
+    this._hasRestartListener = false;
+    this.handleResetWithKb = this.handleResetWithKb.bind(this);
+  }
+
+  componentDidUpdate () {
+    if (this.props.isFinished && !this._hasRestartListener) {
+      document.addEventListener('keydown', this.handleResetWithKb);
+      this._hasRestartListener = true;
+    } else if (this._hasRestartListener) {
+      document.removeEventListener('keydown', this.handleResetWithKb);
+      this._hasRestartListener = false;
+    }
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleResetWithKb);
   }
 
   handleType (val) {
@@ -38,6 +54,16 @@ class Game extends React.Component {
 
   handleValidateWord () {
     this.props.context.executeAction(typeWord);
+  }
+
+  handleReset () {
+    this.props.context.executeAction(reset);
+  }
+
+  handleResetWithKb (e) {
+    if (e.which === 82) {
+      this.handleReset();
+    }
   }
 
   render () {
@@ -78,6 +104,19 @@ class Game extends React.Component {
 
         <GameStats
           stats={stats} />
+
+        {isFinished && (
+          <div className='f fai'>
+            <button
+              className='ZavButton high f fai'
+              onClick={this.handleReset.bind(this)}>
+              <i
+                className='ion-android-refresh'
+                style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+              {'Press \'R\' to restart'}
+            </button>
+          </div>
+        )}
 
       </div>
     );
