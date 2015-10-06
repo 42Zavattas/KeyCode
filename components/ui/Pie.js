@@ -42,10 +42,10 @@ export default class Pie extends React.Component {
   render () {
     return (
       <div className='Pie'>
-        <div className='Pie-content'>
-          {`${this.props.percent}%`}
-        </div>
         <div className='Pie-circle'>
+          <div className='Pie-content'>
+            {`${this.props.percent}%`}
+          </div>
           <svg
             height='10em'
             width='10em'>
@@ -70,6 +70,9 @@ export default class Pie extends React.Component {
               stroke-dashoffset='0em' />
 
           </svg>
+        </div>
+        <div className='Pie-desc'>
+          {this.props.children}
         </div>
       </div>
     );

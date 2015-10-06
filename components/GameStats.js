@@ -18,8 +18,9 @@ export default class GameStats extends React.Component {
 
     return (
       <div className='GameStats'>
-        accuracy:
-        <Pie percent={stats.accuracy} />
+        <Pie percent={stats.accuracy}>
+          Accuracy
+        </Pie>
         wpm: {stats.wpm}
       </div>
     );

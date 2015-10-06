@@ -1,7 +1,10 @@
 .Pie {
+  user-select: none;
+  cursor: default;
   display: flex;
   justify-content: center;
-  position: relative;
+  align-items: center;
+  flex-direction: column;
 }
 
 .Pie-content {
@@ -16,6 +19,7 @@
   color: rgba($clight, 0.6);
   font-size: 1.5rem;
   font-weight: bold;
+  transform: rotate(90deg);
 }
 
 
@@ -26,8 +30,6 @@
   justify-content: center;
   transform: rotate(270deg);
 
-  circle {
-  }
   circle.Pie-value {
     stroke: rgba(orange, 0.4);
     stroke-width: 1em;
@@ -36,4 +38,9 @@
     stroke-width: 1.5em;
     stroke: $cdarken;
   }
+}
+
+.Pie-desc {
+  font-size: 2rem;
+  color: $cdarken1;
 }
