@@ -2,7 +2,6 @@
 
 // modules
 import React from 'react';
-import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 
 // stores
@@ -12,7 +11,6 @@ import GameStore from '../../stores/GameStore';
 import SourceCode from '../SourceCode';
 import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
-import { Slider } from '../ui';
 
 // actions
 import { beginTest, updateWord, typeWord, reset } from '../../actions/game';
@@ -79,28 +77,26 @@ class Game extends React.Component {
     return (
       <div className='Game'>
 
-        <ReactTransitionGroup>
-          {!isFinished && (
-            <Slider>
+        {!isFinished && (
+          <div>
 
-              <SourceCode
-                context={this.props.context}
-                isFocused={this.props.isFocused}
-                text={text}
-                isFinished={isFinished}
-                currentWordIndex={currentWordIndex}
-                typedWord={typedWord} />
+            <SourceCode
+              context={this.props.context}
+              isFocused={this.props.isFocused}
+              text={text}
+              isFinished={isFinished}
+              currentWordIndex={currentWordIndex}
+              typedWord={typedWord} />
 
-              <SourceInput
-                isFocused={this.props.isFocused}
-                context={this.props.context}
-                typedWord={typedWord}
-                onChange={this.handleType.bind(this)}
-                onValidate={this.handleValidateWord.bind(this)} />
+            <SourceInput
+              isFocused={this.props.isFocused}
+              context={this.props.context}
+              typedWord={typedWord}
+              onChange={this.handleType.bind(this)}
+              onValidate={this.handleValidateWord.bind(this)} />
 
-            </Slider>
-          )}
-        </ReactTransitionGroup>
+          </div>
+        )}
 
         <GameStats
           stats={stats} />
