@@ -18,7 +18,7 @@ class GameStore extends BaseStore {
       // stats on the current game
       _stats: {
         wpm: 0,
-        accuracy: 0
+        accuracy: 100
       },
 
       // number of letter typed
@@ -65,8 +65,11 @@ class GameStore extends BaseStore {
   isFocused () { return this._isFocused; }
 
   calcStats () {
-    const accuracy = Math.round((this._typedLetters / this.text.words.join('').length) * 100);
-    const wordsTyped = this._typedLetters / this.text.averageLettersByWord;
+    const textPart = this.text.words.slice(0, this._currentWordIndex);
+    const lettersInText = textPart.join('').length;
+    const averageLettersByWord = lettersInText / textPart.length;
+    const accuracy = Math.round((this._typedLetters / lettersInText) * 100);
+    const wordsTyped = this._typedLetters / averageLettersByWord;
     const duration = this.getDuration();
     const minutes = (duration / 1000 / 60);
     if (!minutes) { return; }

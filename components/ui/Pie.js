@@ -27,6 +27,10 @@ export default class Pie extends React.Component {
     });
   }
 
+  shouldComponentUpdate (nextProps) {
+    return nextProps.percent !== this.props.percent;
+  }
+
   componentDidUpdate () {
     const circle = React.findDOMNode(this.refs.circle);
     const offset = ((this.props.percent / 100) * this.state.circumference);
