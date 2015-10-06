@@ -22,7 +22,7 @@ export default class Pie extends React.Component {
 
     const offset = ((this.props.percent / 100) * this.state.circumference);
 
-    TweenMax.to(circle, 0.5, {
+    TweenMax.set(circle, {
       strokeDashoffset: `${offset}em`
     });
   }
