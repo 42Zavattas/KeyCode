@@ -31,7 +31,7 @@ class GameStore extends BaseStore {
       _typedWord: '',
 
       // the text used
-      text: Parser.parseText('context\n  .getActionContext()\n  .executeAction(navigateAction, { url: req.url }, (err) => {\n    if (err) {\n      if (err.statusCode && err.statusCode === 404) { next(); }\n      else { next(err); }\n      return;\n    }\n'),
+      text: Parser.parseText('context\n  .getActionContext()\n  .executeAction(navigateAction, { url: req.url }, err => {\n    if (err) {\n      if (err.statusCode && err.statusCode === 404) { return next(); }\n      return next(err);\n    }\n'),
 
       // used to show a progress while loading text
       isLoadingText: false,
