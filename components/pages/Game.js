@@ -77,6 +77,9 @@ class Game extends React.Component {
     return (
       <div className='Game'>
 
+        <GameStats
+          stats={stats} />
+
         {!isFinished && (
           <div>
 
@@ -98,11 +101,8 @@ class Game extends React.Component {
           </div>
         )}
 
-        <GameStats
-          stats={stats} />
-
         {isFinished && (
-          <div className='f fai'>
+          <div className='f fai fjc' style={{ marginTop: '5em' }}>
             <button
               className='ZavButton high f fai'
               onClick={this.handleReset.bind(this)}>
