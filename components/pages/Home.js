@@ -6,6 +6,10 @@ import { NavLink } from 'fluxible-router';
 
 export default class Home extends React.Component {
 
+  componentDidMount () {
+    React.findDOMNode(this.refs.startbtn).focus();
+  }
+
   render () {
     return (
       <div style={{ padding: '8rem 0', textAlign: 'center' }}>
@@ -14,7 +18,8 @@ export default class Home extends React.Component {
         <div className='f fjc'>
           <NavLink
             routeName='game'
-            className='ZavButton'>
+            className='ZavButton high'
+            ref='startbtn'>
             <i
               className='ion-ios-keypad'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
