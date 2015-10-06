@@ -3,7 +3,6 @@
 import React from 'react';
 
 import { NavLink } from 'fluxible-router';
-import { GithubButton, Loader } from '../ui';
 
 export default class Home extends React.Component {
 

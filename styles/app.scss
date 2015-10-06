@@ -13,6 +13,7 @@ $clight: #CFD8DC;
 $ctext2: #727272;
 $cborder: #B6B6B6;
 $cwhite: #FFFFFF;
+$corange: rgba(orange, 0.4);
 
 * {
   box-sizing: border-box;
@@ -87,4 +88,5 @@ a {
 @import './ui/Loader.scss';
 @import './ui/Button.scss';
 @import './ui/Pie.scss';
+@import './ui/WpmBar.scss';
 @import './utils.scss';

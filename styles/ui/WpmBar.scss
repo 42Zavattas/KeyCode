@@ -1,0 +1,38 @@
+.WpmBar {
+  cursor: default;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+
+  .WpmBar-desc {
+    display: flex;
+    align-items: center;
+    .value {
+      color: $corange;
+      font-size: 3rem;
+    }
+    .label {
+      margin-left: 0.5rem;
+      color: $cdarken1;
+    }
+  }
+
+  .WpmBar-thumb {
+    position: relative;
+    height: 20px;
+    width: 100%;
+    border: 2px solid $cdarken1;
+    border-top: none;
+  }
+  .WpmBar-bar {
+    transform-origin: center left;
+    position: absolute;
+    background: $corange;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+  }
+}

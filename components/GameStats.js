@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Pie } from './ui';
+import { Pie, WpmBar } from './ui';
 
 export default class GameStats extends React.Component {
 
@@ -17,11 +17,13 @@ export default class GameStats extends React.Component {
     } = this.props;
 
     return (
-      <div className='GameStats'>
+      <div className='GameStats f fae fjc'>
+        <div style={{ marginRight: '4rem' }}>
+          <WpmBar wpm={stats.wpm} />
+        </div>
         <Pie percent={stats.accuracy}>
           Accuracy
         </Pie>
-        wpm: {stats.wpm}
       </div>
     );
   }
