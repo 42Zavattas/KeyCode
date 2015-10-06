@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "start.js",
   "scripts": {
-    "build": "webpack & webpack --config webpack.config.production.js",
+    "build": "webpack --config webpack.config.production.js",
     "prod": "npm run build && NODE_ENV=prod npm start",
     "dev": "node webpack-dev-server.js & PORT=3001 nodemon start.js -e js",
     "lint": "eslint ./{components,stores,actions,api,config}/*.js ./{components,stores,actions,api,config}/**/*.js app.js client.js routes.js server.js start.js",
