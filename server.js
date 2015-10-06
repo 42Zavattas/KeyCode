@@ -16,8 +16,8 @@ import { createElementWithContext } from 'fluxible-addons-react';
 const htmlComponent = React.createFactory(HtmlComponent);
 const server = express();
 
-server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(compression());
+server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use(bodyParser.json());
 server.use('/api', require('./api'));
 
