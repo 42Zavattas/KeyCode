@@ -26,7 +26,7 @@ class Header extends React.Component {
 
           <NavLink
             routeName='home'
-            className='f fai'
+            className='f fai headerLogo'
             style={{ marginRight: '1em' }}>
             <img
               height='50'

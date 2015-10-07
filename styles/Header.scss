@@ -23,6 +23,13 @@
     background-size: 100%;
     border: 1px solid $cdarken1;
   }
+  .headerLogo {
+    opacity: 0.8;
+    transition: 150ms linear opacity;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .Logout {
