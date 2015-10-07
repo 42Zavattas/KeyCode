@@ -26,13 +26,13 @@ export default class Home extends React.Component {
           </NavLink>
         </div>
 
-        <p className='dark'>
+        <p className='light'>
           {'Increase your coding speed.'}
         </p>
         <p
           className='dark'
-          style={{ marginBottom: '2em', fontStyle: 'italic' }}>
-          {'Right now.'}
+          style={{ marginBottom: '2em' }}>
+          {'Now. Right now.'}
         </p>
         <div
           className='f fjc'
