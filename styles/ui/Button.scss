@@ -13,10 +13,23 @@
   &.high {
     color: rgba($clight, 0.5);
   }
+  &.clear {
+    background: transparent;
+    &:hover { background: rgba($cdarken1, 0.2); }
+    &:active  { background: rgba($cdarken1, 0.3); }
+    &:focus  { border-color: rgba($cdarken, 0.3); }
+    i {
+      color: $cdarken3;
+    }
+  }
 
   &:hover { background: rgba($cdarken1, 0.8); }
   &:active  { background: rgba($cdarken1, 0.9); }
   &:focus  { border-color: rgba($cdarken, 0.4); }
+
+  i {
+    display: flex;
+  }
 }
 
 .ZavInput {
