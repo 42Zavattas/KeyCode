@@ -1,9 +1,15 @@
 .Game {
+  padding-bottom: 4em;
 }
 
 .GameStats {
   color: $clight;
   padding: 2rem 0;
+}
+
+.GameContainer {
+  max-width: 950px;
+  margin: 0 auto;
 }
 
 .SourceInput {

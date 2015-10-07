@@ -4,6 +4,7 @@
 $cdark: #455A64;
 $cdarken2: #374850;
 $cdarken1: darken($cdark, 10);
+$cdarken3: darken($cdark, 15);
 $cdarken: darken($cdark, 20);
 $cprimary: #455A64;
 $caccent: #009688;
@@ -20,6 +21,7 @@ $corange: rgba(orange, 0.4);
   font: inherit;
   margin: 0;
   padding: 0;
+  outline-color: $cdarken;
 }
 
 html, body {
@@ -38,29 +40,20 @@ body {
 }
 
 a {
-  color: $caccent;
+  color: inherit;
   font-weight: bold;
   text-decoration: none;
+  &.underline {
+    transition: 100ms linear color;
+    border-bottom: 2px solid;
+    &:hover {
+      color: $clight;
+    }
+  }
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 400px;
-  a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    height: 150px;
-    width: 150px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: $caccent;
-    padding: 1em 1.5em;
-    background: $cdarken;
-  }
+.dark {
+  color: $cdarken3;
 }
 
 // Layout

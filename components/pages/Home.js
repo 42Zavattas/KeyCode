@@ -13,13 +13,30 @@ export default class Home extends React.Component {
   render () {
     return (
       <div style={{ padding: '8rem 0', textAlign: 'center' }}>
-        <img
-          height='200'
-          style={{ display: 'block', margin: '0 auto 2rem auto' }}
-          src='assets/images/logo-1.svg' />
-        {'KeyCode will come soon.'}<br />
-        {'Be prepared.'}<br /><br />
-        <div className='f fjc'>
+
+        <div
+          className='f fjc fai'
+          style={{ marginBottom: '2em' }}>
+          <NavLink
+            routeName='game'>
+            <img
+              style={{ display: 'block' }}
+              height='200'
+              src='assets/images/logo-1.svg' />
+          </NavLink>
+        </div>
+
+        <p className='dark'>
+          {'Increase your coding speed.'}
+        </p>
+        <p
+          className='dark'
+          style={{ marginBottom: '2em', fontStyle: 'italic' }}>
+          {'Right now.'}
+        </p>
+        <div
+          className='f fjc'
+          style={{ marginBottom: '1em' }}>
           <NavLink
             routeName='game'
             className='ZavButton high'
@@ -27,9 +44,17 @@ export default class Home extends React.Component {
             <i
               className='ion-ios-keypad'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
-            Play a practice game now
+            {'Play a random game'}
           </NavLink>
         </div>
+        <p className='dark'>
+          {'or '}
+          <NavLink
+            className='underline'
+            routeName='game'>
+            {'choose a langage'}
+          </NavLink>
+        </p>
       </div>
     );
   }

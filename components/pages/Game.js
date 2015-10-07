@@ -119,7 +119,7 @@ class Game extends React.Component {
           stats={stats} />
 
         {!isFinished && (
-          <div>
+          <div className='GameContainer'>
 
             <SourceCode
               context={this.props.context}
