@@ -80,7 +80,7 @@ class Game extends React.Component {
 
       // start interval
       this.updateStats();
-      this._gameTick = setInterval(this.updateStats, 2.5e2);
+      this._gameTick = setInterval(this.updateStats, 5e2);
       this._hasGameTick = true;
     }
 
