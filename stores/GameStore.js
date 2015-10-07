@@ -122,6 +122,7 @@ class GameStore extends BaseStore {
 
   handleReset () {
     this.init();
+    this._isFocused = true;
     this.emitChange();
   }
 

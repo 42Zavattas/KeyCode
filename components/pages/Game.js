@@ -139,22 +139,20 @@ class Game extends React.Component {
           </div>
         )}
 
-        {isFinished && (
-          <div
-            className='f fai fjc'
-            style={{ marginTop: '5em' }}>
+        <div
+          className='f fai fjc'
+          style={{ marginTop: '5em' }}>
 
-            <button
-              className='ZavButton high f fai'
-              onClick={this.handleReset.bind(this)}>
-              <i
-                className='ion-android-refresh'
-                style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
-              {'Press \'R\' to restart'}
-            </button>
+          <button
+            className='ZavButton high f fai'
+            onClick={this.handleReset.bind(this)}>
+            <i
+              className='ion-android-refresh'
+              style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
+            {isFinished ? 'Press \'R\' to restart' : 'Restart'}
+          </button>
 
-          </div>
-        )}
+        </div>
 
       </div>
     );
