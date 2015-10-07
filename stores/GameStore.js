@@ -54,7 +54,7 @@ class GameStore extends BaseStore {
   getStats () { return this._stats; }
   getText () { return this.text; }
   getDuration () {
-    if (!this._startDate) { throw new Error('Nope !'); }
+    if (!this._startDate) { return 0; }
     return moment().diff(this._startDate);
   }
   typedLetters () { return this._typedLetters; }
@@ -65,6 +65,7 @@ class GameStore extends BaseStore {
   isFocused () { return this._isFocused; }
 
   calcStats () {
+    if (this._currentWordIndex === 0) { return; }
     const textPart = this.text.words.slice(0, this._currentWordIndex);
     const lettersInText = textPart.join('').length;
     const averageLettersByWord = lettersInText / textPart.length;
@@ -124,11 +125,17 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleGameTick () {
+    this.calcStats();
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  GAME_TICK: 'handleGameTick',
   RESET_GAME: 'handleReset',
   INPUT_SET_FOCUS: 'handleSetFocus',
   BEGIN_TEST: 'handleBeginTest',

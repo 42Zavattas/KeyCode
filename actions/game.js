@@ -21,3 +21,7 @@ export function setFocus (context, payload) {
 export function reset (context) {
   context.dispatch('RESET_GAME');
 }
+
+export function tick (context) {
+  context.dispatch('GAME_TICK');
+}

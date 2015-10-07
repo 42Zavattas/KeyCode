@@ -13,7 +13,13 @@ import SourceInput from '../SourceInput';
 import GameStats from '../GameStats';
 
 // actions
-import { beginTest, updateWord, typeWord, reset } from '../../actions/game';
+import {
+  tick,
+  beginTest,
+  updateWord,
+  typeWord,
+  reset
+} from '../../actions/game';
 
 class Game extends React.Component {
 
@@ -23,20 +29,47 @@ class Game extends React.Component {
     // handle 'restart' listener
     this._hasRestartListener = false;
     this.handleResetWithKb = this.handleResetWithKb.bind(this);
+
+    // handle game tick, for refreshing stats
+    this._gameTick = null;
+    this._hasGameTick = false;
+    this.updateStats = this.updateStats.bind(this);
   }
 
   componentDidUpdate () {
-    if (this.props.isFinished && !this._hasRestartListener) {
-      document.addEventListener('keydown', this.handleResetWithKb);
-      this._hasRestartListener = true;
+    if (this.props.isFinished) {
+
+      // clear tick at the end of the test
+      if (this._hasGameTick) {
+        clearInterval(this._gameTick);
+        this._hasGameTick = false;
+      }
+
+      // listen to 'R' key for restart
+      if (!this._hasRestartListener) {
+        document.addEventListener('keydown', this.handleResetWithKb);
+        this._hasRestartListener = true;
+      }
+
     } else if (this._hasRestartListener) {
+
+      // remove restart listener
       document.removeEventListener('keydown', this.handleResetWithKb);
       this._hasRestartListener = false;
     }
+
+
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.handleResetWithKb);
+    if (this._hasGameTick) {
+      clearInterval(this._gameTick);
+    }
+  }
+
+  updateStats () {
+    this.props.context.executeAction(tick);
   }
 
   handleType (val) {
@@ -44,6 +77,11 @@ class Game extends React.Component {
 
       // start timer
       this.props.context.executeAction(beginTest);
+
+      // start interval
+      this.updateStats();
+      this._gameTick = setInterval(this.updateStats, 2.5e2);
+      this._hasGameTick = true;
     }
 
     // update word
@@ -102,7 +140,10 @@ class Game extends React.Component {
         )}
 
         {isFinished && (
-          <div className='f fai fjc' style={{ marginTop: '5em' }}>
+          <div
+            className='f fai fjc'
+            style={{ marginTop: '5em' }}>
+
             <button
               className='ZavButton high f fai'
               onClick={this.handleReset.bind(this)}>
@@ -111,6 +152,7 @@ class Game extends React.Component {
                 style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
               {'Press \'R\' to restart'}
             </button>
+
           </div>
         )}
 
