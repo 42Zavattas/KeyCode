@@ -13,6 +13,10 @@ export default class Home extends React.Component {
   render () {
     return (
       <div style={{ padding: '8rem 0', textAlign: 'center' }}>
+        <img
+          height='200'
+          style={{ display: 'block', margin: '0 auto 2rem auto' }}
+          src='assets/images/logo-1.svg' />
         {'KeyCode will come soon.'}<br />
         {'Be prepared.'}<br /><br />
         <div className='f fjc'>

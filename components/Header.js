@@ -22,12 +22,15 @@ class Header extends React.Component {
   render () {
     return (
       <div className='Header'>
-        <div className='f'>
+        <div className='f fai'>
 
           <NavLink
             routeName='home'
-            style={{ padding: '1em', marginRight: '1em' }}>
-            {'KeyCode'}
+            className='f fai'
+            style={{ marginRight: '1em' }}>
+            <img
+              height='50'
+              src='assets/images/logo-1.svg' />
           </NavLink>
 
           <NavLink

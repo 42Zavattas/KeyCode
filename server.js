@@ -18,6 +18,7 @@ const server = express();
 
 server.use(compression());
 server.use('/public', express.static(path.join(__dirname, '/build')));
+server.use('/assets', express.static(path.join(__dirname, '/assets')));
 server.use(bodyParser.json());
 server.use('/api', require('./api'));
 
