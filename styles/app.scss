@@ -11,6 +11,7 @@ $caccent: #009688;
 $cred: #FF5252;
 $ctext: #212121;
 $clight: #CFD8DC;
+$clight2: darken($clight, 22);
 $ctext2: #727272;
 $cborder: #B6B6B6;
 $cwhite: #FFFFFF;
@@ -32,7 +33,7 @@ html, body {
 body {
   font-family: Coda, sans-serif;
   background: $cprimary;
-  color: $clight;
+  color: $clight2;
   font-smooth: always;
   ::selection {
     background-color: rgba(black, 0.25);

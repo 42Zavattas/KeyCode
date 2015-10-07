@@ -51,7 +51,7 @@ export default class Home extends React.Component {
           {'or '}
           <NavLink
             className='underline'
-            routeName='game'>
+            routeName='languages'>
             {'choose a language'}
           </NavLink>
         </p>
