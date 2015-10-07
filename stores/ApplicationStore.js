@@ -15,6 +15,22 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = '';
   }
 
+  dehydrate () {
+    return {
+      currentPageName: this.currentPageName,
+      currentPage: this.currentPage,
+      pages: this.pages,
+      pageTitle: this.pageTitle
+    };
+  }
+
+  rehydrate (state) {
+    this.currentPageName = state.currentPageName;
+    this.currentPage = state.currentPage;
+    this.pages = state.pages;
+    this.pageTitle = state.pageTitle;
+  }
+
   handlePageTitle (currentRoute) {
     this.dispatcher.waitFor(RouteStore, () => {
       if (currentRoute && currentRoute.get('title')) {
@@ -34,22 +50,6 @@ class ApplicationStore extends BaseStore {
 
   getPages () {
     return this.pages;
-  }
-
-  dehydrate () {
-    return {
-      currentPageName: this.currentPageName,
-      currentPage: this.currentPage,
-      pages: this.pages,
-      pageTitle: this.pageTitle
-    };
-  }
-
-  rehydrate (state) {
-    this.currentPageName = state.currentPageName;
-    this.currentPage = state.currentPage;
-    this.pages = state.pages;
-    this.pageTitle = state.pageTitle;
   }
 
 }

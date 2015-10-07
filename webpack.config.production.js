@@ -43,9 +43,6 @@ var webpackConfig = {
       compress: {
         warnings: false
       }
-    }),
-    new webpack.ProvidePlugin({
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ]
 };

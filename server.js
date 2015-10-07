@@ -5,21 +5,24 @@ import path from 'path';
 import express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
+import { createElementWithContext } from 'fluxible-addons-react';
 
 import app from './app';
 import config from './config';
 import HtmlComponent from './components/Html';
-import { createElementWithContext } from 'fluxible-addons-react';
+import { checkSession } from './actions/auth';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 const server = express();
 
+server.use(bodyParser.json());
+server.use(cookieParser());
 server.use(compression());
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use('/assets', express.static(path.join(__dirname, '/assets')));
-server.use(bodyParser.json());
 server.use('/api', require('./api'));
 
 /**
@@ -28,28 +31,34 @@ server.use('/api', require('./api'));
 
 server.use((req, res, next) => {
 
-  const context = app.createContext();
+  const context = app.createContext({ req, res, config });
 
   context
     .getActionContext()
-    .executeAction(navigateAction, { url: req.url }, err => {
-      if (err) {
-        if (err.statusCode && err.statusCode === 404) { return next(); }
-        return next(err);
-      }
+    .executeAction(checkSession, null, err => {
+      if (err) { return next(err); }
+      context.getActionContext()
+        .executeAction(navigateAction, { url: req.url }, err => {
+          if (err) {
+            if (err.statusCode && err.statusCode === 404) { return next(); }
+            return next(err);
+          }
 
-      const exposed = `window.App=${serialize(app.dehydrate(context))};`;
-      const html = React.renderToStaticMarkup(htmlComponent({
-        clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
-        context: context.getComponentContext(),
-        state: exposed,
-        markup: React.renderToString(createElementWithContext(context))
-      }));
+          const dehydratedState = app.dehydrate(context);
 
-      res.type('html');
-      res.write(`<!DOCTYPE html>${html}`);
-      res.end();
+          const exposed = `window.App=${serialize(dehydratedState)};`;
 
+          const html = React.renderToStaticMarkup(htmlComponent({
+            clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
+            context: context.getComponentContext(),
+            state: exposed,
+            markup: React.renderToString(createElementWithContext(context))
+          }));
+
+          res.type('html');
+          res.write(`<!DOCTYPE html>${html}`);
+          res.end();
+        });
     });
 });
 

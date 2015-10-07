@@ -4,23 +4,33 @@ import BaseStore from 'fluxible/addons/BaseStore';
 
 export default class AuthStore extends BaseStore {
 
-  static getToken () {
-    const val = `; ${document.cookie}`;
-    const parts = val.split('; token=');
-    if (parts.length !== 2) { return null; }
-    return parts.pop().split(';').shift();
-  }
-
-  static removeToken () {
-    document.cookie = 'token =; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-  }
-
   constructor (dispatcher) {
     super(dispatcher);
     this._user = null;
-    this._jwt = null;
-    this._lognupMessage = null;
+    this._token = null;
     this._isLogging = false;
+  }
+
+  dehydrate () {
+    return {
+      token: this._token,
+      user: this._user,
+      isLogging: this._isLogging
+    };
+  }
+
+  rehydrate (state) {
+    this._token = state.token;
+    this._user = state.user;
+    this._isLogging = state.isLogging;
+  }
+
+  loadSession (payload) {
+    this._isLogging = false;
+    if (!payload) { return this.emitChange(); }
+    this._token = payload.token;
+    this._user = payload.user;
+    this.emitChange();
   }
 
   handleStartLogin () {
@@ -28,16 +38,9 @@ export default class AuthStore extends BaseStore {
     this.emitChange();
   }
 
-  handleLogin (user) {
-    this._isLogging = false;
-    this._user = user;
-    this.emitChange();
-  }
-
   handleLogout () {
-    this._jwt = null;
+    this._token = null;
     this._user = null;
-    AuthStore.removeToken();
     this.emitChange();
   }
 
@@ -50,11 +53,7 @@ export default class AuthStore extends BaseStore {
   }
 
   getToken () {
-    return this._jwt;
-  }
-
-  getLognupMessage () {
-    return this._lognupMessage;
+    return this._token;
   }
 
   isLogged () {
@@ -67,5 +66,6 @@ AuthStore.storeName = 'AuthStore';
 
 AuthStore.handlers = {
   START_LOGIN: 'handleStartLogin',
-  USER_LOGOUT: 'handleLogout'
+  USER_LOGOUT: 'handleLogout',
+  LOAD_SESSION: 'loadSession'
 };
