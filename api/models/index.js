@@ -6,11 +6,10 @@ import User from './user.model';
 import Language from './language.model';
 
 q.all([
-    User.sync(),
-    Language.sync(),
-  ])
-  .then(() => { return Text.sync(); })
-  .catch(err => { console.log(err); });
+  User.sync(),
+  Language.sync(),
+])
+.then(() => { return Text.sync(); });
 
 export default {
 

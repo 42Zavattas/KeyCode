@@ -7,7 +7,7 @@ exports.getById = id => {
 };
 
 exports.getByGithub = id => {
-  return User.findOne({ where: { githubId: id }});
+  return User.findOne({ where: { githubId: id } });
 };
 
 exports.updateOrCreate = (githubId, name, avatar) => {
@@ -20,6 +20,6 @@ exports.updateOrCreate = (githubId, name, avatar) => {
     .then(user => {
       if (user.banned) { throw new Error('You are banned from KeyCode.'); }
       return user;
-    })
+    });
 
 };
