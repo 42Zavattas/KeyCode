@@ -11,6 +11,8 @@ q.all([
 ])
 .then(() => { return Text.sync(); });
 
+Text.belongsTo(Language);
+
 export default {
 
   User,

@@ -1,13 +1,13 @@
 'use strict';
 
-import { Text } from '../models';
+import { Text, Language } from '../models';
 
 exports.getAll = () => {
-  return Text.findAll();
+  return Text.findAll({ include: [{ model: Language }] });
 };
 
 exports.getOne = id => {
-  return Text.findById(id);
+  return Text.findById(id, { include: [{ model: Language }] });
 };
 
 exports.create = (title, data, language, author) => {
