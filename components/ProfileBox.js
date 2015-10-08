@@ -6,27 +6,19 @@ import { NavLink } from 'fluxible-router';
 
 import { logout } from '../actions/auth';
 
-class ProfileDrop extends React.Component {
-
-  componentDidMount () {
-    const first = React.findDOMNode(this).querySelector('.item');
-    first.focus();
-  }
+class LogoutButton extends React.Component {
 
   componentWillEnter (done) {
-    const els = React.findDOMNode(this).querySelectorAll('.item');
+    const el = React.findDOMNode(this);
     new TimelineMax()
-      .staggerFrom(els, 0.15, {
-        opacity: 0,
-        y: -10
-      }, 0.1)
+      .from(el, 0.25, { opacity: 0, x: 20, ease: 'Back.easeOut' })
       .addCallback(done);
   }
 
   componentWillLeave (done) {
-    const els = React.findDOMNode(this).querySelectorAll('.item');
+    const el = React.findDOMNode(this);
     new TimelineMax()
-      .staggerTo(els, 0.15, { opacity: 0, y: -10 }, -0.1)
+      .to(el, 0.2, { opacity: 0, x: 20, ease: 'Back.easeIn' })
       .addCallback(done);
   }
 
@@ -36,20 +28,12 @@ class ProfileDrop extends React.Component {
 
   render () {
     return (
-      <div className='ProfileBox-drop'>
-        <NavLink
-          className='item'
-          routeName='home'>
-          <i className='ion-person' />
-          {'Profile'}
-        </NavLink>
-        <button
-          className='item'
-          onClick={this.logout.bind(this)}>
-          <i className='ion-log-out' />
-          {'Logout'}
-        </button>
-      </div>
+      <button
+        onClick={this.logout.bind(this)}
+        className='ZavButton high logout'>
+        <i className='ion-log-out' />
+        {'Logout'}
+      </button>
     );
   }
 
@@ -65,9 +49,15 @@ export default class ProfileBox extends React.Component {
     };
   }
 
-  toggle () {
+  toggleOn () {
     this.setState({
-      open: !this.state.open
+      open: true
+    });
+  }
+
+  toggleOff () {
+    this.setState({
+      open: false
     });
   }
 
@@ -76,32 +66,26 @@ export default class ProfileBox extends React.Component {
     const { user } = this.props;
     const { open } = this.state;
 
-    const toggleClassName = [
-      'Profile-toggle',
-      open ? 'open' : ''
-    ].join(' ');
-
     return (
-      <div className='ProfileBox'>
-        <button
-          onClick={this.toggle.bind(this)}
-          className={toggleClassName}>
-          <div className='ProfileName'>
-            {user.name}
-          </div>
-          <div
-            className='ProfilePic'
-            style={{
-              backgroundImage: `url(${user.avatar}&s=200)`,
-              backgroundSize: '100%'
-            }} />
-        </button>
+      <div
+        onMouseEnter={this.toggleOn.bind(this)}
+        onMouseLeave={this.toggleOff.bind(this)}
+        className='ProfileBox'>
         <ReactTransitionGroup>
           {open && (
-            <ProfileDrop
+            <LogoutButton
               context={this.props.context} />
           )}
         </ReactTransitionGroup>
+        <NavLink
+          routeName='profile'>
+          <div
+            className='ProfilePic'
+            style={{
+              backgroundImage: `url(${user.avatar})`,
+              backgroundSize: '100%'
+            }} />
+        </NavLink>
       </div>
     );
   }

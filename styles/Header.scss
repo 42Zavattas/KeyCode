@@ -27,72 +27,22 @@
 .ProfileBox {
   position: relative;
 
-  .Profile-toggle {
-    display: flex;
-    align-items: center;
-    padding: 1px 0.5rem;
-    cursor: pointer;
-    border: none;
-    background: $cdark;
-    outline: none;
-    border: 2px solid transparent;
-    border-radius: 3px;
-    color: rgba($clight, 0.5);
-    position: relative;
-    z-index: 2;
+  display: flex;
+  align-items: center;
 
-    &:active, &.open { background: $cdarken1 !important; }
-    &:focus  { border-color: rgba($cdarken, 0.3); }
-
-    &:hover {
-      background: $cdarken2;
+  .logout {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    i {
+      margin-right: 0.5rem;
     }
   }
 
   .ProfilePic {
-    width: 40px;
-    height: 40px;
+    padding: 3px;
+    border: 2px solid $cdarken2;
+    width: 45px;
+    height: 45px;
     background-size: 100%;
-  }
-
-  .ProfileName {
-    margin-right: 0.5rem;
-  }
-
-  .ProfileBox-drop {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    top: 100%;
-    margin-top: 0.25rem;
-    min-width: 250px;
-
-    .item {
-      font-weight: normal;
-      color: rgba($clight, 0.5);
-      background: rgba($cdarken2, 0.3);
-      border: 2px solid transparent;
-      cursor: pointer;
-      display: flex;
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-      outline: none;
-
-      &:hover {
-        background: rgba($cdarken2, 0.7);
-      }
-      &:active, &:focus {
-        background: $cdarken2;
-        border-color: $cdarken1;
-      }
-
-      i {
-        margin-right: 0.5rem;
-      }
-    }
   }
 }
