@@ -1,6 +1,7 @@
 'use strict';
 
 import moment from 'moment';
+import superagent from 'superagent';
 
 export function updateWord (context, payload) {
   context.dispatch('UPDATE_WORD', payload);
@@ -24,4 +25,18 @@ export function reset (context) {
 
 export function tick (context) {
   context.dispatch('GAME_TICK');
+}
+
+export function loadRandom (context, done) {
+
+  context.dispatch('RANDOM_TEXT_LOAD');
+
+  superagent.get(`${context.api._getUrl()}/texts/rand`)
+    .accept('json')
+    .end((err, res) => {
+      if (err) { throw err; }
+      context.dispatch('RANDOM_TEXT_LOADED', res.body);
+      done();
+    });
+
 }

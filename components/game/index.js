@@ -171,4 +171,3 @@ export default connectToStores(Game, [GameStore], context => {
     isFocused: gameStore.isFocused()
   };
 });
-

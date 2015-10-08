@@ -76,6 +76,8 @@ export default class SourceCode extends React.Component {
       currentWordIndex
     } = this.props;
 
+    if (!text) { return <div>{'lol nope'}</div>; }
+
     const colorRed = '#FF5252';
     const wantedWord = text.words[currentWordIndex];
     const beforeCursor = [];

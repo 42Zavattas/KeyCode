@@ -30,7 +30,7 @@ export default {
     handler: require('./components/pages/Languages')
   },
   game: {
-    path: '/game',
+    path: '/game/:id',
     method: 'get',
     page: 'game',
     title: 'Game',

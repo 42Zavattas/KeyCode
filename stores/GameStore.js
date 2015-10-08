@@ -9,11 +9,32 @@ class GameStore extends BaseStore {
 
   constructor (dispatcher) {
     super(dispatcher);
-    this.init();
+
+    _.assign(this, {
+      text: null,
+      _source: null,
+      _isReady: false,
+      _stats: {},
+      _typedLetters: 0,
+      _currentWordIndex: 0,
+      _typedWord: '',
+      _isPlaying: false,
+      _isFinished: false,
+      _isFocused: false,
+      _startDate: null
+    });
   }
 
-  init () {
+  init (text) {
+    if (!text) {
+      throw new Error('No text');
+    }
     _.assign(this, {
+
+      // source from server
+      _source: text,
+
+      _isReady: true,
 
       // stats on the current game
       _stats: {
@@ -31,10 +52,7 @@ class GameStore extends BaseStore {
       _typedWord: '',
 
       // the text used
-      text: Parser.parseText('context\n  .getActionContext()\n  .executeAction(navigateAction, { url: req.url }, err => {\n    if (err) {\n      if (err.statusCode && err.statusCode === 404) { return next(); }\n      return next(err);\n    }\n'),
-
-      // used to show a progress while loading text
-      isLoadingText: false,
+      text: Parser.parseText(text.data),
 
       // used to see if a test is in progress
       _isPlaying: false,
@@ -53,12 +71,16 @@ class GameStore extends BaseStore {
 
   getStats () { return this._stats; }
   getText () { return this.text; }
+  getTextId () { return _.get(this._source, 'id'); }
   getDuration () {
     if (!this._startDate) { return 0; }
     return moment().diff(this._startDate);
   }
   typedLetters () { return this._typedLetters; }
   isPlaying () { return this._isPlaying; }
+  isReady () {
+    return this._isReady;
+  }
   isFinished () { return this._isFinished; }
   currentWordIndex () { return this._currentWordIndex; }
   typedWord () { return this._typedWord; }
@@ -121,7 +143,7 @@ class GameStore extends BaseStore {
   }
 
   handleReset () {
-    this.init();
+    this.init(this._source);
     this._isFocused = true;
     this.emitChange();
   }
@@ -131,11 +153,23 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleRandomTextLoaded (text) {
+    this.init(text);
+    this.emitChange();
+  }
+
+  handleRandomTextLoad () {
+    this._isReady = false;
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  RANDOM_TEXT_LOAD: 'handleRandomTextLoad',
+  RANDOM_TEXT_LOADED: 'handleRandomTextLoaded',
   GAME_TICK: 'handleGameTick',
   RESET_GAME: 'handleReset',
   INPUT_SET_FOCUS: 'handleSetFocus',
