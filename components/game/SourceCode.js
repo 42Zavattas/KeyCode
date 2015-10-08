@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { setFocus } from '../actions/game';
+import { setFocus } from '../../actions/game';
 
 export default class SourceCode extends React.Component {
 

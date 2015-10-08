@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Pie, WpmBar } from './ui';
+import { Pie, WpmBar } from '../ui';
 
 export default class GameStats extends React.Component {
 
