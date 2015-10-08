@@ -53,6 +53,13 @@ a {
   }
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15em 0;
+}
+
 .dark {
   color: $cdarken3;
 }

@@ -18,7 +18,7 @@ export default class Home extends React.Component {
           className='f fjc fai'
           style={{ marginBottom: '2em' }}>
           <NavLink
-            routeName='game'>
+            routeName='random'>
             <img
               style={{ display: 'block' }}
               height='200'
@@ -38,7 +38,7 @@ export default class Home extends React.Component {
           className='f fjc'
           style={{ marginBottom: '1em' }}>
           <NavLink
-            routeName='game'
+            routeName='random'
             className='ZavButton high'
             ref='startbtn'>
             <i
