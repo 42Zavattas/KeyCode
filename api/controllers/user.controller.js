@@ -24,10 +24,26 @@ exports.putMe = (req, res) => {
   res.status(404).send({ message: 'Route under construction.' });
 };
 
+/**
+ * Get all users, for admins only
+ */
 exports.getAll = (req, res) => {
   UserService.getAll()
     .then(users => {
       res.status(200).send(users);
+    })
+    .catch(err => {
+      res.status(400).send({ message: err.message });
+    });
+};
+
+/**
+ * Create a new result for a user
+ */
+exports.newResult = (req, res) => {
+  UserService.newResult(req.body.wpm, req.body.accuracy, req.body.textId, req.user.id)
+    .then(() => {
+      res.status(200).end();
     })
     .catch(err => {
       res.status(400).send({ message: err.message });

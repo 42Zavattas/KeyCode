@@ -11,6 +11,7 @@ const router = express.Router();
 router.get('/users', AuthService.isAdmin(), UserCtrl.getAll);
 router.get('/users/me', AuthService.isAuthenticated(), UserCtrl.getMe);
 router.put('/users/me', AuthService.isAuthenticated(), UserCtrl.putMe);
+router.post('/users/me/game', AuthService.isAuthenticated(), UserCtrl.newResult);
 
 router.get('/languages', LanguageCtrl.getAll);
 router.get('/languages/:id', LanguageCtrl.getOne);

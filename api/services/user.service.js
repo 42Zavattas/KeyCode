@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import { propsDiffer } from './utils.service';
 
-import { User } from '../models';
+import { User, Test } from '../models';
 
 exports.getAll = () => {
   return User.findAll();
@@ -33,4 +33,8 @@ exports.updateOrCreate = (githubId, name, avatar, token) => {
       return user;
     });
 
+};
+
+exports.newResult = (wpm, accuracy, textId, userId) => {
+  return Test.create({ wpm, accuracy, textId, userId });
 };
