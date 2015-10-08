@@ -13,26 +13,8 @@
 }
 
 .SourceInput {
-  background: rgba(black, 0.2);
-  input {
-    font-family: 'Source Code Pro', monospace;
-    background: transparent;
-    width: 100%;
-    display: block;
-    color: $clight;
-    padding: 1em;
-    outline: none;
-    border: none;
-    &:hover {
-      background-color: rgba($caccent, .1);
-    }
-    &:focus {
-      background-color: rgba($caccent, .25);
-    }
-    &::placeholder {
-      color: rgba(black, 0.3);
-    }
-  }
+  height: 0;
+  opacity: 0;
 }
 
 .SourceCode {
