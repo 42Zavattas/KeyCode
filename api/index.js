@@ -17,6 +17,7 @@ router.get('/languages/:id', LanguageCtrl.getOne);
 router.post('/languages', AuthService.isAdmin(), LanguageCtrl.create);
 
 router.get('/texts', TextCtrl.getAll);
+router.get('/texts/rand', TextCtrl.getRandom);
 router.get('/texts/:id', TextCtrl.getOne);
 router.post('/texts', AuthService.isAdmin(), TextCtrl.create);
 

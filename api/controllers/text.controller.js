@@ -12,6 +12,16 @@ exports.getAll = (req, res) => {
     });
 };
 
+exports.getRandom = (req, res) => {
+  TextService.getRandom()
+    .then(text => {
+      res.status(200).send(text);
+    })
+    .catch(err => {
+      res.status(400).send({ message: err.message });
+    });
+};
+
 exports.getOne = (req, res) => {
   TextService.getOne(req.params.id)
     .then(text => {
