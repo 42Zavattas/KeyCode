@@ -8,6 +8,13 @@ export default {
     title: 'Home',
     handler: require('./components/pages/Home')
   },
+  profile: {
+    path: '/profile',
+    method: 'get',
+    page: 'profile',
+    title: 'Profile',
+    handler: require('./components/pages/Profile')
+  },
   languages: {
     path: '/languages',
     method: 'get',
