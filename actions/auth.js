@@ -22,5 +22,6 @@ export function checkSession (context, payload, done) {
 }
 
 export function logout (context) {
+  context.cookie.clear('token');
   context.dispatch('USER_LOGOUT');
 }

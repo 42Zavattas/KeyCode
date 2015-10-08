@@ -30,6 +30,7 @@ class Cookie {
 
   clear (name) {
     if (Env.isServer()) { return this._res.clearCookie(name); }
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
   }
 
 };
