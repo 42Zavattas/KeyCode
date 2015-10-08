@@ -12,10 +12,14 @@ exports.getByGithub = id => {
 
 exports.updateOrCreate = (githubId, name, avatar) => {
 
-  return User.upsert({ name, avatar, githubId }, { fields: ['name', 'avatar'] })
+  return exports.getByGithub(githubId)
+    .then(user => {
+      if (!user) { return User.create({ githubId, name, avatar }); }
+      return user;
+    })
     .then(user => {
       if (user.banned) { throw new Error('You are banned from KeyCode.'); }
       return user;
-    });
+    })
 
 };

@@ -10,7 +10,6 @@ q.all([
     Language.sync(),
   ])
   .then(() => { return Text.sync(); })
-  .then(() => { console.log('Success'); })
   .catch(err => { console.log(err); });
 
 export default {
