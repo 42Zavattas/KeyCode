@@ -74,9 +74,10 @@ exports.setToken = (req, res) => {
 passport.use(new Strategy({
   clientID: config.githubId,
   clientSecret: config.githubSecret,
-  callbackURL: config.callbackUrl
+  callbackURL: config.callbackUrl,
+  scope: ['write:org', 'read:org']
 }, (accessToken, refreshToken, profile, done) => {
-  UserService.updateOrCreate(profile.id, profile.username, profile._json.avatar_url)
+  UserService.updateOrCreate(profile.id, profile.username, profile._json.avatar_url, accessToken)
     .then(user => { done(null, user); })
     .catch(done);
 }));

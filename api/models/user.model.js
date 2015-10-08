@@ -13,6 +13,7 @@ export default db.define('user', {
   banned: { type: Sequelize.BOOLEAN, defaultValue: false },
   admin: { type: Sequelize.BOOLEAN, defaultValue: false },
 
-  githubId: { type: Sequelize.BIGINT, unique: true }
+  githubId: { type: Sequelize.BIGINT, unique: true },
+  token: { type: Sequelize.STRING }
 
 });

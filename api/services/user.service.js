@@ -17,15 +17,15 @@ exports.getByGithub = id => {
   return User.findOne({ where: { githubId: id } });
 };
 
-exports.updateOrCreate = (githubId, name, avatar) => {
+exports.updateOrCreate = (githubId, name, avatar, token) => {
 
   return exports.getByGithub(githubId)
     .then(user => {
 
-      if (!user) { return User.create({ githubId, name, avatar }); }
-      if (!propsDiffer(user, { name, avatar })) { return user; }
+      if (!user) { return User.create({ githubId, name, avatar, token }); }
+      if (!propsDiffer(user, { name, avatar, token })) { return user; }
 
-      _.assign(user, { name, avatar });
+      _.assign(user, { name, avatar, token });
       return user.save();
     })
     .then(user => {
