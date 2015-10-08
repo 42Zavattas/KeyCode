@@ -44,7 +44,7 @@ class Header extends React.Component {
             <i
               className='ion-ios-play'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
-            {'Play'}
+            {'Random game'}
           </NavLink>
 
           <NavLink
@@ -54,7 +54,7 @@ class Header extends React.Component {
             <i
               className='ion-code-working'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
-            {'Languages'}
+            {'Explore'}
           </NavLink>
 
         </div>
