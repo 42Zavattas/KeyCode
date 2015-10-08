@@ -9,7 +9,7 @@ exports.getAll = () => {
 };
 
 exports.getRandom = () => {
-  return Text.findOne({ order: Sequelize.fn('RANDOM') });
+  return Text.findOne({ order: Sequelize.fn('RANDOM'), include: [{ model: Language }] });
 };
 
 exports.getOne = id => {
