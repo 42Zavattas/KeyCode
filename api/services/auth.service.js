@@ -29,6 +29,24 @@ exports.isAuthenticated = () => {
 };
 
 /**
+ * Middleware to check if a user is an admin.
+ * @returns {Middleware} mid
+ */
+exports.isAdmin = () => {
+  return compose()
+    .use(checkJwt)
+    .use((req, res, next) => {
+      UserService.getById(req.user.id)
+        .then(user => {
+          if (!user.admin) { return next('Not admin.'); }
+          req.user = user;
+          next();
+        })
+        .catch(err => { next(err.message); });
+    });
+};
+
+/**
  * Sign a token for 48 hours.
  * @param {String} id The userId
  * @returns {String} token

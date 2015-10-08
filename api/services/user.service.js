@@ -5,6 +5,10 @@ import { propsDiffer } from './utils.service';
 
 import { User } from '../models';
 
+exports.getAll = () => {
+  return User.findAll();
+};
+
 exports.getById = id => {
   return User.findById(id);
 };

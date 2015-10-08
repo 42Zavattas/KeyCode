@@ -24,6 +24,16 @@ exports.putMe = (req, res) => {
   res.status(404).send({ message: 'Route under construction.' });
 };
 
+exports.getAll = (req, res) => {
+  UserService.getAll()
+    .then(users => {
+      res.status(200).send(users);
+    })
+    .catch(err => {
+      res.status(400).send({ message: err.message });
+    });
+};
+
 /**
  * Create a new user
  *
@@ -40,3 +50,4 @@ exports.create = (req, res) => {
       res.status(400).send({ message: err.message });
     });
 };
+

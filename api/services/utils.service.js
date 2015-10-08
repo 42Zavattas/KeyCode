@@ -7,4 +7,4 @@ export function propsDiffer (one, two, arr) {
     if (one[i] !== two[i]) { return true; }
   }
   return false;
-};
+}
