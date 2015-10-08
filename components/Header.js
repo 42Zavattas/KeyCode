@@ -8,6 +8,7 @@ import AuthStore from '../stores/AuthStore';
 import { logout } from '../actions/auth';
 
 import { GithubButton } from './ui';
+import ProfileBox from './ProfileBox';
 
 class Header extends React.Component {
 
@@ -20,6 +21,9 @@ class Header extends React.Component {
   }
 
   render () {
+
+    const { isLogged, user } = this.props;
+
     return (
       <div className='Header'>
         <div className='f fai'>
@@ -56,18 +60,13 @@ class Header extends React.Component {
         </div>
         <div className='f mla fai'>
 
-          {this.props.isLogged && (
-            <div className='f fai'>
-              <div
-                className='ProfilePic'
-                style={{
-                  backgroundImage: 'url(https://avatars2.githubusercontent.com/u/6033345?v=3&s=400)',
-                  backgroundSize: '100%'
-                }} />
-            </div>
+          {isLogged && (
+            <ProfileBox
+              context={this.props.context}
+              user={user} />
           )}
 
-          {!this.props.isLogged && (
+          {!isLogged && (
             <GithubButton context={this.props.context} />
           )}
 
