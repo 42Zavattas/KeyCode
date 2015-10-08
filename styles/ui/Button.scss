@@ -9,10 +9,8 @@
   border-radius: 3px;
   display: flex;
   align-items: center;
+  color: rgba($clight, 0.5);
 
-  &.high {
-    color: rgba($clight, 0.5);
-  }
   &.clear {
     background: transparent;
     &:hover { background: rgba($cdarken1, 0.2); }

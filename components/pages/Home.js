@@ -42,7 +42,7 @@ export default class Home extends React.Component {
             className='ZavButton high'
             ref='startbtn'>
             <i
-              className='ion-ios-keypad'
+              className='ion-ios-play'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
             {'Play a random game'}
           </NavLink>
