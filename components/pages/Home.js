@@ -58,8 +58,8 @@ export default class Home extends React.Component {
           {'or '}
           <NavLink
             className='underline'
-            routeName='languages'>
-            {'choose a language'}
+            routeName='explore'>
+            {'choose a test'}
           </NavLink>
         </p>
       </div>

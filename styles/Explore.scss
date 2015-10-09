@@ -1,0 +1,50 @@
+.Explore {
+  display: flex;
+  flex-direction: column;
+  padding-top: 3rem;
+}
+
+.TestItem {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: 3rem;
+
+  > .body {
+    padding: 1rem;
+    flex-grow: 1;
+    &:hover {
+      background: rgba(black, 0.1);
+    }
+    > header {
+      margin-bottom: 1rem;
+    }
+    > section {
+      display: flex;
+      align-items: center;
+      img {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .VoteBox {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      display: block;
+      font-size: 30px;
+    }
+  }
+
+  .language {
+    padding: 0.25rem;
+    background: rgba(black, 0.1);
+    color: $clight;
+  }
+}

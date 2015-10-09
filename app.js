@@ -7,6 +7,7 @@ import ApplicationStore from './stores/ApplicationStore';
 import RouteStore from './stores/RouteStore';
 import GameStore from './stores/GameStore';
 import AuthStore from './stores/AuthStore';
+import { ExploreStore } from './stores';
 
 import CookiePlugin from './plugins/CookiePlugin';
 import ApiPlugin from './plugins/ApiPlugin';
@@ -18,6 +19,7 @@ app.plug(CookiePlugin);
 
 app.registerStore(RouteStore);
 app.registerStore(GameStore);
+app.registerStore(ExploreStore);
 app.registerStore(AuthStore);
 app.registerStore(ApplicationStore);
 

@@ -54,7 +54,7 @@ class Header extends React.Component {
 
           <NavLink
             className='ZavButton clear'
-            routeName='languages'
+            routeName='explore'
             style={{ padding: '0.5em 1em' }}>
             <i
               className='ion-code-working'

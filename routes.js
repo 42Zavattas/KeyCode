@@ -15,12 +15,12 @@ export default {
     title: 'Profile',
     handler: require('./components/pages/Profile')
   },
-  languages: {
-    path: '/languages',
+  explore: {
+    path: '/explore',
     method: 'get',
-    page: 'languages',
-    title: 'Choose you language',
-    handler: require('./components/pages/Languages')
+    page: 'explore',
+    title: 'Explore tests',
+    handler: require('./components/pages/Explore')
   },
   game: {
     path: '/game/:id',
