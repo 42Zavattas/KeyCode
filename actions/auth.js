@@ -2,7 +2,14 @@
 
 export function login (context) {
   context.dispatch('START_LOGIN');
-  window.location.href = '/api/auth';
+
+  const data = {
+    wpm: 10,
+    accuracy: 80,
+    textId: 1
+  };
+
+  window.location.href = `/api/auth?data=${JSON.stringify(data)}`;
 }
 
 export function checkSession (context, payload, done) {

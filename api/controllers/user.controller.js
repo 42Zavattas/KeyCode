@@ -1,5 +1,6 @@
 'use strict';
 
+import _ from 'lodash';
 import { UserService } from '../services';
 
 /**
@@ -41,7 +42,7 @@ exports.getAll = (req, res) => {
  * Create a new result for a user
  */
 exports.newResult = (req, res) => {
-  UserService.newResult(req.body.wpm, req.body.accuracy, req.body.textId, req.user.id)
+  UserService.newResult(_.assign(req.body, { userId: req.user.id }))
     .then(() => {
       res.status(200).end();
     })

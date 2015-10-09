@@ -1,5 +1,6 @@
 'use strict';
 
+import _ from 'lodash';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
 import compose from 'composable-middleware';
@@ -75,9 +76,23 @@ passport.use(new Strategy({
   clientID: config.githubId,
   clientSecret: config.githubSecret,
   callbackURL: config.callbackUrl,
-  scope: ['write:org', 'read:org']
-}, (accessToken, refreshToken, profile, done) => {
+  scope: ['write:org', 'read:org'],
+  failureRedirect: '/',
+  passReqToCallback: true
+}, (req, accessToken, refreshToken, profile, done) => {
   UserService.updateOrCreate(profile.id, profile.username, profile._json.avatar_url, accessToken)
+    .then(user => {
+      if (req.query.state && _.isString(req.query.state)) {
+
+        const failsave = JSON.parse(req.query.state);
+        if (!failsave.wpm || !failsave.accuracy || !failsave.textId) { throw new Error('Invalid failsave data.'); }
+        failsave.userId = user.id;
+
+        return UserService.newResult(failsave)
+          .then(() => { return user; });
+      }
+      return user;
+    })
     .then(user => { done(null, user); })
     .catch(done);
 }));

@@ -22,14 +22,12 @@ router.get('/texts/rand', TextCtrl.getRandom);
 router.get('/texts/:id', TextCtrl.getOne);
 router.post('/texts', AuthService.isAdmin(), TextCtrl.create);
 
-router.get('/auth', passport.authenticate('github', {
-  session: false,
-  failureRedirect: '/'
-}));
+router.get('/auth', (req, res, next) => {
+  passport.authenticate('github', { state: req.query.data })(req, res, next);
+});
 
 router.get('/auth/callback', passport.authenticate('github', {
-  session: false,
-  failureRedirect: '/'
+  session: false
 }), AuthService.setToken);
 
 export default router;

@@ -35,6 +35,6 @@ exports.updateOrCreate = (githubId, name, avatar, token) => {
 
 };
 
-exports.newResult = (wpm, accuracy, textId, userId) => {
-  return Test.create({ wpm, accuracy, textId, userId });
+exports.newResult = test => {
+  return Test.create(_.pick(test, ['wpm', 'accuracy', 'textId', 'userId']));
 };
