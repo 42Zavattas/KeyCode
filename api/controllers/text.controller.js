@@ -41,3 +41,13 @@ exports.create = (req, res) => {
       res.status(400).send({ message: err.message });
     });
 };
+
+exports.castVote = (req, res) => {
+  TextService.castVote(req.params.id, req.user.id, req.body.value)
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch(err => {
+      res.status(400).send({ message: err.message });
+    });
+};

@@ -2,7 +2,7 @@
 
 import Sequelize from 'sequelize';
 
-import { Text, Language } from '../models';
+import { Text, Language, Vote } from '../models';
 
 exports.getAll = () => {
   return Text.findAll({ include: [{ model: Language }] });
@@ -18,4 +18,8 @@ exports.getOne = id => {
 
 exports.create = (title, data, language, author) => {
   return Text.create({ title, data, language, author });
+};
+
+exports.castVote = (textId, userId, value) => {
+  return Vote.create({ value, userId, textId });
 };

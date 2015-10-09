@@ -20,6 +20,7 @@ router.post('/languages', AuthService.isAdmin(), LanguageCtrl.create);
 router.get('/texts', TextCtrl.getAll);
 router.get('/texts/rand', TextCtrl.getRandom);
 router.get('/texts/:id', TextCtrl.getOne);
+router.post('/texts/:id/vote', AuthService.isAuthenticated(), TextCtrl.castVote);
 router.post('/texts', AuthService.isAdmin(), TextCtrl.create);
 
 router.get('/auth', (req, res, next) => {
