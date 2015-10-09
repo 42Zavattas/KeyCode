@@ -15,7 +15,8 @@ import {
   const gameStore = context.getStore(GameStore);
   const routeStore = context.getStore(RouteStore);
   return {
-    text: gameStore.getText(),
+    isFetching: gameStore.isFetching(),
+    textSource: gameStore.getTextSource(),
     route: routeStore.getCurrentNavigate()
   };
 })
@@ -24,19 +25,23 @@ export default class GamePage extends React.Component {
   constructor (props) {
     super(props);
 
-    if (!props.text) {
-      const id = props.route.url.split('/')[2];
-      props.context.executeAction(loadText, id);
+    const id = props.route.url.split('/')[2];
+
+    if (!props.textSource || id !== String(props.textSource.id)) {
+      setTimeout(() => {
+        props.context.executeAction(loadText, id);
+      });
     }
   }
 
   render () {
 
-    const { text } = this.props;
-    const hasText = !!text;
+    const { textSource } = this.props;
+    const hasText = !!textSource;
 
     return (
       <div>
+
         {hasText && (
           <Game
             context={this.props.context} />
@@ -47,7 +52,9 @@ export default class GamePage extends React.Component {
             <Loader />
           </div>
         )}
+
       </div>
     );
   }
 }
+

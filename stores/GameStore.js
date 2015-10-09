@@ -28,6 +28,9 @@ class GameStore extends BaseStore {
   init (text) {
     _.assign(this, {
 
+      // check if a text is currently being fetched
+      _isFetching: false,
+
       // source from server
       _source: text || null,
 
@@ -68,12 +71,14 @@ class GameStore extends BaseStore {
 
   getStats () { return this._stats; }
   getText () { return this.text; }
+  getTextSource () { return this._source; }
   getTextId () { return _.get(this._source, 'id'); }
   getDuration () {
     if (!this._startDate) { return 0; }
     return moment().diff(this._startDate);
   }
   typedLetters () { return this._typedLetters; }
+  isFetching () { return this._isFetching; }
   isPlaying () { return this._isPlaying; }
   isReady () {
     return this._isReady;
@@ -152,6 +157,9 @@ class GameStore extends BaseStore {
 
   handleTextLoad () {
     this._isReady = false;
+    this._isFetching = true;
+    this.text = null;
+    this._source = null;
     this.emitChange();
   }
 
@@ -165,11 +173,17 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleDestroyGame () {
+    this.init();
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  DESTROY_GAME: 'handleDestroyGame',
   TEXT_LOAD: 'handleTextLoad',
   TEXT_LOADED: 'handleTextLoaded',
   RANDOM_TEXT_LOADED: 'handleRandomTextLoaded',
