@@ -5,8 +5,6 @@ import React from 'react';
 import { NavLink } from 'fluxible-router';
 import { loadRandom } from '../../actions/game';
 
-import { Loader } from '../ui';
-
 export default class Home extends React.Component {
 
   componentDidMount () {
