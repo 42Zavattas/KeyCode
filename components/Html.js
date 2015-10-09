@@ -14,6 +14,8 @@ export default class Html extends React.Component {
       <html>
         <head>
 
+          <base href='/' />
+
           <meta charSet='utf-8' />
           <link rel='icon' href='assets/favicon.ico' />
 
