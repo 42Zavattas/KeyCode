@@ -2,6 +2,7 @@
 
 import moment from 'moment';
 import superagent from 'superagent';
+import { navigateAction } from 'fluxible-router';
 
 export function updateWord (context, payload) {
   context.dispatch('UPDATE_WORD', payload);
@@ -23,19 +24,22 @@ export function reset (context) {
   context.dispatch('RESET_GAME');
 }
 
+export function destroyGame (context) {
+  context.dispatch('DESTROY_GAME');
+}
+
 export function tick (context) {
   context.dispatch('GAME_TICK');
 }
 
-export function loadRandom (context, done) {
-
-  context.dispatch('RANDOM_TEXT_LOAD');
+export function loadRandom (context, payload, done) {
 
   superagent.get(`${context.api._getUrl()}/texts/rand`)
     .accept('json')
     .end((err, res) => {
       if (err) { throw err; }
       context.dispatch('RANDOM_TEXT_LOADED', res.body);
+      context.executeAction(navigateAction, { url: `/game/${res.body.id}` });
       done();
     });
 

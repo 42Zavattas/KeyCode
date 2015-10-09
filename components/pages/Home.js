@@ -3,11 +3,16 @@
 import React from 'react';
 
 import { NavLink } from 'fluxible-router';
+import { loadRandom } from '../../actions/game';
 
 export default class Home extends React.Component {
 
   componentDidMount () {
     React.findDOMNode(this.refs.startbtn).focus();
+  }
+
+  randomGame () {
+    this.props.context.executeAction(loadRandom);
   }
 
   render () {
@@ -17,13 +22,15 @@ export default class Home extends React.Component {
         <div
           className='f fjc fai'
           style={{ marginBottom: '2em' }}>
-          <NavLink
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={this.randomGame.bind(this)}
             routeName='random'>
             <img
               style={{ display: 'block' }}
               height='200'
               src='assets/images/logo-1.svg' />
-          </NavLink>
+          </div>
         </div>
 
         <p className='light'>
@@ -37,15 +44,15 @@ export default class Home extends React.Component {
         <div
           className='f fjc'
           style={{ marginBottom: '1em' }}>
-          <NavLink
-            routeName='random'
+          <button
+            onClick={this.randomGame.bind(this)}
             className='ZavButton high'
             ref='startbtn'>
             <i
               className='ion-ios-play'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
             {'Play a random game'}
-          </NavLink>
+          </button>
         </div>
         <p className='dark'>
           {'or '}

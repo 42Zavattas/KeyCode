@@ -6,6 +6,7 @@ import { NavLink } from 'fluxible-router';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import AuthStore from '../stores/AuthStore';
 import { logout } from '../actions/auth';
+import { loadRandom } from '../actions/game';
 
 import { GithubButton } from './ui';
 import ProfileBox from './ProfileBox';
@@ -14,6 +15,10 @@ class Header extends React.Component {
 
   constructor (props) {
     super(props);
+  }
+
+  randomGame () {
+    this.props.context.executeAction(loadRandom);
   }
 
   logout () {
@@ -37,15 +42,15 @@ class Header extends React.Component {
               src='assets/images/logo-1.svg' />
           </NavLink>
 
-          <NavLink
+          <button
+            onClick={this.randomGame.bind(this)}
             className='ZavButton clear'
-            routeName='random'
             style={{ padding: '0.5em 1em', marginRight: '0.5rem' }}>
             <i
               className='ion-ios-play'
               style={{ fontSize: '1.5rem', marginRight: '0.5rem' }} />
             {'Random game'}
-          </NavLink>
+          </button>
 
           <NavLink
             className='ZavButton clear'

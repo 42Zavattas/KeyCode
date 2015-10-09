@@ -26,15 +26,12 @@ class GameStore extends BaseStore {
   }
 
   init (text) {
-    if (!text) {
-      throw new Error('No text');
-    }
     _.assign(this, {
 
       // source from server
-      _source: text,
+      _source: text || null,
 
-      _isReady: true,
+      _isReady: !!text,
 
       // stats on the current game
       _stats: {
@@ -52,7 +49,7 @@ class GameStore extends BaseStore {
       _typedWord: '',
 
       // the text used
-      text: Parser.parseText(text.data),
+      text: text ? Parser.parseText(text.data) : null,
 
       // used to see if a test is in progress
       _isPlaying: false,
@@ -61,7 +58,7 @@ class GameStore extends BaseStore {
       _isFinished: false,
 
       // input is focused ?
-      _isFocused: false,
+      _isFocused: !!text,
 
       // begin/end timestamps
       _startDate: null
@@ -144,7 +141,11 @@ class GameStore extends BaseStore {
 
   handleReset () {
     this.init(this._source);
-    this._isFocused = true;
+    this.emitChange();
+  }
+
+  handleDestroyGame () {
+    this.init();
     this.emitChange();
   }
 
@@ -153,13 +154,13 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
-  handleRandomTextLoaded (text) {
-    this.init(text);
+  handleRandomTextLoad () {
+    this._isReady = false;
     this.emitChange();
   }
 
-  handleRandomTextLoad () {
-    this._isReady = false;
+  handleRandomTextLoaded (text) {
+    this.init(text);
     this.emitChange();
   }
 
@@ -168,6 +169,7 @@ class GameStore extends BaseStore {
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
+  DESTROY_GAME: 'handleDestroyGame',
   RANDOM_TEXT_LOAD: 'handleRandomTextLoad',
   RANDOM_TEXT_LOADED: 'handleRandomTextLoaded',
   GAME_TICK: 'handleGameTick',

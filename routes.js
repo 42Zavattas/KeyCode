@@ -15,13 +15,6 @@ export default {
     title: 'Profile',
     handler: require('./components/pages/Profile')
   },
-  random: {
-    path: '/random',
-    method: 'get',
-    page: 'random',
-    title: 'Random game',
-    handler: require('./components/pages/Random')
-  },
   languages: {
     path: '/languages',
     method: 'get',
