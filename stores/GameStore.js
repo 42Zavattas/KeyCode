@@ -106,6 +106,7 @@ class GameStore extends BaseStore {
     if (!this._startDate) {
       this._startDate = moment();
     }
+    if (!this.text) { return; }
     const chunk = this.text.wordsChunks[this._currentWordIndex];
     if (!chunk) { return; }
     if (chunk.val !== this._typedWord) {
@@ -149,7 +150,7 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
-  handleRandomTextLoad () {
+  handleTextLoad () {
     this._isReady = false;
     this.emitChange();
   }
@@ -159,12 +160,18 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleTextLoaded (text) {
+    this.init(text);
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
-  RANDOM_TEXT_LOAD: 'handleRandomTextLoad',
+  TEXT_LOAD: 'handleTextLoad',
+  TEXT_LOADED: 'handleTextLoaded',
   RANDOM_TEXT_LOADED: 'handleRandomTextLoaded',
   GAME_TICK: 'handleGameTick',
   RESET_GAME: 'handleReset',

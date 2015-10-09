@@ -40,3 +40,16 @@ export function loadRandom (context, payload, done) {
     });
 
 }
+
+export function loadText (context, textId, done) {
+
+  context.dispatch('TEXT_LOAD');
+
+  superagent.get(`${context.api._getUrl()}/texts/${textId}`)
+    .accept('json')
+    .end((err, res) => {
+      if (err) { throw err; }
+      context.dispatch('TEXT_LOADED', res.body);
+      done();
+    });
+}
