@@ -144,11 +144,6 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
-  handleDestroyGame () {
-    this.init();
-    this.emitChange();
-  }
-
   handleGameTick () {
     this.calcStats();
     this.emitChange();
@@ -169,7 +164,6 @@ class GameStore extends BaseStore {
 GameStore.storeName = 'GameStore';
 
 GameStore.handlers = {
-  DESTROY_GAME: 'handleDestroyGame',
   RANDOM_TEXT_LOAD: 'handleRandomTextLoad',
   RANDOM_TEXT_LOADED: 'handleRandomTextLoaded',
   GAME_TICK: 'handleGameTick',

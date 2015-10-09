@@ -14,7 +14,6 @@ import GameStats from './GameStats';
 
 // actions
 import {
-  destroyGame,
   tick,
   beginTest,
   updateWord,
@@ -67,7 +66,6 @@ class Game extends React.Component {
     if (this._hasGameTick) {
       clearInterval(this._gameTick);
     }
-    this.props.context.executeAction(destroyGame);
   }
 
   updateStats () {

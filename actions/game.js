@@ -24,10 +24,6 @@ export function reset (context) {
   context.dispatch('RESET_GAME');
 }
 
-export function destroyGame (context) {
-  context.dispatch('DESTROY_GAME');
-}
-
 export function tick (context) {
   context.dispatch('GAME_TICK');
 }
