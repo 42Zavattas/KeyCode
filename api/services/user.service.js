@@ -1,9 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import { propsDiffer } from './utils.service';
+import Sequelize from 'sequelize';
 
+import { propsDiffer } from './utils.service';
 import { User, Test } from '../models';
+import GithubService from './github.service';
 
 exports.getAll = () => {
   return User.findAll();
@@ -36,5 +38,25 @@ exports.updateOrCreate = (githubId, name, avatar, token) => {
 };
 
 exports.newResult = test => {
-  return Test.create(_.pick(test, ['wpm', 'accuracy', 'textId', 'userId']));
+
+  if (!test.wpm || !test.accuracy || !test.textId || !test.userId) { throw new Error('Missing test data.'); }
+
+  let _user;
+
+  return exports.getById(test.userId)
+    .then(user => {
+      if (!user) { throw new Error('No such user.'); }
+      _user = user;
+      return Test.create(_.pick(test, ['wpm', 'accuracy', 'textId', 'userId']));
+    })
+    .then(() => {
+      return Test.findOne({
+        attributes: [[Sequelize.fn('AVG', Sequelize.col('wpm')), 'average']],
+        where: { userId: _user.id }
+      });
+    })
+    .then(res => {
+      if (!_.has(res, 'dataValues.average')) { throw new Error('No average wpm for user.'); }
+      return GithubService.updateUserRank(_user, Math.floor(res.dataValues.average));
+    });
 };

@@ -14,6 +14,7 @@ export default db.define('user', {
   admin: { type: Sequelize.BOOLEAN, defaultValue: false },
 
   githubId: { type: Sequelize.BIGINT, unique: true },
-  token: { type: Sequelize.STRING }
+  token: { type: Sequelize.STRING },
+  currentOrg: { type: Sequelize.INTEGER }
 
 });

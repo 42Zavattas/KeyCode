@@ -85,7 +85,7 @@ passport.use(new Strategy({
       if (req.query.state && _.isString(req.query.state)) {
 
         const failsave = JSON.parse(req.query.state);
-        if (!failsave.wpm || !failsave.accuracy || !failsave.textId) { throw new Error('Invalid failsave data.'); }
+        if (!_.isObject(failsave)) { throw new Error('Invalid failsave.'); }
         failsave.userId = user.id;
 
         return UserService.newResult(failsave)
