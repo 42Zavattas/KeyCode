@@ -57,3 +57,14 @@ export function loadText (context, textId, done) {
       done();
     });
 }
+
+export function submitStats (context, payload, done) {
+  superagent.post(`${context.api._getUrl()}/users/me/game`)
+    .set('Authorization', `Bearer ${context.api._getToken()}`)
+    .send(payload)
+    .accept('json')
+    .end(err => {
+      if (err) { throw err; }
+      done();
+    });
+}

@@ -14,6 +14,7 @@ import GameStats from './GameStats';
 
 // actions
 import {
+  submitStats,
   destroyGame,
   tick,
   beginTest,
@@ -94,6 +95,12 @@ class Game extends React.Component {
 
   handleValidateWord () {
     this.props.context.executeAction(typeWord);
+    if (this.props.currentWordIndex === this.props.text.words.length - 1) {
+      this.props.context.executeAction(submitStats, {
+        textId: this.props.textId,
+        ...this.props.stats
+      });
+    }
   }
 
   handleReset () {
@@ -168,6 +175,7 @@ export default connectToStores(Game, [GameStore], context => {
   return {
     stats: gameStore.getStats(),
     text: gameStore.getText(),
+    textId: gameStore.getTextId(),
     currentWordIndex: gameStore.currentWordIndex(),
     typedWord: gameStore.typedWord(),
     isPlaying: gameStore.isPlaying(),
