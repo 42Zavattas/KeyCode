@@ -23,7 +23,7 @@ var webpackConfig = {
         exclude: /node_modules/,
         loaders: [
           'react-hot',
-          'babel'
+          'babel?stage=0'
         ]
       },
       {

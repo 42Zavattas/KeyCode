@@ -20,7 +20,7 @@ var webpackConfig = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [
-          require.resolve('babel-loader')
+          'babel?stage=0'
         ]
       },
       {
