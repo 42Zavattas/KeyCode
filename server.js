@@ -1,5 +1,6 @@
 'use strict';
 
+import q from 'q';
 import React from 'react';
 import path from 'path';
 import express from 'express';
@@ -33,33 +34,30 @@ server.use((req, res, next) => {
 
   const context = app.createContext({ req, res, config });
 
-  context
-    .getActionContext()
-    .executeAction(checkSession, null, err => {
-      if (err) { return next(err); }
-      context.getActionContext()
-        .executeAction(navigateAction, { url: req.url }, err => {
-          if (err) {
-            if (err.statusCode && err.statusCode === 404) { return next(); }
-            return next(err);
-          }
+  const actionContext = context.getActionContext();
 
-          const dehydratedState = app.dehydrate(context);
+  q.all([
+    actionContext.executeAction(checkSession, null),
+    actionContext.executeAction(navigateAction, { url: req.url })
+  ])
+  .then(() => {
+    const dehydratedState = app.dehydrate(context);
 
-          const exposed = `window.App=${serialize(dehydratedState)};`;
+    const exposed = `window.App=${serialize(dehydratedState)};`;
 
-          const html = React.renderToStaticMarkup(htmlComponent({
-            clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
-            context: context.getComponentContext(),
-            state: exposed,
-            markup: React.renderToString(createElementWithContext(context))
-          }));
+    const html = React.renderToStaticMarkup(htmlComponent({
+      clientFile: config.env === 'prod' ? 'main.min.js' : 'main.js',
+      context: context.getComponentContext(),
+      state: exposed,
+      markup: React.renderToString(createElementWithContext(context))
+    }));
 
-          res.type('html');
-          res.write(`<!DOCTYPE html>${html}`);
-          res.end();
-        });
-    });
+    res.type('html');
+    res.write(`<!DOCTYPE html>${html}`);
+    res.end();
+  })
+  .catch(err => { next(err); });
+
 });
 
 const port = process.env.PORT || 3000;
