@@ -39,6 +39,9 @@ exports.addUserToOrg = (user, org) => {
     return q.reject(new Error('Invalid organization.'));
   }
 
+  const userGithub = new Github({ version: '3.0.0', debug: true });
+  userGithub.authenticate({ type: 'oauth', token: user.token });
+
   return user.save()
     .then(() => {
       return q.nfcall(
@@ -47,33 +50,16 @@ exports.addUserToOrg = (user, org) => {
       );
     })
     .then(() => {
-
-      /*
-
-      const userGithub = new Github({ version: '3.0.0', debug: true });
-      userGithub.authenticate({ type: 'oauth', token: user.token });
-
-      userGithub.user.listOrganizationMembership({ org: 'KeyCode-5', user: user.name }, function (err, res) {
-        console.log(err, res);
-      });
-
-      userGithub.orgs.publicizeMembership({ org: 'KeyCode-5', user: user.name }, function (err, res) {
-        console.log(err, res);
-      });
-      userGithub.user.editOrganizationMembership({ org: 'KeyCode-5', state: 'active' }, (err, res) => {
-        console.log(err, res);
-      });
-
-      github.orgs.addTeamMember({ id: config.orgIds[org], user: user.name }, (err, res) => {
-        console.log(err, res);
-      });
-
-      userGithub.user.listOrganizationMembership({ org: 'KeyCode-5', user: user.name }, function (err, res) {
-        console.log(err, res);
-      });
-
-      */
-      return null;
+      return q.nfcall(
+        userGithub.user.editOrganizationMembership,
+        { org: `KeyCode-${org}`, state: 'active' }
+      );
+    })
+    .then(() => {
+      return q.nfcall(
+        userGithub.orgs.publicizeMembership,
+        { org: `KeyCode-${org}`, user: user.name }
+      );
     });
 
 };
