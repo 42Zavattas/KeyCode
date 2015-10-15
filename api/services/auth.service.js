@@ -80,19 +80,21 @@ passport.use(new Strategy({
   failureRedirect: '/',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
+
   UserService.updateOrCreate(profile.id, profile.username, profile._json.avatar_url, accessToken)
     .then(user => {
-      if (req.query.state && _.isString(req.query.state)) {
+      if (!req.query.state || !_.isString(req.query.state)) { return user; }
 
-        const failsave = JSON.parse(req.query.state);
-        if (!_.isObject(failsave)) { throw new Error('Invalid failsave.'); }
-        failsave.userId = user.id;
+      const failsave = JSON.parse(req.query.state);
+      if (!_.isObject(failsave)) { throw new Error('Invalid failsave.'); }
+      if (failsave.wpm < 10) { return user; }
 
-        return UserService.newResult(failsave)
-          .then(() => { return user; });
-      }
-      return user;
+      failsave.userId = user.id;
+
+      return UserService.newResult(failsave)
+        .then(() => { return user; });
     })
     .then(user => { done(null, user); })
     .catch(done);
+
 }));
