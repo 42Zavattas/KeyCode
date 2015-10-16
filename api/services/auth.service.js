@@ -87,7 +87,10 @@ passport.use(new Strategy({
 
       const failsave = JSON.parse(req.query.state);
       if (!_.isObject(failsave)) { throw new Error('Invalid failsave.'); }
-      if (failsave.wpm < 10) { return user; }
+
+      // Do not save if the user average is superior.
+      const average = UserService.getAverageWpm(user.id);
+      if (average && average > failsave.wpm) { return user; }
 
       failsave.userId = user.id;
 

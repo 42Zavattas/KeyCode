@@ -19,6 +19,14 @@ exports.getByGithub = id => {
   return User.findOne({ where: { githubId: id } });
 };
 
+exports.getAverageWpm = id => {
+  return Test.findOne({
+    attributes: [[Sequelize.fn('AVG', Sequelize.col('wpm')), 'average']],
+    where: { userId: id }
+  })
+  .then(res => { return _.get(res, 'dataValues.average'); });
+};
+
 exports.updateOrCreate = (githubId, name, avatar, token) => {
 
   return exports.getByGithub(githubId)
@@ -50,13 +58,10 @@ exports.newResult = test => {
       return Test.create(_.pick(test, ['wpm', 'accuracy', 'textId', 'userId']));
     })
     .then(() => {
-      return Test.findOne({
-        attributes: [[Sequelize.fn('AVG', Sequelize.col('wpm')), 'average']],
-        where: { userId: _user.id }
-      });
+      return exports.getAverageWpm(_user.id);
     })
-    .then(res => {
-      if (!_.has(res, 'dataValues.average')) { throw new Error('No average wpm for user.'); }
-      return GithubService.updateUserRank(_user, Math.floor(res.dataValues.average));
+    .then(average => {
+      if (!average) { throw new Error('No average wpm for user.'); }
+      return GithubService.updateUserRank(_user, Math.floor(average));
     });
 };
