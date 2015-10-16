@@ -6,9 +6,7 @@ import { UserService } from '../services';
 /**
  * Return the current user
  *
- * @param {Object} req Express request
- * @param {Object} res Exress result
- * @returns {Object} user
+ * GET /users/me [User]
  */
 exports.getMe = (req, res) => {
   res.status(200).send(req.user);
@@ -17,16 +15,16 @@ exports.getMe = (req, res) => {
 /**
  * Update the current user
  *
- * @param {Object} req Express request
- * @param {Object} res Exress result
- * @returns {Null} nothing
+ * PUT /users/me [User]
  */
 exports.putMe = (req, res) => {
   res.status(404).send({ message: 'Route under construction.' });
 };
 
 /**
- * Get all users, for admins only
+ * Get all users
+ *
+ * GET /users [Admin]
  */
 exports.getAll = (req, res) => {
   UserService.getAll()
@@ -40,6 +38,8 @@ exports.getAll = (req, res) => {
 
 /**
  * Create a new result for a user
+ *
+ * POST /users/me/game [User]
  */
 exports.newResult = (req, res) => {
   UserService.newResult(_.assign(req.body, { userId: req.user.id }))

@@ -2,6 +2,11 @@
 
 import { TextService } from '../services';
 
+/**
+ * Get all texts
+ *
+ * GET /texts [None]
+ */
 exports.getAll = (req, res) => {
   TextService.getAll()
     .then(texts => {
@@ -12,6 +17,11 @@ exports.getAll = (req, res) => {
     });
 };
 
+/**
+ * Get a random text
+ *
+ * GET /texts/rand [None]
+ */
 exports.getRandom = (req, res) => {
   TextService.getRandom()
     .then(text => {
@@ -22,6 +32,11 @@ exports.getRandom = (req, res) => {
     });
 };
 
+/**
+ * Get a text by its id
+ *
+ * GET /texts/:id [None]
+ */
 exports.getOne = (req, res) => {
   TextService.getOne(req.params.id)
     .then(text => {
@@ -32,6 +47,11 @@ exports.getOne = (req, res) => {
     });
 };
 
+/**
+ * Create a text
+ *
+ * POST /texts [Admin]
+ */
 exports.create = (req, res) => {
   TextService.create(req.body.title, req.body.data, req.body.language, req.user.id)
     .then(text => {
@@ -42,6 +62,11 @@ exports.create = (req, res) => {
     });
 };
 
+/**
+ * Cast a vote on a text
+ *
+ * POST /text/:id/vote [User]
+ */
 exports.castVote = (req, res) => {
   TextService.castVote(req.params.id, req.user.id, req.body.value)
     .then(() => {

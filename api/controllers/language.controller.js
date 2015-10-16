@@ -2,6 +2,11 @@
 
 import { LanguageService } from '../services';
 
+/**
+ * Get all languages
+ *
+ * GET /languages [None]
+ */
 exports.getAll = (req, res) => {
   LanguageService.getAll().then(languages => {
     res.status(200).send(languages);
@@ -10,6 +15,11 @@ exports.getAll = (req, res) => {
   });
 };
 
+/**
+ * Get a specific language by its id
+ *
+ * GET /languages/:id [None]
+ */
 exports.getOne = (req, res) => {
   LanguageService.getOne(req.params.id).then(language => {
     res.status(200).send(language);
@@ -18,6 +28,11 @@ exports.getOne = (req, res) => {
   });
 };
 
+/**
+ * Create a text
+ *
+ * POST /languages [Admin]
+ */
 exports.create = (req, res) => {
   LanguageService.create(req.body).then(language => {
     res.status(200).send(language);
