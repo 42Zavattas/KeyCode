@@ -50,21 +50,3 @@ exports.newResult = (req, res) => {
       res.status(400).send({ message: err.message });
     });
 };
-
-/**
- * Create a new user
- *
- * @param {Object} req Express request
- * @param {Object} res Exress result
- * @returns {Null} nothing
- */
-exports.create = (req, res) => {
-  UserService.create(req.body.email)
-    .then(() => {
-      res.status('200').send({ message: 'Email sent.' });
-    })
-    .catch(err => {
-      res.status(400).send({ message: err.message });
-    });
-};
-
