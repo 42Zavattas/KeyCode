@@ -1,15 +1,8 @@
 'use strict';
 
-export function login (context) {
+export function login (context, payload) {
   context.dispatch('START_LOGIN');
-
-  const data = {
-    wpm: 10,
-    accuracy: 80,
-    textId: 1
-  };
-
-  window.location.href = `/api/auth?data=${JSON.stringify(data)}`;
+  window.location.href = `/api/auth${ payload ? `data=${JSON.stringify(payload)}` : '' }`;
 }
 
 export function checkSession (context, payload, done) {

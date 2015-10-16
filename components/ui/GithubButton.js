@@ -3,16 +3,16 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
 
-import { AuthStore } from '../../stores';
+import { AuthStore, GameStore } from '../../stores';
 import { login, logout } from '../../actions/auth';
 
 class GithubButton extends React.Component {
 
   handleClick () {
-    const { isLogged, isLogging } = this.props;
+    const { isLogged, isLogging, failsave } = this.props;
     if (isLogging) { return; }
     if (!isLogged) {
-      this.props.context.executeAction(login);
+      this.props.context.executeAction(login, failsave);
     } else {
       this.props.context.executeAction(logout);
     }
@@ -45,12 +45,13 @@ class GithubButton extends React.Component {
 
 export default connectToStores(
   GithubButton,
-  [AuthStore],
+  [AuthStore, GameStore],
   context => {
     const authStore = context.getStore(AuthStore);
     return {
       isLogged: authStore.isLogged(),
-      isLogging: authStore.isLogging()
+      isLogging: authStore.isLogging(),
+      failsave: context.getStore(GameStore).getFailsave()
     };
   }
 );

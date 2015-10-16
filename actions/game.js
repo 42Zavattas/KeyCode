@@ -59,6 +59,8 @@ export function loadText (context, textId, done) {
 }
 
 export function submitStats (context, payload, done) {
+  if (!payload.isLogged) { return context.dispatch('OVERRIDE_FAILSAVE', payload); }
+
   superagent.post(`${context.api._getUrl()}/users/me/game`)
     .set('Authorization', `Bearer ${context.api._getToken()}`)
     .send(payload)

@@ -5,7 +5,7 @@ import React from 'react';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 
 // stores
-import GameStore from '../../stores/GameStore';
+import { AuthStore, GameStore } from '../../stores';
 
 // components
 import SourceCode from './SourceCode';
@@ -39,6 +39,7 @@ class Game extends React.Component {
   }
 
   componentDidUpdate () {
+
     if (this.props.isFinished) {
 
       // clear tick at the end of the test
@@ -59,7 +60,6 @@ class Game extends React.Component {
       document.removeEventListener('keydown', this.handleResetWithKb);
       this._hasRestartListener = false;
     }
-
 
   }
 
@@ -98,7 +98,8 @@ class Game extends React.Component {
     if (this.props.currentWordIndex === this.props.text.words.length - 1) {
       this.props.context.executeAction(submitStats, {
         textId: this.props.textId,
-        ...this.props.stats
+        ...this.props.stats,
+        isLogged: this.props.isLogged
       });
     }
   }
@@ -170,8 +171,9 @@ class Game extends React.Component {
   }
 }
 
-export default connectToStores(Game, [GameStore], context => {
+export default connectToStores(Game, [AuthStore, GameStore], context => {
   const gameStore = context.getStore(GameStore);
+  const authStore = context.getStore(AuthStore);
   return {
     stats: gameStore.getStats(),
     text: gameStore.getText(),
@@ -180,6 +182,7 @@ export default connectToStores(Game, [GameStore], context => {
     typedWord: gameStore.typedWord(),
     isPlaying: gameStore.isPlaying(),
     isFinished: gameStore.isFinished(),
-    isFocused: gameStore.isFocused()
+    isFocused: gameStore.isFocused(),
+    isLogged: authStore.isLogged()
   };
 });

@@ -21,7 +21,8 @@ class GameStore extends BaseStore {
       _isPlaying: false,
       _isFinished: false,
       _isFocused: false,
-      _startDate: null
+      _startDate: null,
+      _failsave: null
     });
   }
 
@@ -77,6 +78,7 @@ class GameStore extends BaseStore {
     if (!this._startDate) { return 0; }
     return moment().diff(this._startDate);
   }
+  getFailsave () { return this._failsave; }
   typedLetters () { return this._typedLetters; }
   isFetching () { return this._isFetching; }
   isPlaying () { return this._isPlaying; }
@@ -178,6 +180,11 @@ class GameStore extends BaseStore {
     this.emitChange();
   }
 
+  handleFailsave (failsave) {
+    this._failsave = failsave;
+    this.emitChange();
+  }
+
 }
 
 GameStore.storeName = 'GameStore';
@@ -192,7 +199,8 @@ GameStore.handlers = {
   INPUT_SET_FOCUS: 'handleSetFocus',
   BEGIN_TEST: 'handleBeginTest',
   UPDATE_WORD: 'handleUpdateWord',
-  TYPE_WORD: 'handleTypeWord'
+  TYPE_WORD: 'handleTypeWord',
+  OVERRIDE_FAILSAVE: 'handleFailsave'
 };
 
 export default GameStore;
